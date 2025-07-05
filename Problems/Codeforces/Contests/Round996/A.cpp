@@ -1,0 +1,29 @@
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+typedef double db;
+typedef pair<int, int> PII;
+
+
+void solve(){
+    int n, a, b;
+    cin >> n >> a >> b;
+    if(abs(a - b) % 2 == 0){
+        cout << "Yes\n";
+    }else{
+        cout << "No\n";
+    }
+}
+
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+
+    int t;
+    cin >> t;
+    while(t--){
+        solve();
+    }
+    return 0;
+}
