@@ -17,51 +17,37 @@ ll fast_pow(ll a, ll b) {
     }
     return res;
 }
-const ll inv_2 = fast_pow(2, MOD - 2);
+
 void solve() {
     int n;
     cin >> n;
+    vector<ll> pow_2(n + 1), inv_2(n + 1);
+    pow_2[0] = inv_2[0] = 1;
+    for(int i = 1; i <= n; i++) {
+        pow_2[i] = pow_2[i - 1] * 2 % MOD;
+        inv_2[i] = fast_pow(pow_2[i], MOD - 2);
+    }
     vector<vector<int>> adj(n + 1);
     for(int i = 1; i < n; i++) {
         int u, v;
         cin >> u >> v;
         adj[u].push_back(v);
         adj[v].push_back(u);
-    }    
-    // vector<ll> fac(n + 1);
-    // vector<ll> inv_fac(n + 1);
-    vector<ll> pow2(n + 1);
-    pow2[0] = 1;
-    for(int i = 1; i <= n; i++) {
-        pow2[i] = pow2[i - 1] * 2 % MOD;
     }
-    // const ll mi = pow2[n];
-    // const ll inv_mi = fast_pow(mi, MOD - 2);
-    // for(int i = 1; i <= n; i++) {
-    //     fac[i] = fac[i - 1] * i % MOD;
-    //     inv_fac[i] = fast_pow(fac[i], MOD - 2);
-    // }
-    // vector<ll> dp(n + 1);
-    // for(int i = 0; i <= n; i++) {
-    //     dp[i] = fac[n] * inv_mi % MOD * inv_fac[i] % MOD * inv_fac[n - i] % MOD * i % MOD;
-    // }
-    vector<ll> sz(n + 1, 1);
+    vector<int> sz(n + 1, 1); 
     ll ans = 0;
-    auto dfs = [&](auto &&self, int u, int fa) -> ll {
-        ll res = 0;
+    const ll sum = n - 1;
+    auto dfs = [&](auto &&self, int u, int fa) -> void {
+        ll cur = 0;
         for(int v : adj[u]) {
             if(v == fa) continue;
-            ll p = self(self, v, u);
-            if(sz[v] != 1) {
-                res = (res + inv_2 * (2 * p + 1) % MOD) % MOD;
-            }
+            self(self, v, u);
             sz[u] += sz[v];
+            cur = (cur + (1 - inv_2[sz[v]] + MOD) % MOD * inv_2[sum - sz[v]] % MOD) % MOD;
         }
-        ll cur = sz[u] - 1;
-        ll rem = n - sz[u] + 1;
-        cerr << u << " " << fa << " " << rem << " " << res << "\n";
-        ans = (ans + fast_pow(pow2[rem], MOD - 2) * res % MOD) % MOD;
-        return res;
+        cur = (cur + (1 - inv_2[n - sz[u]]) * inv_2[sum - n + sz[u]]) % MOD;
+        cur = (cur + inv_2[sum]) % MOD;
+        ans = (ans + (1 - cur + MOD) * inv_2[1]) % MOD;
     };
     dfs(dfs, 1, 0);
     cout << ans << "\n";
