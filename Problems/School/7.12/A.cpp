@@ -4,33 +4,34 @@ typedef long long ll;
 typedef double db;
 typedef pair<int,int> PII;
 typedef unsigned long long ull;
-const int inf = 1000000000;
+const ll inf = 1E15;
 
 void solve() {
     int n;
     cin >> n;
-    vector<int> a(n + 1);
+    vector<ll> a(n + 1), b(n + 1);
     for(int i = 1; i <= n; i++) {
         cin >> a[i];
+        b[i] = a[i] - i;
     }
-    vector<int> pre(n + 2), suf(n + 2);
+    sort(b.begin() + 1, b.end());
+    vector<ll> pre(n + 1);
     for(int i = 1; i <= n; i++) {
-        pre[i] = max(pre[i - 1], a[i]);
+        pre[i] = pre[i - 1] + b[i];
     }
-    for(int i = n; i >= 1; i--) {
-        suf[i] = max(suf[i + 1], a[i]);
-    }
+    ll ans = inf;
     for(int i = 1; i <= n; i++) {
-        cout << max(pre[i - 1], suf[i + 1]) << "\n";
+        ans = min(ans, -pre[i - 1] + pre[n] - pre[i - 1] + b[i] * (i - 1 - (n - i + 1)));
     }
+    cout << ans << "\n";
 }
 
-int main()
-{
+int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
 
     int t = 1;
+    // cin >> t;
     while(t--) {
         solve();
     }

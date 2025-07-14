@@ -7,9 +7,14 @@ typedef unsigned long long ull;
 const int inf = 1000000000;
 
 void solve() {
-    ll r;
-    cin >> r;
-    cout << 3 * r * r << "\n";
+    string s;
+    cin >> s;
+    int t = 0;
+    for(char c : s) {
+        if(c == '+') t++;
+        else t--;
+    }
+    cout << t << "\n";
 }
 
 int main()
@@ -18,6 +23,7 @@ int main()
     cin.tie(0);
 
     int t = 1;
+    // cin >> t;
     while(t--) {
         solve();
     }

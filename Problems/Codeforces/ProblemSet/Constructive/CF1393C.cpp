@@ -9,20 +9,23 @@ const int inf = 1000000000;
 void solve() {
     int n;
     cin >> n;
-    vector<int> a(n + 1);
+    vector<int> cnt(n + 1);
     for(int i = 1; i <= n; i++) {
-        cin >> a[i];
+        int x;
+        cin >> x;
+        cnt[x]++;
     }
-    vector<int> pre(n + 2), suf(n + 2);
+    vector<int> b;
+    int mx = 0;
     for(int i = 1; i <= n; i++) {
-        pre[i] = max(pre[i - 1], a[i]);
+        if(cnt[i]) {
+            b.push_back(cnt[i]);
+            mx = max(mx, cnt[i]);
+        }
     }
-    for(int i = n; i >= 1; i--) {
-        suf[i] = max(suf[i + 1], a[i]);
-    }
-    for(int i = 1; i <= n; i++) {
-        cout << max(pre[i - 1], suf[i + 1]) << "\n";
-    }
+    int cmx = count(b.begin(), b.end(), mx);
+    int ans = (n - cmx) / (mx - 1) - 1;
+    cout << ans << "\n";
 }
 
 int main()
@@ -31,6 +34,7 @@ int main()
     cin.tie(0);
 
     int t = 1;
+    cin >> t;
     while(t--) {
         solve();
     }

@@ -7,17 +7,22 @@ typedef unsigned long long ull;
 const int inf = 1000000000;
 
 void solve() {
-    ll r;
-    cin >> r;
-    cout << 3 * r * r << "\n";
+    int n, k;
+    cin >> n >> k;
+    if(n % k) {
+        cout << 1;
+    } else {
+        cout << 0;
+    }
+    cout << "\n";
 }
 
-int main()
-{
+int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
 
     int t = 1;
+    // cin >> t;
     while(t--) {
         solve();
     }

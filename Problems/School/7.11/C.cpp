@@ -7,9 +7,17 @@ typedef unsigned long long ull;
 const int inf = 1000000000;
 
 void solve() {
-    ll r;
-    cin >> r;
-    cout << 3 * r * r << "\n";
+    int k, s;
+    cin >> k >> s;
+    ll ans = 0;
+    for(int i = 0; i <= k; i++) {
+        for(int j = 0; j <= k; j++) {
+            if(i + j <= s && i + j >= s - k) {
+                ans++;
+            }
+        }
+    }
+    cout << ans << "\n";
 }
 
 int main()
@@ -18,6 +26,7 @@ int main()
     cin.tie(0);
 
     int t = 1;
+    // cin >> t;
     while(t--) {
         solve();
     }

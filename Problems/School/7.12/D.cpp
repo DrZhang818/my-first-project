@@ -4,20 +4,20 @@ typedef long long ll;
 typedef double db;
 typedef pair<int,int> PII;
 typedef unsigned long long ull;
-const int inf = 1000000000;
+const int inf = 1000000007;
 
 void solve() {
-    ll r;
-    cin >> r;
-    cout << 3 * r * r << "\n";
+    int n;
+    cin >> n;
+    cout << lcm(2, n) << "\n";
 }
 
-int main()
-{
+int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
 
     int t = 1;
+    // cin >> t;
     while(t--) {
         solve();
     }

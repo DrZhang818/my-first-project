@@ -7,22 +7,15 @@ typedef unsigned long long ull;
 const int inf = 1000000000;
 
 void solve() {
-    int n;
-    cin >> n;
+    int n, k;
+    cin >> n >> k;
     vector<int> a(n + 1);
     for(int i = 1; i <= n; i++) {
         cin >> a[i];
     }
-    vector<int> pre(n + 2), suf(n + 2);
-    for(int i = 1; i <= n; i++) {
-        pre[i] = max(pre[i - 1], a[i]);
-    }
-    for(int i = n; i >= 1; i--) {
-        suf[i] = max(suf[i + 1], a[i]);
-    }
-    for(int i = 1; i <= n; i++) {
-        cout << max(pre[i - 1], suf[i + 1]) << "\n";
-    }
+    n--;
+    k--;
+    cout << (n + k - 1) / k << "\n";
 }
 
 int main()
@@ -31,6 +24,7 @@ int main()
     cin.tie(0);
 
     int t = 1;
+    // cin >> t;
     while(t--) {
         solve();
     }
