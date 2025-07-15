@@ -100,23 +100,23 @@ void solve() {
     dp[0][0][0] = 1;
     for(int i = 0; i < n; i++) {
         for(int j = 1; j <= n; j++) {
-            if(i + j > n) continue;
+            if(i + j > n) break;
             for(int k = 1; k <= j; k++) {
-                int x = k, en = (k + j - 1) % j;
+                int x = k - 1;
                 bool ok = true;
                 for(int p = i + 1; p <= i + j; p++) {
+                    x++;
+                    if(x > j) x = 1;
                     if(ban[p][x]) {
                         ok = false;
                         break;
                     }
-                    x++;
-                    if(x == j + 1) x = 1;
                 }
                 if(ok) {
-                    for(int las = 0; las <= n; las++) {
-                        add(dp[i + j][en][k == 1], dp[i][las][0]);
-                        if(k != las + 1) {
-                            add(dp[i + j][en][k == 1], dp[i][las][1]);
+                    for(int y = 0; y <= i; y++) {
+                        add(dp[i + j][x][k == 1], dp[i][y][0]);
+                        if(k != y + 1) {
+                            add(dp[i + j][x][k == 1], dp[i][y][1]);
                         }
                     }
                 }
@@ -124,9 +124,9 @@ void solve() {
         }
     }
     int ans = 0;
-    for(int i = 1; i <= n; i++) {
-        add(ans, dp[n][i][0]);
-        add(ans, dp[n][i][1]);
+    for(int j = 1; j <= n; j++) {
+        add(ans, dp[n][j][0]);
+        add(ans, dp[n][j][1]);
     }
     cout << ans << "\n";
 }
