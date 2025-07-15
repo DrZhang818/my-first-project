@@ -6,7 +6,16 @@ typedef pair<int,int> PII;
 typedef unsigned long long ull;
 const int inf = 1000000000;
 
-
+//https://codeforces.com/contest/2123/problem/E
+/*
+    构造
+    题意:
+        给定一个长度为N的数组, 对于每个k∈[0,n-1], 你需要回答:
+        Q: 删除恰好k个元素后, MEX(a)有多少可能值    
+        范围: N∈[1,2e5], a[i]∈[0,n]
+    关键思考:
+        本题为
+*/
 void solve() {
     int n;
     cin >> n;
