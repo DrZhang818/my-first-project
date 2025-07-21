@@ -6,56 +6,46 @@ typedef pair<int,int> PII;
 typedef unsigned long long ull;
 const int inf = 1000000000;
 
+ll get(int x, int tag) {
+    vector<int> num;
+    ll res = x;
+    while(x) {
+        num.push_back(x % 10);
+        x /= 10;
+    }
+    for(int i = tag; i < num.size(); i++) {
+        res = res * 10 + num[i];
+    }
+    return res; 
+}
 void solve() {
-    int a;
+    int base;
     ll n;
-    cin >> a >> n;
+    cin >> base >> n;
     auto ck = [&](ll x) -> bool {
-        string s;
+        vector<int> num;
         while(x) {
-            s += to_string(x % a);
-            x /= a;
+            num.push_back(x % base);
+            x /= base;
         }
-        string t = s;
-        reverse(s.begin(), s.end());
-        return s == t;
+        int n = num.size();
+        for(int i = 0; i < n; i++) {
+            if(num[i] != num[n - i - 1]) {
+                return false;
+            }
+        }
+        return true;
     };
     ll ans = 0;
-    for(ll i = 1; i <= 999999; i++) {
-        string s = to_string(i);
-        string t = s;
-        reverse(s.begin(), s.end());
-        t += s;
-        ll x = stoll(t);
+    for(int i = 1; ; i++) {
+        ll x = get(i, 0);
         if(x > n) break;
-        if(ck(x)) {
-            ans += x;
-        }
+        if(ck(x)) ans += x;
     }
-    for(ll i = 1; i <= 9 && i <= n; i++) {
-        if(ck(i)) {
-            ans += i;
-        }
-    }
-    for(ll i = 1; i <= 999999; i++) {
-        string s = to_string(i);
-        bool ok = true;
-        for(char j = '0'; j <= '9'; j++) {
-            string t = s;
-            string p = s;
-            reverse(p.begin(), p.end());
-            t += j;
-            t += p;
-            ll x = stoll(t);
-            if(x > n) {
-                ok = false;
-                break;
-            }
-            if(ck(x)) {
-                ans += x;
-            }
-        }
-        if(!ok) break;
+    for(int i = 1; ; i++) {
+        ll x = get(i, 1);
+        if(x > n) break;
+        if(ck(x)) ans += x;
     }
     cout << ans << "\n";
 }
