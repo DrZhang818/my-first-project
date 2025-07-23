@@ -7,7 +7,17 @@ typedef unsigned long long ull;
 const int inf = 1000000000;
 
 void solve() {
-    
+    string s;
+    cin >> s;
+    vector<int> a;
+    for(int i = 0; i < s.size(); i++) {
+        if(s[i] == '#') {
+            a.push_back(i + 1);
+        }
+    }
+    for(int i = 0; i < a.size(); i += 2) {
+        cout << a[i] << "," << a[i + 1] << "\n";
+    }
 }
 
 int main() {
@@ -15,7 +25,7 @@ int main() {
     cin.tie(0);
 
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while(t--) {
         solve();
     }

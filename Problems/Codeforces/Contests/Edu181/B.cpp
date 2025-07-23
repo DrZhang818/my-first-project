@@ -7,7 +7,16 @@ typedef unsigned long long ull;
 const int inf = 1000000000;
 
 void solve() {
-    
+    ll a, b, k;
+    cin >> a >> b >> k;
+    ll g = gcd(a, b);
+    a /= g;
+    b /= g;
+    if(a - k <= 0 && b - k <= 0) {
+        cout << 1 << "\n";
+        return;
+    }
+    cout << 2 << "\n";
 }
 
 int main() {

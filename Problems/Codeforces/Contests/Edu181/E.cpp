@@ -5,8 +5,15 @@ typedef double db;
 typedef pair<int,int> PII;
 typedef unsigned long long ull;
 const int inf = 1000000000;
+const int MOD = 998244353;
 
 void solve() {
+    int n, x;
+    cin >> n >> x;
+    if(n > x) {
+        cout << 0 << "\n";
+        return;
+    }    
     
 }
 

@@ -6,6 +6,27 @@ typedef pair<int,int> PII;
 typedef unsigned long long ull;
 const int inf = 1000000000;
 
+//https://codeforces.com/contest/2126/problem/G2
+/*
+    枚举 || 中位数Trick || 线段树 || 双指针
+    题意:
+        给定一个长度为N的数组, 你需要从中选取一段子数组a[l:r], 
+        使得med(a[l:r]) - min(a[l:r])最大
+        med(a[l:r])表示a[l:r]的中位数, 即第(k+1)/2大元素(上取整)
+        输出能得到的最大值
+        范围: N∈[1,2e5], a[i]∈[1,n]
+    关键思考:
+        本题为决策类题目, 常用思考方式为: 暴力->DP||贪心, 常用优化手段为: 二分、前缀和、双指针、数据结构
+        由G1的分析, 我们已经有了初步的思路, 就是枚举med后枚举数组
+        但现在a[i]范围增大, 上述思路的时间复杂度变为O(n^2), 无法通过
+        我们思考如何节省枚举数组这一步
+        由于med越大, 对数组a的要求越严格, 因为数组b的-1个数只会更多, 1的个数只会更少
+        那么med和min就有了单调性关系, 当med增大后, 能取到的min单调不降
+        这样我们就可以用双指针来寻找min, 而无需遍历整个数组寻找min
+        另一个问题是如何维护S以及前缀max后缀min
+        显然可以用线段树来维护, 每次相当于一系列单点修改
+        把遍历到med + 1时, 把所有a[i] = med的位置i对应的b数组-2 (从1变成-1)
+*/
 inline int ls(int o) { return o << 1; }
 inline int rs(int o) { return o << 1 | 1; } 
 class SegmentTree {

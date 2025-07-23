@@ -46,11 +46,10 @@ void solve() {
     s = "#" + s;
     vector<map<char,int>> mp(n + 1);
     map<char,bool> vis;
-    char ch;
+    char ch = s[1];
     for(int i = 1; i <= n; i++) {
         mp[i][s[i]]++; 
         vis[s[i]] = true;
-        ch = s[i];
         for(char j = 'a'; j <= 'z'; j++) {
             mp[i][j] += mp[i - 1][j];
         }
@@ -62,11 +61,11 @@ void solve() {
     unordered_map<ull,int> cnt;
     cnt[0] = 1;
     for(int i = 1; i <= n; i++) {
-        int sa = mp[i][ch];
+        int cnt_x = mp[i][ch];
         ull H = 0;
         for(auto [cur, c] : mp[i]) {
             if(vis[cur]) {
-                H = H * P + c - sa;
+                H = H * P + c - cnt_x;
             }
         }
         add(ans, cnt[H]);
