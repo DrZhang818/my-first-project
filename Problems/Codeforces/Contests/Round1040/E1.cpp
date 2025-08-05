@@ -40,9 +40,9 @@ void solve() {
             cout << "? " << 4 << " " << l << " " << r << " " << l << " " << r << endl;
             int x;
             cin >> x;
-            if(x == 2) {
+            if(x == 3) {
                 a[l] = '(';
-                a[r] = ')';
+                a[r] = ')'; 
                 if(pos == -1) pos = l;
             } else if(x == 1) {
                 a[l] = ')';
@@ -59,7 +59,7 @@ void solve() {
             cout << "? " << 10 << " " << l << " " << r << " " << l << " " << u << " " << r << " " << l << " " << v << " " << r << " " << l << " " << r << endl;
             int x;
             cin >> x;
-            if(x == 4) {
+            if(x == 5) {
                 a[l] = '(';
                 a[r] = ')';
                 if(pos == -1) pos = l;
@@ -98,8 +98,6 @@ void solve() {
         }
     } else if(!s.empty()) {
         int o = s[0];
-        assert(pos < 1);
-
         cout << "? " << 3 << " " << pos << " " << o << " " << pos << endl;
         int x;
         cin >> x;
