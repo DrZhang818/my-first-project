@@ -6,19 +6,17 @@ typedef pair<int,int> PII;
 typedef unsigned long long ull;
 const int inf = 1000000000;
 
-//https://codeforces.com/contest/1987/problem/C
 void solve() {
     int n;
     cin >> n;
-    vector<int> a(n + 1);
     for(int i = 1; i <= n; i++) {
-        cin >> a[i];
+        if(i & 1) {
+            cout << -1 << " ";
+        } else {
+            cout << (i == n ? 2 : 3) << " ";
+        }
     }
-    int ans = a[n];
-    for(int i = n - 1; i >= 1; i--) {
-        ans = max(a[i], ans + 1);
-    }
-    cout << ans << "\n";
+    cout << "\n";
 }
 
 int main() {

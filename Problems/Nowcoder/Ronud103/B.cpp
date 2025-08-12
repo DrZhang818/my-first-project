@@ -6,7 +6,6 @@ typedef pair<int,int> PII;
 typedef unsigned long long ull;
 const int inf = 1000000000;
 
-//https://codeforces.com/contest/1987/problem/C
 void solve() {
     int n;
     cin >> n;
@@ -14,11 +13,25 @@ void solve() {
     for(int i = 1; i <= n; i++) {
         cin >> a[i];
     }
-    int ans = a[n];
-    for(int i = n - 1; i >= 1; i--) {
-        ans = max(a[i], ans + 1);
+    int l = 1, r = n;
+    while(l < n && a[l + 1] == a[l]) {
+        l++;
     }
-    cout << ans << "\n";
+    while(r > 1 && a[r - 1] == a[r]) {
+        r--;
+    }
+    if(l + 1 > r - 1) {
+        cout << "YES\n";
+        return;
+    }
+    int x = a[l + 1];
+    for(int i = l + 1; i <= r - 1; i++) {
+        if(a[i] != x) {
+            cout << "NO\n";
+            return;
+        }
+    }
+    cout << "YES\n";
 }
 
 int main() {

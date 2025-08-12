@@ -35,12 +35,12 @@ void solve1(){
     ll n, k;
     cin >> n >> k;
     ll cnt = 1, delta = 0, ans = 0;
-    while(n >= k){
-        if(n % 2 == 0){
+    while(n >= k) {
+        if(n % 2 == 0) {
             n >>= 1;
             delta = delta * 2 + cnt * n;
             cnt <<= 1;
-        }else{
+        } else {
             ans += (1 + n) / 2 * cnt + delta;
             n >>= 1;
             delta = delta * 2 + cnt * (n + 1);
@@ -52,7 +52,7 @@ void solve1(){
 void solve2(){
     ll n, k;
     cin >> n >> k;
-    ll t = n, count = 0, cur = 0, ans = -1;
+    ll t = n, count = 0, cur = 0;
     while(t >= k){
         if(t & 1){
             count += (1LL << cur);

@@ -5,18 +5,27 @@ typedef double db;
 typedef pair<int,int> PII;
 typedef unsigned long long ull;
 const int inf = 1000000000;
-
-//https://codeforces.com/contest/1987/problem/C
 void solve() {
     int n;
     cin >> n;
-    vector<int> a(n + 1);
+    string s;
+    cin >> s;
+    ll c0 = 1, c1 = 0;
+    ll ans = 0;
+    s = "#" + s;
+    vector<int> pre(n + 1);
     for(int i = 1; i <= n; i++) {
-        cin >> a[i];
+        s[i] ^= 1;
+        pre[i] = pre[i - 1] ^ (s[i] - '0');
     }
-    int ans = a[n];
-    for(int i = n - 1; i >= 1; i--) {
-        ans = max(a[i], ans + 1);
+    for(int i = 1; i <= n; i++) {
+        if(pre[i] == 0) {
+            ans += c0;
+            c0++;
+        } else {
+            ans += c1;
+            c1++;
+        }
     }
     cout << ans << "\n";
 }
@@ -26,7 +35,6 @@ int main() {
     cin.tie(0);
 
     int t = 1;
-    cin >> t;
     while(t--) {
         solve();
     }

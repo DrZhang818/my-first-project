@@ -5,20 +5,20 @@ typedef double db;
 typedef pair<int,int> PII;
 typedef unsigned long long ull;
 const int inf = 1000000000;
-
-//https://codeforces.com/contest/1987/problem/C
+const int MOD = 1000000007;
+int fast_pow(int a, int b) {
+    int res = 1;
+    while(b) {
+        if(b & 1) res = 1LL * res * a % MOD;
+        a = 1LL * a * a % MOD;
+        b >>= 1;
+    }
+    return res;
+}
 void solve() {
     int n;
     cin >> n;
-    vector<int> a(n + 1);
-    for(int i = 1; i <= n; i++) {
-        cin >> a[i];
-    }
-    int ans = a[n];
-    for(int i = n - 1; i >= 1; i--) {
-        ans = max(a[i], ans + 1);
-    }
-    cout << ans << "\n";
+    cout << fast_pow(2, n - 1) << "\n";
 }
 
 int main() {
@@ -26,7 +26,6 @@ int main() {
     cin.tie(0);
 
     int t = 1;
-    cin >> t;
     while(t--) {
         solve();
     }
