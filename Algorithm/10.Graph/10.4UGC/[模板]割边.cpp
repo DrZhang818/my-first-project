@@ -52,6 +52,7 @@ void solve() {
     for(auto [u, v] : ans) {
         cout << u << " " << v << "\n";
     }
+    
 }
 
 int main()

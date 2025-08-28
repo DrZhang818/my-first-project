@@ -1,0 +1,1 @@
+print(('0'*50).join(str(5**i) for i in range(1, 100)))
