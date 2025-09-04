@@ -6,6 +6,21 @@ typedef pair<int,int> PII;
 typedef unsigned long long ull;
 const int inf = 1000000000;
 
+//https://codeforces.com/contest/2134/problem/D
+/*
+    构造
+    题意:
+        给定一棵N个顶点的树, 你可以进行以下操作:
+        op: 选出三个不同的顶点a,b,c, 其中b直接连接着a和c
+            然后, 对于b的每个邻居d(不包括a和c), 把边b-d删除, 改为直接连接d-c
+        你需要用最少的操作把树变成一条直链, 可以证明一定可以做到
+        你只需要输出第一步操作, 如果树已经是一条链, 输出-1
+        范围: N∈[1,2e5]
+    关键思考:
+        本题为构造类题目, 常用思考方式为: 从小规模数据中探寻规律, 从特殊到一般
+        首先观察题目性质, 
+
+*/
 void solve() {
     int n;
     cin >> n;
@@ -44,36 +59,19 @@ void solve() {
     dfs(1, 0, 0, x);
     mx = 0, y = x;
     dfs(x, 0, 0, y);
-    vector<PII> point;
-    point.push_back({y, dep[y]});
     int pre = 0;
     for(int o = y; o; o = p[o]) {
         son[o] = pre;
         if(adj[o].size() >= 3) {
-            point.push_back({o, dep[o]});
+            int a = pre, b = o;
+            for(int c : adj[o]) {
+                if(c != a && c != p[o]) {
+                    cout << a << " " << b << " " << c << "\n";
+                    return;
+                }
+            }
         }
         pre = o;
-    }
-    point.push_back({x, dep[x]});
-
-    int sz = point.size();
-    int mn = point[1].second;
-    for(int i = 1; i < sz - 1; i++) {
-        if(dep[y] - point[i].second + point[i + 1].second <= mn) {
-            mn = dep[y] - point[i].second + point[i + 1].second;
-        }
-    }
-    if(point[1].second == mn) {
-        int o = point[1].first;
-        cout << son[o] << " " << o << " " << p[o] << "\n";
-        return;
-    }
-    for(int i = 1; i < sz - 1; i++) {
-        if(dep[y] - point[i].second + point[i + 1].second == mn) {
-            int o = point[i].first;
-            cout << p[o] << " " << o << " " << son[o] << "\n";
-            return;
-        }
     }
 }
 

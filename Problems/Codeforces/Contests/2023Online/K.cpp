@@ -7,38 +7,6 @@ typedef unsigned long long ull;
 const int inf = 1000000000;
 const db eps = 1e-8;
 
-//https://www.luogu.com.cn/problem/UVA10263
-/*
-    计算几何
-    题意:
-        给定一个点M和由N+1个点依次连接构成的类曲线图(N条线段)
-        你需要求出曲线上离M最近的P点坐标(P可以在任意一条线段上)
-    关键思考:
-        本题为决策类题目, 常用思考方式为: 暴力->DP||贪心, 常用优化手段为: 二分、前缀和、双指针、数据结构
-        首先观察题目性质, 我们有个很朴素的暴力方法: 求出点M到每条线段的最短距离,
-        取其中最小的一个就是P点所在线段, 再进一步求出P点在哪
-        因此核心问题就是如何求解点到线段的最短距离
-        我们可以把这个问题转化成点到点的距离
-        设线段两个端点为a,b, 我们要求点p到线段a,b的最短距离d(p,a,b)
-        (1)若a = b, 那么转化成点到点的距离d(p,a)
-        (2)若a != b
-            设x = p - a, y = p - b, z = b - a
-            <1>若dot(x,z) < 0, 说明p的垂线与线段无交点, 且p离a更近
-                转化为d(p,a)
-            <2>若dot(y,z) > 0, 说明p的垂线与线段无交点, 且p离b更近
-                转化为d(p,b)
-            <3>p的垂线与线段有交点, 此时要求出垂足o
-                转化为d(p,o)
-        垂足的求法:
-            设x = p - a, y = p - b, z = b - a
-            我们要利用p在向量ab上的投影来算出比例系数, 通过偏移找到垂足
-            len = dot(x,z) / length(z)  这是|ao|
-            tot = length(z)             这是|bo|
-            o = a + z * (len1 / length(z))
-        两点间距离的求法
-            求解d(x,y)
-            令z = y - x, 转化为length(z)
-*/
 int dcmp(db x) { return x < -eps ? -1 : (x > eps ? 1 : 0); }
 template<class T>
 struct Point {
@@ -187,26 +155,38 @@ Point<T> dis_PL(Point<T> p, Point<T> a, Point<T> b) {
 }
 Point<db> m;
 void solve() {
-    int n;
-    cin >> n;
-    vector<Point<db>> a(n + 2);
-    for(int i = 1; i <= n + 1; i++) {
-        cin >> a[i];
+    int n, q;
+    cin >> n >> q;
+    vector<Point<db>> P(n);
+    for(int i = 0; i < n; i++) {
+        cin >> P[i];
     }
-    Point<db> ans = a[1];
-    for(int i = 1; i <= n; i++) {
-        Point<db> cur = dis_PL(m, a[i], a[i + 1]);
-        if(dcmp(length(m - cur) - length(m - ans)) < 0) ans = cur;
+    while(q--) {
+        ll a, b, c, d;
+        cin >> a >> b >> c >> d;
+        m.x = (a + c) / 2.0;
+        m.y = (b + d) / 2.0;
+        db R_2 = ((a - c) * (a - c) + (b - d) * (b - d)) / 4.0;
+        if(pointInPolygon(m, P)) {
+            cout << fixed << setprecision(12) << R_2 / 2.0 << "\n";
+            continue;
+        }
+        Point<db> ans = P[0];
+        for(int i = 0; i < n; i++) {
+            Point<db> cur = dis_PL(m, P[i], P[(i + 1) % n]);
+            if(dcmp(length(m - cur) - length(m - ans)) < 0) ans = cur;
+        }
+        db r_2 = length(m - ans) * length(m - ans);
+        cout << fixed << setprecision(12) << R_2 / 2.0 + r_2 << "\n";
     }
-    cout << fixed << setprecision(4) << ans.x << "\n" << ans.y << "\n";
 }
 
-int main()
-{
+int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
 
-    while(cin >> m) {
+    int t = 1;
+    while(t--) {
         solve();
     }
     return 0;
