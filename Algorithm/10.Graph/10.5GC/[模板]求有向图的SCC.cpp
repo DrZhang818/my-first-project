@@ -6,58 +6,58 @@ typedef pair<int,int> PII;
 typedef unsigned long long ull;
 const int inf = 1000000000;
 
-int n, m, timer = 0, cnt = 0, ans = 0;
-vector<vector<int>> adj;
-vector<int> dfn, low, scc;
-vector<bool> instk;
-stack<int> stk;
-void init() {
-    adj.resize(n + 1);
-    dfn.resize(n + 1);
-    low.resize(n + 1);
-    scc.resize(n + 1);
-    instk.resize(n + 1);
-}
-void dfs(int u, int fa) {
-    dfn[u] = low[u] = ++timer;
-    stk.push(u);
-    instk[u] = true;
-    for(int v : adj[u]) {
-        if(!dfn[v]) {
-            dfs(v, u);
-            low[u] = min(low[u], low[v]);
-        } else if(instk[v]) {
-            low[u] = min(low[u], dfn[v]);
-        }
+struct SCC {
+    int n;
+    vector<vector<int>> adj;
+    vector<int> stk;
+    vector<int> dfn, low, bel;
+    int cur, cnt;
+    SCC() {}
+    SCC(int n) {
+        init(n);
     }
-    if(dfn[u] == low[u]) {
-        cnt++;
-        int sz = 0;
-        while(1) {
-            int v = stk.top(); stk.pop();
-            sz++;
-            instk[v] = false;
-            scc[v] = cnt;
-            if(v == u) break;
-        }
-        if(sz > 1) ans++;
+    void init(int n) {
+        this->n = n;
+        adj.assign(n + 1, {});
+        dfn.assign(n + 1, -1);
+        low.resize(n + 1);
+        bel.assign(n + 1, -1);
+        stk.clear();
+        cur = cnt = 0;
     }
-}
-void solve() {
-    cin >> n >> m;
-    init();
-    for(int i = 1; i <= m; i++) {
-        int u, v;
-        cin >> u >> v;
+    void addEdge(int u, int v) {
         adj[u].push_back(v);
     }
-    for(int i = 1; i <= n; i++) {
-        if(!dfn[i]) {
-            dfs(i, 0);
+    void dfs(int x) {
+        dfn[x] = low[x] = ++cur;
+        stk.push_back(x);
+        for(auto y : adj[x]) {
+            if(dfn[y] == -1) {
+                dfs(y);
+                low[x] = min(low[x], low[y]);
+            } else if(bel[y] == -1) {
+                low[x] = min(low[x], dfn[y]);
+            }
+        }
+        if(dfn[x] == low[x]) {
+            ++cnt;
+            int y;
+            do {
+                y = stk.back();
+                bel[y] = cnt;
+                stk.pop_back();
+            } while(y != x);
         }
     }
-    cout << ans << "\n";
-}
+    vector<int> work() {
+        for(int i = 1; i <= n; i++) {
+            if(dfn[i] == -1) {
+                dfs(i);
+            }
+        }
+        return bel;
+    }
+};
 
 int main()
 {

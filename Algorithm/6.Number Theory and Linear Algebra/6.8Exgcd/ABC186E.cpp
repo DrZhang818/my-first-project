@@ -16,13 +16,13 @@ ll exgcd(ll a, ll b, ll &x, ll &y) {
     y -= a / b * x;
     return g;
 }
-ll mod(ll a, ll p) {
-    return (a % p + p) % p;
-}
 ll mod_inv(ll a, ll p) {
     ll x, y;
     exgcd(a, p, x, y);
     return (x % p + p) % p;
+}
+ll mod(ll a, ll p) {
+    return (a % p + p) % p;
 }
 void solve() {
     ll n, s, k;

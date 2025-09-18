@@ -1,3 +1,6 @@
+#include<bits/stdc++.h>
+using namespace std;
+
 struct AhoCorasick {
     static const int ALPHABET = 26;
     struct node {

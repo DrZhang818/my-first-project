@@ -66,7 +66,6 @@ struct node {
 vector<line> L;
 vector<node> tr;
 vector<int> X;
-
 inline int ls(int o) { return o << 1; }
 inline int rs(int o) { return o << 1 | 1; }
 void push_up(int o, int l, int r) {

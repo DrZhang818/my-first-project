@@ -69,6 +69,35 @@ void solve() {
     cout << ans << "\n";
 }
 
+void solve2() {
+    int n;
+    cin >> n;
+    vector<vector<PII>> adj(n);
+    for(int i = 0; i < n - 1; i++) {
+        int u, v, w;
+        cin >> u >> v >> w;
+        u--, v--;
+        adj[u].push_back({v, w});
+        adj[v].push_back({u, w});
+    }
+    int mx = 0, x = 1, y;
+    vector<int> p(n + 1), son(n + 1), dep(n + 1);
+    auto dfs = [&](this auto &&self, int u, int fa, int d, int &o) -> void {
+        p[u] = fa;
+        dep[u] = d;
+        if(d > mx) {
+            mx = d;
+            o = u;
+        }
+        for(int v : adj[u]) {
+            if(v == fa) continue;
+            self(v, u, d + 1, o);
+        }
+    };
+    dfs(1, 0, 0, x);
+    mx = 0, y = x;
+    dfs(x, 0, 0, y);
+}
 int main()
 {
     ios::sync_with_stdio(false);
