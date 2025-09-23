@@ -8,13 +8,6 @@ const int inf = 1000000000;
 const int MOD = 1000000007;
 
 //https://codeforces.com/contest/2143/problem/D1
-/*
-    DP
-    题意:
-
-
-
-*/
 
 void add(int &x, int y) {
     x += y - MOD; x += x >> 31 & MOD;    

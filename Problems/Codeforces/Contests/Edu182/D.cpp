@@ -8,32 +8,31 @@ const ll inf = 1E18;
 const int N = 200000;
 
 void solve() {
-    int n, w;
-    cin >> n >> w;
-    vector<int> a(n + 1);
-    vector<int> cnt(N + 1);
+    int n, y;
+    cin >> n >> y;
     int mx = 2;
+    vector<int> cnt(N + 1);
     for(int i = 1; i <= n; i++) {
-        cin >> a[i];
-        cnt[a[i]]++;
-        mx = a[i] > mx ? a[i] : mx;
+        int x;
+        cin >> x;
+        cnt[x]++;
+        mx = max(mx, x);
     }
-    ll ans = -inf;
-    vector<int> pre(N + 1);
-    for(int i = 1; i <= N; i++) {
+
+    vector<int> pre(mx + 1);
+    for(int i = 1; i <= mx; i++) {
         pre[i] = pre[i - 1] + cnt[i];
     }
+
+    ll ans = -inf;
     for(int x = 2; x <= mx; x++) {
-        ll cur = 0;
-        int L = 1;
-        for(int t = 1; t <= (mx + x - 1) / x && L <= N; t++) {
-            int R = x * t;
-            R = min(R, N);
-            cur += 1LL * t * (pre[R] - pre[L - 1]);
-            cur -= 1LL * w * max(0, (pre[R] - pre[L - 1]) - cnt[t]);
-            L = R + 1;
+        ll sum = 0;
+        for(int i = 1; i <= (mx - 1) / x + 1; i++) {
+            ll now_cnt = pre[min(mx, i * x)] - pre[(i - 1) * x];
+            ll need = max(0LL, now_cnt - cnt[i]);
+            sum += i * now_cnt - need * y;
         }
-        ans = max(ans, cur);
+        ans = max(ans, sum);
     }
 
     cout << ans << "\n";
