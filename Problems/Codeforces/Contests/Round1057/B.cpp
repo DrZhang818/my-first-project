@@ -7,7 +7,13 @@ typedef unsigned long long ull;
 const int inf = 1000000000;
 
 void solve() {
-    
+    int x, y, z;
+    cin >> x >> y >> z;
+    if((x & y) != (x & z) || (x & y) != (y & z)) {
+        cout << "NO\n";
+    } else {
+        cout << "YES\n";
+    }
 }
 
 int main() {

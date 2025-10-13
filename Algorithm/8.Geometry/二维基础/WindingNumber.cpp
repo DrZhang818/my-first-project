@@ -1,3 +1,13 @@
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+typedef double db;
+typedef pair<int,int> PII;
+typedef unsigned long long ull;
+const int inf = 1000000000;
+
+//https://ac.nowcoder.com/acm/contest/27249/B
+
 template<class T>
 struct Point {
     T x;
@@ -133,6 +143,11 @@ int sgn(const Point<T> &a) {
 template<class T>
 bool pointOnLineLeft(const Point<T> &p, const Line<T> &l) {
     return cross(l.b - l.a, p - l.a) > 0;
+}
+
+template<class T>
+bool pointOnLineRight(const Point<T> &p, const Line<T> &l) {
+    return cross(l.b - l.a, p - l.a) < 0;
 }
 
 template<class T>
@@ -376,4 +391,54 @@ std::vector<Point<T>> hp(std::vector<Line<T>> lines) {
     ps.push_back(lineIntersection(ls[0], ls.back()));
     
     return std::vector(ps.begin(), ps.end());
+}
+
+
+void solve() {
+    int n;
+    cin >> n;
+      
+    vector<Point<ll>> p(n);
+    for(int i = 0; i < n; i++) {
+        cin >> p[i];
+    }
+
+    int q;
+    cin >> q;
+    while(q--) {
+        Point<ll> S;
+        cin >> S;
+        bool ok = true;
+        int t = 0;
+        for(int i = 0; i < n; i++) {
+            auto u = p[i];
+            auto v = p[(i + 1) % n];
+            if(pointOnSegment(S, Line(u, v))) {
+                ok = false;
+                break;
+            }
+            if(u.x >= S.x && v.x < S.x && pointOnLineLeft(S, Line(u, v))) {
+                t++;
+            }
+            if(u.x < S.x && v.x >= S.x && pointOnLineLeft(S, Line(v, u))) {
+                t--;
+            }
+        }
+        if(!ok) {
+            cout << "EDGE\n";
+            continue;
+        }
+        cout << t << "\n";
+    }
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+
+    int t = 1;
+    while(t--) {
+        solve();
+    }
+    return 0;
 }

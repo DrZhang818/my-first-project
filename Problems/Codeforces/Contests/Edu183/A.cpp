@@ -7,7 +7,9 @@ typedef unsigned long long ull;
 const int inf = 1000000000;
 
 void solve() {
-    
+    int x;
+    cin >> x;
+    cout << (3 - x % 3) % 3 << "\n";
 }
 
 int main() {

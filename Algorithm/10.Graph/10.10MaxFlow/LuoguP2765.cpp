@@ -1,3 +1,14 @@
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+typedef double db;
+typedef pair<int,int> PII;
+typedef unsigned long long ull;
+const int inf = 1000000000;
+const int N = 1567;
+
+int num[N + 1];
+
 template<class T>
 class MaxFlow {
 private:
@@ -19,8 +30,8 @@ public:
         this->n = n;
         e.clear();
         g.assign(n, {});
-        cur.resize(n);
-        h.resize(n);
+        cur.assign(n, 0);
+        h.assign(n, 0);
     }
     bool bfs(int s, int t) {
         h.assign(n, -1);
@@ -103,3 +114,76 @@ public:
         return a;
     }
 };
+
+
+void solve() {
+    int n;
+    cin >> n;
+
+    MaxFlow<int> g;
+    int f;
+    auto ck = [&](int x) -> bool {
+        int S = 0, T = 2 * x + 1;
+        g.init(T + 1);
+        for(int i = 1; i <= x; i++) {
+            g.addEdge(S, i, 1);
+            g.addEdge(i + x, T, 1);
+            auto j = upper_bound(num + 1, num + N + 1, 2 * i) - num;
+            for(j; j <= N; j++) {
+                int y = num[j];
+                if(y - i > x) {
+                    break;
+                }
+                g.addEdge(i, y - i + x, 1);
+            }
+        }
+        f = g.flow(S, T);
+        return x - f <= n;
+    };
+
+    int l = 0, r = N + 1;
+    while(l + 1 < r) {
+        int mid = l + r >> 1;
+        if(ck(mid)) {
+            l = mid;
+        } else {
+            r = mid;
+        }
+    }
+    cout << l << "\n";
+
+    ck(l);
+    auto e = g.edges();
+    vector<int> nxt(l + 1), deg(l + 1);
+    for(auto &[from, to, _, flow] : e) {
+        if(flow && 1 <= from && from <= l) {
+            nxt[from] = to - l;
+            deg[to - l]++;
+        }
+    }
+    for(int i = 1; i <= l; i++) {
+        if(!deg[i]) {
+            int u = i;
+            while(u) {
+                cout << u << " \n"[nxt[u] == 0];
+                u = nxt[u];
+            }
+        }
+    }
+
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+
+    for(int i = 1; i <= N; i++) {
+        num[i] = i * i;
+    }
+
+    int t = 1;
+    while(t--) {
+        solve();
+    }
+    return 0;
+}

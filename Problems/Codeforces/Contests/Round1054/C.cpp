@@ -7,7 +7,24 @@ typedef unsigned long long ull;
 const int inf = 1000000000;
 
 void solve() {
-    
+    int n, k;
+    cin >> n >> k;
+
+    vector<int> cnt(n + 1);
+    for(int i = 1; i <= n; i++) {
+        int x;
+        cin >> x;
+        cnt[x]++;
+    }
+
+    int ans = 0;
+    for(int i = 0; i < k; i++) {
+        if(cnt[i] == 0) {
+            ans++;
+        }
+    }
+    ans += max(0, cnt[k] - ans);
+    cout << ans << "\n";
 }
 
 int main() {

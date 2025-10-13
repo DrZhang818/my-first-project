@@ -7,7 +7,15 @@ typedef unsigned long long ull;
 const int inf = 1000000000;
 
 void solve() {
-    
+    vector<int> a(5);
+    for(int i = 1; i <= 4; i++) {
+        cin >> a[i];
+    }
+    int ans = a[1] / 2 + a[2] / 2 + a[3] / 2 + a[4] / 2;
+    if(a[1] % 2 == 1 && a[2] % 2 == 1 && a[3] % 2 == 1) {
+        ans++;
+    }
+    cout << ans << "\n";
 }
 
 int main() {

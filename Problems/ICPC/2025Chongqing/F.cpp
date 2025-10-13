@@ -7,7 +7,15 @@ typedef unsigned long long ull;
 const int inf = 1000000000;
 
 void solve() {
-    
+    int a, b, c;
+    cin >> a >> b >> c;
+    if(a > b) {
+        cout << "Win\n";
+    } else if(c > b) {
+        cout << "WIN\n";
+    } else {
+        cout << "nowin\n";
+    }
 }
 
 int main() {

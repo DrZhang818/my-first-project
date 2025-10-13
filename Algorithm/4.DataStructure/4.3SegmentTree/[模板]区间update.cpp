@@ -14,7 +14,7 @@ private:
     vector<ll> sum, mx;
     vector<ll> tag;
 public:
-    SegmentTree(int x) : n(x), sum(x << 2), mx(x << 2), tag(x << 2) {}
+    SegmentTree(int x) : n(x), sum(x << 2), mx(x << 2), tag(x << 2, -inf) {}
     void push_up(int o) {
         sum[o] = sum[ls(o)] + sum[rs(o)];
         mx[o] = max(mx[ls(o)], mx[rs(o)]);
@@ -25,11 +25,11 @@ public:
         mx[o] = d;
     }
     void push_down(int o, int l, int r) {
-        if(tag[o]) {
+        if(tag[o] != -inf) {
             int mid = l + (r - l) / 2;
             addtag(ls(o), l, mid, tag[o]);
             addtag(rs(o), mid + 1, r, tag[o]);
-            tag[o] = 0;
+            tag[o] = inf;
         }
     }
     void update(int L, int R, int o, int l, int r, ll d) {

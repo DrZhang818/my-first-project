@@ -1,3 +1,11 @@
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+typedef double db;
+typedef pair<int,int> PII;
+typedef unsigned long long ull;
+const int inf = 1000000000;
+
 template<class T>
 class MaxFlow {
 private:
@@ -103,3 +111,52 @@ public:
         return a;
     }
 };
+
+void solve() {
+    int n, m;
+    cin >> n >> m;
+    int S = 0, T = 2 * n + 1;
+    MaxFlow<int> g(T + 1);
+    for(int i = 1; i <= n; i++) {
+        g.addEdge(S, i, 1);
+        g.addEdge(i + n, T, 1);
+    }
+    for(int i = 1; i <= m; i++) {
+        int u, v;
+        cin >> u >> v;  
+        g.addEdge(u, v + n, 1);
+    }
+    auto f = g.flow(S, T);
+    auto e = g.edges();
+    vector<int> nxt(n + 1);
+    vector<int> deg(n + 1);
+    for(auto [from, to, _, flow] : e) {
+        if(flow && 1 <= from && from <= n) {
+            nxt[from] = to - n;
+            deg[to - n]++;
+        }
+    }
+    for(int i = 1; i <= n; i++) {
+        if(deg[i]) {
+            continue;
+        }
+        int u = i;
+        while(u) {
+            cout << u << " ";
+            u = nxt[u];
+        }
+        cout << "\n";
+    }
+    cout << n - f << "\n";
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+
+    int t = 1;
+    while(t--) {
+        solve();
+    }
+    return 0;
+}

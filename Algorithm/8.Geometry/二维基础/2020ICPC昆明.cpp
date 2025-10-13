@@ -1,3 +1,11 @@
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+typedef double db;
+typedef pair<int,int> PII;
+typedef unsigned long long ull;
+const int inf = 1000000000;
+
 template<class T>
 struct Point {
     T x;
@@ -144,6 +152,7 @@ template<class T>
 bool pointOnLine(const Point<T> &p, const Line<T> &l) {
     return cross(p - l.a, l.b - l.a) == 0;
 }
+
 
 template<class T>
 bool pointOnSegment(const Point<T> &p, const Line<T> &l) {
@@ -376,4 +385,51 @@ std::vector<Point<T>> hp(std::vector<Line<T>> lines) {
     ps.push_back(lineIntersection(ls[0], ls.back()));
     
     return std::vector(ps.begin(), ps.end());
+}
+
+
+
+void solve() {
+    int n, q;
+    cin >> n >> q;
+    Point<ll> S, T;
+    cin >> S >> T;
+    vector<Point<ll>> p(n);
+    for(int i = 0; i < n; i++) {
+        cin >> p[i];
+    } 
+
+    while(q--) {
+        int h, k;
+        cin >> h >> k;
+        h--;
+        vector<Point<db>> a;
+        for(int i = 0; i < n; i++) {
+            if(i == h) continue;
+            if(pointOnLineLeft(S, Line(p[h], p[i])) ^ pointOnLineLeft(T, Line(p[h], p[i]))) {
+                a.push_back(lineIntersection(Line<db>(S, T), Line<db>(p[h], p[i])));
+            }
+        }
+        if(a.size() < k) {
+            cout << -1 << "\n";
+            continue;
+        }
+
+        sort(a.begin(), a.end(), 
+            [&](auto x, auto y) {
+                return distance(Point<db>(S), x) < distance(Point<db>(S), y);
+            });
+        cout << fixed << setprecision(12) << a[k - 1].x << " " << a[k - 1].y << "\n";
+    }
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+
+    int t = 1;
+    while(t--) {
+        solve();
+    }
+    return 0;
 }

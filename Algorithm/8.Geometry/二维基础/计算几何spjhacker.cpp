@@ -7,7 +7,7 @@ typedef unsigned long long ull;
 const int inf = 1000000000;
 
 void solve() {
-    
+    cout << 0.0 << " " << 0.0 << "\n";
 }
 
 int main() {
@@ -15,7 +15,6 @@ int main() {
     cin.tie(0);
 
     int t = 1;
-    cin >> t;
     while(t--) {
         solve();
     }

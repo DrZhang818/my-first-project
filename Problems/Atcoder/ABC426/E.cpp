@@ -1,3 +1,11 @@
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+typedef double db;
+typedef pair<int,int> PII;
+typedef unsigned long long ull;
+const int inf = 1000000000;
+
 template<class T>
 struct Point {
     T x;
@@ -376,4 +384,56 @@ std::vector<Point<T>> hp(std::vector<Line<T>> lines) {
     ps.push_back(lineIntersection(ls[0], ls.back()));
     
     return std::vector(ps.begin(), ps.end());
+}
+
+
+void solve() {
+    Point<db> S1, T1, S2, T2;
+    cin >> S1 >> T1 >> S2 >> T2;
+    Point<db> v1 = normalize(T1 - S1);
+    Point<db> v2 = normalize(T2 - S2);
+
+    auto dis1 = distance(S1, T1);
+    auto dis2 = distance(S2, T2);
+    db l = 0, r = min(dis1, dis2);
+    db ans;
+    for(int i = 0; i < 200; i++) {
+        db lmid = l + (r - l) / 3;
+        db rmid = r - (r - l) / 3;
+        Point<db> l1 = S1 + lmid * v1;
+        Point<db> l2 = S2 + lmid * v2;
+        Point<db> r1 = S1 + rmid * v1;
+        Point<db> r2 = S2 + rmid * v2;
+        db disL = distance(l1, l2);
+        db disR = distance(r1, r2);
+        if(disL > disR) {
+            l = lmid;
+            ans = disR;
+        } else {
+            r = rmid;
+            ans = disL;
+        }
+    }
+    if(dis1 < dis2) {
+        Point<db> W2 = S2 + dis1 * v2;
+        Line<db> L(W2, T2);
+        ans = min(ans, distancePS(T1, L));
+    } else {
+        Point<db> W1 = S1 + dis2 * v1;
+        Line<db> L(W1, T1);
+        ans = min(ans, distancePS(T2, L));
+    }
+    cout << fixed << setprecision(12) << ans << "\n";
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+
+    int t = 1;
+    cin >> t;
+    while(t--) {
+        solve();
+    }
+    return 0;
 }
