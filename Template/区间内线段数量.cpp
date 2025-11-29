@@ -15,8 +15,6 @@ typedef unsigned long long ull;
         (1)允许不完全覆盖数量  
         (2)完全覆盖数量
         N∈[1,1e5], L,R∈[1,1e5], Q∈[1,1e5]
-
-
 */ 
 int n;
 vector<int> t1(100005), t2(100005);

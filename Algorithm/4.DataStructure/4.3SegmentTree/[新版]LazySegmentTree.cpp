@@ -1,5 +1,3 @@
-const int inf = 1000000000;
-
 template<class Info, class Tag>
 struct LazySegmentTree {
     int n;
@@ -146,7 +144,7 @@ struct Tag {
 };
 
 struct Info {
-    int min = -inf;
+    int min = inf;
     void apply(const Tag &t) {
         min += t.add;
     }

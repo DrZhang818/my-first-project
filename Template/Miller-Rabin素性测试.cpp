@@ -1,62 +1,47 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
-typedef long long ll;
-typedef double db;
-typedef unsigned long long ull;
-typedef pair<int, int> PII;
-
-ull	mul_mod(ull a, ull b, ull m){
-	__uint128_t res = (__uint128_t) a * b;
-	return (ull)(res % m);
-} 
-
-ull binpow(ull a, ull b, ull m){
-	ull res = 1;
-	a %= m;
-	while(b > 0){
-		if(b & 1) res = res * a % m;
-		a = a * a % m;
-		b >>= 1;
-	}
-	return res;
+int fast_pow(int a, int b, int MOD) {
+    int res = 1;
+    while(b) {
+        if(b & 1) {
+            res = 1LL * res * a % MOD;
+        }
+        a = 1LL * a * a % MOD;
+        b >>= 1;
+    }
+    return res;
 }
 
-bool miller_test(ull d, ull n, ull a){
-	ull x = binpow(a, d, n);
-	if(x == 1 || x == n - 1){
-		return true;
-	}
-	while(d != n - 1){
-		x = (__uint128_t) x * x % n;
-		d <<= 1;
-		if(x == 1) return false;
-		if(x == n - 1) return true;
-	}
-	return false;
-}
-bool is_prime64(ull n){
-	if(n < 2) return false;
-	static const int smallPrimes[12] = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37};
-	for(int i = 0; i < 12; i++){
-		if((ull)smallPrimes[i] == n) return true;
-		if(n % smallPrimes[i] == 0 && n != (ull)smallPrimes[i]) return false;
-	}
-	ull d = n - 1;
-	while((d & 1ULL) == 0){
-		d >>= 1;
-	}
-	static const ull testPrimes[12] = {2ULL, 325ULL, 9375ULL, 28178ULL, 450775ULL, 9780504ULL
-										, 1795265022ULL};
-    for(auto a : testPrimes){
-    	if(a % n == 0) return true;
-    	if(!miller_test(d, n, a)) return false;
+int B[] = {2, 7, 61};
+bool MR(int n) {
+    if(n <= 1) return false;
+    for(int p : B) {
+        if(n == p) return true;
+        if(n % p == 0) return false;
+    }
+    int m = n - 1 >> __builtin_ctz(n - 1);
+    for(int p : B) {
+        cerr << "p: " << p << "\n";
+        int t = m, a = fast_pow(p, m, n);
+        cerr << "! " << a << "\n";
+        while(t != n - 1 && a != 1 && a != n - 1) {
+            cerr << "a: " << a << " t: " << t << '\n';
+            a = 1LL * a * a % n;
+            cerr << ":: " << a << "\n";
+            t <<= 1;
+        }
+        if(a != n - 1 && t % 2 == 0) return false;
     }
     return true;
 }
-int main()
-{
-	ull x;
-	cin >> x;
-	cout << (is_prime64(x) ? "YES\n" : "NO\n");
-	return 0;
+
+int main() {
+
+    int n = 1463;
+    if(MR(n)) {
+        cout << "YES\n";
+    } else {
+        cout << "NO\n";
+    }
+    return 0;
 }

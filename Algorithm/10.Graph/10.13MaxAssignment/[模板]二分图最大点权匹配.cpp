@@ -16,10 +16,10 @@ public:
             [&](auto x, auto y) {
                 return val[x] > val[y];
             });
-        auto find = [&](this auto &&self, int x) -> bool {
+        auto find = [&](auto &&self, int x) -> bool {
             vis[x] = true;
             for(int y : adj[x]) {
-                if(yx[y] == -1 || !vis[yx[y]] && self(yx[y])) {
+                if(yx[y] == -1 || !vis[yx[y]] && self(self, yx[y])) {
                     yx[y] = x;
                     return true;
                 }
@@ -28,7 +28,7 @@ public:
         };
         int ans = 0;
         for(auto i : p) {
-            if(find(i)) {
+            if(find(find, i)) {
                 vis.assign(n, false);
                 ans += val[i];
             }

@@ -377,3 +377,36 @@ std::vector<Point<T>> hp(std::vector<Line<T>> lines) {
     
     return std::vector(ps.begin(), ps.end());
 }
+
+template<class T>
+std::vector<Point<T>> convexHull(std::vector<Point<T>> p) {
+    int n = p.size();
+    if(n <= 2) {
+        return p;
+    }
+
+    std::sort(p.begin(), p.end(), 
+        [&](const Point<T> &a, const Point<T> &b) {
+            return a.x < b.x || (a.x == b.x && a.y < b.y);
+        });
+
+    std::vector<Point<T>> h;
+
+    for(int i = 0; i < n; i++) {
+        while(h.size() >= 2 && cross(h.back() - h[h.size() - 2], p[i] - h.back()) <= 0) {
+            h.pop_back();
+        }
+        h.push_back(p[i]);
+    }
+
+    int k = h.size();
+    for(int i = n - 2; i >= 0; i--) {
+        while(h.size() > k && cross(h.back() - h[h.size() - 2], p[i] - h.back()) <= 0) {
+            h.pop_back();
+        }
+        h.push_back(p[i]);
+    }
+
+    h.pop_back();
+    return h;
+}
