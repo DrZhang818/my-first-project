@@ -6,7 +6,7 @@ using PII = pair<int,int>;
 using ull = unsigned long long;
 constexpr int inf = 1000000000;
 
-void solve() {
+void solve() {  
     
 }
 
