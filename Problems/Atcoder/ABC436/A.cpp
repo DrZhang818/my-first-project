@@ -7,7 +7,12 @@ using ull = unsigned long long;
 constexpr int inf = 1000000000;
 
 void solve() {  
-
+    int n;
+    cin >> n;
+    string s;
+    cin >> s;
+    s = string(n - s.size(), 'o') + s;
+    cout << s << "\n";    
 }
 
 int main() {
@@ -15,7 +20,6 @@ int main() {
     cin.tie(0);
 
     int t = 1;
-    cin >> t;
     while(t--) {
         solve();
     }
