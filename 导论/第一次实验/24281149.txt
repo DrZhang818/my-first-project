@@ -1,0 +1,7 @@
+Caches are used everywhere in modern systems.
+1103283111 -1795162112
+1 2 4 8 16 32
+0 84
+5 2
+fhkcgd
+2 1 5 4 3 6

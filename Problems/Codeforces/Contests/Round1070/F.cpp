@@ -194,7 +194,6 @@ int init = []() {
         }
     }
 
-
     return 1;
 } ();
 const int mx = *max_element(f.begin() + 1, f.end());
