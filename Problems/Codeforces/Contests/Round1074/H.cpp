@@ -1,3 +1,11 @@
+#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+using db = double;
+using PII = pair<int,int>;
+using ull = unsigned long long;
+constexpr int inf = 1000000000;
+
 template<class Info>
 struct PersistentSegmentTree {
     struct Node {
@@ -63,10 +71,10 @@ struct PersistentSegmentTree {
     int modify(int prev, int l, int r, int x, const Info& v) {
         int u = copyNode(prev);
         if(l == r) {
-            nodes[u].info = v;
+            // nodes[u].info = v;
 
             //需要累加时这样写
-            //nodes[u].info = nodes[u].info + v;
+            nodes[u].info = nodes[u].info + v;
             return u;
         }
         int mid = l + r >> 1;
@@ -128,4 +136,125 @@ struct Info {
 
 Info operator+(const Info& a, const Info& b) {
     return {a.cnt + b.cnt};
+}
+
+void solve() {  
+    int n, k;
+    cin >> n >> k;
+    vector<int> a(n + 1);
+    for(int i = 1; i <= n; i++) {
+        cin >> a[i];
+    }
+    vector<ll> pre(n + 1);
+    for(int i = 1; i <= n; i++) {
+        pre[i] = pre[i - 1] + a[i];
+    }
+    vector<ll> f(n + 1);
+    for(int i = 0; i < n; i++) {
+        f[i] = pre[i] - a[i + 1];
+    }
+
+    vector<ll> val(2 * n + 1);
+    for(int i = 1; i <= n; i++) {
+        val[i] = -a[i];
+        val[i + n] = f[i - 1];
+    }
+
+    val.push_back(0);
+    sort(val.begin() + 1, val.end());
+    val.erase(unique(val.begin() + 1, val.end()), val.end());
+    int m = val.size() - 1;
+
+    PersistentSegmentTree<Info> seg(m, n);
+    vector<int> root(n + 1);
+    for(int i = 1; i <= n; i++) {
+        auto pos = lower_bound(val.begin() + 1, val.end(), f[i - 1]) - val.begin();
+        root[i] = seg.modify(root[i - 1], pos, {1});
+    }    
+
+    auto cal = [&](int l, int r, int pos) -> int {
+        return seg.query(root[r + 1], 1, pos - 1).cnt - seg.query(root[l], 1, pos - 1).cnt;
+    };
+
+    auto p0 = lower_bound(val.begin() + 1, val.end(), 0) - val.begin();
+
+    for(int x = 1; x <= n; x++) {
+        int ans = 0;
+        int lo = x - 1, hi = n + 1;
+        while(lo + 1 < hi) {
+            int m = lo + hi >> 1;
+            if(pre[m] >= 2 * a[x]) {
+                hi = m;
+            } else {
+                lo = m;
+            }
+        }
+        int p = hi;
+        lo = x - 1, hi = p;
+        while(lo + 1 < hi) {
+            int m = lo + hi >> 1;
+            if(cal(m, n - 1, p0) <= k) { 
+                hi = m;
+            } else {
+                lo = m;
+            }
+        }
+        ans += p - hi;
+        lo = p - 1, hi = n + 1;
+        while(lo + 1 < hi) {
+            int m = lo + hi >> 1;
+            if(cal(m, n - 1, p0) <= k - 1) {
+                hi = m;
+            } else {
+                lo = m;
+            }
+        }
+        ans += n - hi + 1;
+
+        int nk = k - cal(x, n - 1, p0);
+        auto v = lower_bound(val.begin() + 1, val.end(), -a[x]) - val.begin();
+        lo = 0, hi = x;
+        while(lo + 1 < hi) {
+            int m = lo + hi >> 1;
+            if(pre[m - 1] >= a[x]) {
+                hi = m;
+            } else {
+                lo = m;
+            }
+        }
+        p = hi;
+        lo = 0, hi = p;
+        while(lo + 1 < hi) {
+            int m = lo + hi >> 1;
+            if(cal(m - 1, x - 2, v) <= nk) {
+                hi = m;
+            } else {
+                lo = m;
+            }
+        }
+        ans += p - hi;
+        lo = p - 1, hi = x;
+        while(lo + 1 < hi) {
+            int m = lo + hi >> 1;
+            if(cal(m - 1, x - 2, v) <= nk - 1) {
+                hi = m;
+            } else {
+                lo = m;
+            }
+        }
+        ans += x - hi;
+        cout << ans << " \n"[x == n];
+    }   
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+
+    int t = 1;
+    cin >> t;
+    while(t--) {
+        solve();
+    }
+    return 0;
 }
