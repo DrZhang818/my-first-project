@@ -1,3 +1,11 @@
+#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+using db = double;
+using PII = pair<int,int>;
+using ull = unsigned long long;
+constexpr int inf = 1000000000;
+
 template<class T>
 struct Point {
     T x;
@@ -448,3 +456,86 @@ std::vector<Point<T>> convexHull(std::vector<Point<T>> p) {
     return h;
 }
 
+template<class T>
+bool same(const Point<T>& a, const Point<T>& b) {
+    return cross(a, b) == 0 && dot(a, b) > 0;
+}
+
+void solve() {  
+    int n, q;
+    cin >> n >> q;
+    vector<Point<ll>> points(n);
+    for(int i = 0; i < n; i++) {
+        cin >> points[i];
+    }
+    auto p = getPolarOrder(points);
+    
+    int idx = 0;
+    for(int i = 1; i < n; i++) {
+        if(!same(points[p[i]], points[p[i - 1]])) {
+            idx = i;
+            break;
+        }
+    }
+    bool allSame = false;
+    if(idx == 0) {
+        allSame = true;
+    }
+    rotate(p.begin(), p.begin() + idx, p.end());
+
+    vector<int> trans(n);
+    vector<int> L(n), R(n);
+
+    for(int i = 0; i < n; i++) {
+        trans[p[i]] = i;
+        if(i > 0) {
+            if(same(points[p[i]], points[p[i - 1]])) {
+                L[i] = L[i - 1];
+            } else {
+                L[i] = i;
+            }
+        }
+    }
+
+    R[n - 1] = n - 1;
+    for(int i = n - 2; i >= 0; i--) {
+        if(same(points[p[i]], points[p[i + 1]])) {
+            R[i] = R[i + 1];
+        } else {
+            R[i] = i;
+        }
+    }
+
+
+    while(q--) {
+        int a, b;
+        cin >> a >> b;
+        if(allSame) {
+            cout << n << "\n";
+            continue;
+        }
+        a--;
+        b--;
+        int l = trans[b];
+        int r = trans[a];
+        l = L[l];
+        r = R[r];
+        if(l <= r) {
+            cout << r - l + 1 << "\n";
+        } else {
+            cout << n - (l - r - 1) << "\n";
+        }
+    }
+
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+
+    int t = 1;
+    while(t--) {
+        solve();
+    }
+    return 0;
+}

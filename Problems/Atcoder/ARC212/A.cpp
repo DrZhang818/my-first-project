@@ -1,3 +1,11 @@
+#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+using db = double;
+using PII = pair<int,int>;
+using ull = unsigned long long;
+constexpr int inf = 1000000000;
+
 template<class T> 
 constexpr T power(T a, ll b) {
     T res = 1;
@@ -108,5 +116,39 @@ int MInt<0>::Mod = 998244353;
 template<int V, int P>
 constexpr MInt<P> CInv = MInt<P>(V).inv();
 
-constexpr int P = 1000000007;
+constexpr int P = 998244353;
 using Z = MInt<P>;
+
+void solve() {  
+    int k;
+    cin >> k;
+    
+    Z ans = 0;
+
+    for(int i = (k + 2) / 3; i <= k; i++) {
+        for(int j = k - 2 * i; j <= i; j++) {
+            if(j < 2 || k - i - j < 2 || j < k - i - j) continue;
+            Z cur = Z(1) * (i - 1) * (j - 1) * (k - i - j - 1) * (k - i);
+            if(i == j && j == k - i - j) {
+            } else if(i == j || j == k - i - j || i == k - i - j) {
+                cur *= 3;
+            } else {
+                cur *= 6;
+            }
+            ans += cur;
+        }
+    }
+
+    cout << ans << "\n";
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+
+    int t = 1;
+    while(t--) {
+        solve();
+    }
+    return 0;
+}

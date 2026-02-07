@@ -1,23 +1,32 @@
-template<class T> 
+#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+using db = double;
+using PII = pair<int,int>;
+using ull = unsigned long long;
+constexpr int inf = 1000000000;
+
+
+template<class T>
 constexpr T power(T a, ll b) {
     T res = 1;
-    while(b) {
-        if(b & 1) res *= a;
-        a *= a;
-        b >>= 1;
+    for (; b; b /= 2, a *= a) {
+        if (b % 2) {
+            res *= a;
+        }
     }
     return res;
 }
  
-template<int P> 
+template<int P>
 struct MInt {
     int x;
-    constexpr MInt() : x() {}
-    constexpr MInt(ll x) : x(norm(x % getMod())) {}
-
+    constexpr MInt() : x{} {}
+    constexpr MInt(ll x) : x{norm(x % getMod())} {}
+    
     static int Mod;
     constexpr static int getMod() {
-        if(P > 0) {
+        if (P > 0) {
             return P;
         } else {
             return Mod;
@@ -27,10 +36,10 @@ struct MInt {
         Mod = Mod_;
     }
     constexpr int norm(int x) const {
-        if(x < 0) {
+        if (x < 0) {
             x += getMod();
         }
-        if(x >= getMod()) {
+        if (x >= getMod()) {
             x -= getMod();
         }
         return x;
@@ -85,13 +94,13 @@ struct MInt {
         res /= rhs;
         return res;
     }
-    friend constexpr istream &operator>>(istream &is, MInt &a) {
+    friend constexpr std::istream &operator>>(std::istream &is, MInt &a) {
         ll v;
         is >> v;
         a = MInt(v);
         return is;
     }
-    friend constexpr ostream &operator<<(ostream &os, const MInt &a) {
+    friend constexpr std::ostream &operator<<(std::ostream &os, const MInt &a) {
         return os << a.val();
     }
     friend constexpr bool operator==(MInt lhs, MInt rhs) {
@@ -101,12 +110,82 @@ struct MInt {
         return lhs.val() != rhs.val();
     }
 };
-
+ 
 template<>
-int MInt<0>::Mod = 998244353;
-
+int MInt<0>::Mod = 1;
+ 
 template<int V, int P>
 constexpr MInt<P> CInv = MInt<P>(V).inv();
-
+ 
 constexpr int P = 1000000007;
 using Z = MInt<P>;
+
+struct Comb {
+    int n;
+    std::vector<Z> _fac;
+    std::vector<Z> _invfac;
+    std::vector<Z> _inv;
+    
+    Comb() : n{0}, _fac{1}, _invfac{1}, _inv{0} {}
+    Comb(int n) : Comb() {
+        init(n);
+    }
+    
+    void init(int m) {
+        m = std::min(m, Z::getMod() - 1);
+        if (m <= n) return;
+        _fac.resize(m + 1);
+        _invfac.resize(m + 1);
+        _inv.resize(m + 1);
+        
+        for (int i = n + 1; i <= m; i++) {
+            _fac[i] = _fac[i - 1] * i;
+        }
+        _invfac[m] = _fac[m].inv();
+        for (int i = m; i > n; i--) {
+            _invfac[i - 1] = _invfac[i] * i;
+            _inv[i] = _invfac[i] * _fac[i - 1];
+        }
+        n = m;
+    }
+    
+    Z fac(int m) {
+        if (m > n) init(2 * m);
+        return _fac[m];
+    }
+    Z invfac(int m) {
+        if (m > n) init(2 * m);
+        return _invfac[m];
+    }
+    Z inv(int m) {
+        if (m > n) init(2 * m);
+        return _inv[m];
+    }
+    Z binom(int n, int m) {
+        if (n < m || m < 0) return 0;
+        return fac(n) * invfac(m) * invfac(n - m);
+    }
+} comb;
+
+void solve() {  
+    ll n, k;
+    cin >> n >> k;
+    Z ans = 0;
+    for(ll i = k; i <= n + 1; i++) {
+        ll lo = i * (i - 1) / 2;
+        ll hi = i * (2 * n - i + 1) / 2;
+        ans += hi - lo + 1;
+    }
+    cout << ans << "\n";
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+
+    int t = 1;
+    while(t--) {
+        solve();
+    }
+    return 0;
+}

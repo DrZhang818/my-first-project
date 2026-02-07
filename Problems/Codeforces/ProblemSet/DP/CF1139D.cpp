@@ -1,3 +1,11 @@
+#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+using db = double;
+using PII = pair<int,int>;
+using ull = unsigned long long;
+constexpr int inf = 1000000000;
+
 template<class T> 
 constexpr T power(T a, ll b) {
     T res = 1;
@@ -8,7 +16,7 @@ constexpr T power(T a, ll b) {
     }
     return res;
 }
- 
+
 template<int P> 
 struct MInt {
     int x;
@@ -110,3 +118,79 @@ constexpr MInt<P> CInv = MInt<P>(V).inv();
 
 constexpr int P = 1000000007;
 using Z = MInt<P>;
+
+vector<int> minp, primes, mu;
+vector<vector<int>> fac;
+
+void init(int n) {
+    minp.resize(n + 1);
+    mu.resize(n + 1);
+    fac.resize(n + 1);
+
+    for(int i = 1; i <= n; i++) {
+        for(int j = i; j <= n; j += i) {
+            fac[j].push_back(i);
+        }
+    }
+
+    mu[1] = 1;
+    for(int i = 2; i <= n; i++) {
+        if(!minp[i]) {
+            minp[i] = i;
+            primes.push_back(i);
+            mu[i] = -1;
+        }
+        for(auto p : primes) {
+            if(i * p > n) break;
+            minp[i * p] = p;
+            if(minp[i] == p) {
+                break;
+            } else {
+                mu[i * p] = -mu[i];
+            }
+        }
+    }
+}
+
+void solve() {  
+    int m;
+    cin >> m;
+    init(m);
+    const Z invm = Z(m).inv();
+
+    auto calc = [&](int x, int y) {
+        int res = 0;
+        for(auto d : fac[x / y]) {
+            res += mu[d] * (m / (d * y));
+        }
+        return res;
+    };
+
+    vector<Z> dp(m + 1);
+    dp[1] = 1;
+    for(int g = 2; g <= m; g++) {
+        Z cur = m;
+        for(auto d : fac[g]) {
+            if(d == g) break;
+            cur += dp[d] * calc(g, d);
+        }
+        cur /= m - calc(g, g);
+        dp[g] = cur;
+    }
+    Z ans = 0;
+    for(int i = 1; i <= m; i++) {
+        ans += dp[i] * invm;
+    }
+    cout << ans << "\n";
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+
+    int t = 1;
+    while(t--) {
+        solve();
+    }
+    return 0;
+}
