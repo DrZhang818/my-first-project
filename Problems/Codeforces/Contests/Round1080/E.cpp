@@ -1,6 +1,14 @@
+#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+using db = double;
+using PII = pair<int,int>;
+using ull = unsigned long long;
+constexpr int inf = 1000000000;
+
 
 template<class T>
-constexpr T power(T a, i64 b) {
+constexpr T power(T a, ll b) {
     T res = 1;
     for (; b; b /= 2, a *= a) {
         if (b % 2) {
@@ -14,7 +22,7 @@ template<int P>
 struct MInt {
     int x;
     constexpr MInt() : x{} {}
-    constexpr MInt(i64 x) : x{norm(x % getMod())} {}
+    constexpr MInt(ll x) : x{norm(x % getMod())} {}
     
     static int Mod;
     constexpr static int getMod() {
@@ -87,7 +95,7 @@ struct MInt {
         return res;
     }
     friend constexpr std::istream &operator>>(std::istream &is, MInt &a) {
-        i64 v;
+        ll v;
         is >> v;
         a = MInt(v);
         return is;
@@ -109,7 +117,7 @@ int MInt<0>::Mod = 1;
 template<int V, int P>
 constexpr MInt<P> CInv = MInt<P>(V).inv();
  
-constexpr int P = 998244353;
+constexpr int P = 1000000007;
 using Z = MInt<P>;
 
 struct Comb {
@@ -158,3 +166,52 @@ struct Comb {
         return fac(n) * invfac(m) * invfac(n - m);
     }
 } comb;
+
+void solve() {  
+    int n;
+    cin >> n;
+    vector<vector<int>> adj(n + 1);
+    adj[0].push_back(1);
+    for(int i = 1; i <= n; i++) {
+        int u, v;
+        cin >> u >> v;
+        if(u == 0 && v == 0) continue;
+        adj[i].push_back(u);
+        adj[i].push_back(v);
+    }
+
+    vector<Z> dp(n + 1);
+
+    auto dfs = [&](this auto&& self, int u) -> void {
+        for(int v : adj[u]) {
+            self(v);
+            dp[u] += dp[v] + 2;
+        }
+    };
+    dfs(0);
+
+    dp[0] = 0;
+    auto dfs2 = [&](this auto&& self, int u) -> void {
+        for(int v : adj[u]) {
+            dp[v] += 1 + dp[u];
+            self(v);
+        }
+    };
+    dfs2(0);
+
+    for(int i = 1; i <= n; i++) {
+        cout << dp[i] << " \n"[i == n];
+    }
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+
+    int t = 1;
+    cin >> t;
+    while(t--) {
+        solve();
+    }
+    return 0;
+}

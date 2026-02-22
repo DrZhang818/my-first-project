@@ -1,6 +1,14 @@
+#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+using db = double;
+using PII = pair<int,int>;
+using ull = unsigned long long;
+constexpr int inf = 1000000000;
+
 
 template<class T>
-constexpr T power(T a, i64 b) {
+constexpr T power(T a, ll b) {
     T res = 1;
     for (; b; b /= 2, a *= a) {
         if (b % 2) {
@@ -14,7 +22,7 @@ template<int P>
 struct MInt {
     int x;
     constexpr MInt() : x{} {}
-    constexpr MInt(i64 x) : x{norm(x % getMod())} {}
+    constexpr MInt(ll x) : x{norm(x % getMod())} {}
     
     static int Mod;
     constexpr static int getMod() {
@@ -87,7 +95,7 @@ struct MInt {
         return res;
     }
     friend constexpr std::istream &operator>>(std::istream &is, MInt &a) {
-        i64 v;
+        ll v;
         is >> v;
         a = MInt(v);
         return is;
@@ -109,7 +117,7 @@ int MInt<0>::Mod = 1;
 template<int V, int P>
 constexpr MInt<P> CInv = MInt<P>(V).inv();
  
-constexpr int P = 998244353;
+constexpr int P = 1000000007;
 using Z = MInt<P>;
 
 struct Comb {
@@ -158,3 +166,108 @@ struct Comb {
         return fac(n) * invfac(m) * invfac(n - m);
     }
 } comb;
+
+inline int lowbit(int o) { return o & -o; }
+struct FenwickTree {
+    int n;
+    vector<ll> tr;
+    FenwickTree(int n) {
+        init(n);
+    }
+    void init(int n) {
+        this->n = n;
+        tr.assign(n, {});
+    }
+    void add(int o, ll x) {
+        for(; o < n; o += lowbit(o)) {
+            tr[o] += x;
+        }
+    }
+    ll query(int o) {
+        ll res = 0;
+        for(; o > 0; o -= lowbit(o)) {
+            res += tr[o];
+        }
+        return res;
+    }
+    ll rangeQuery(int l, int r) {
+        return query(r) - query(l - 1);
+    }
+    int select(ll k) {
+        int x = 0;
+        ll cur = 0;
+        for(int i = 1 << __lg(n); i; i >>= 1) {
+            if(x + i < n && cur + tr[x + i] < k) {
+                x += i;
+                cur += tr[x];
+            }
+        }
+        return x + 1;
+    }
+};
+
+void solve() {  
+    int n;
+    cin >> n;
+    vector<int> a(n + 1);
+    vector<int> vis(n + 1);    
+    for(int i = 1; i <= n; i++) {
+        cin >> a[i];
+        vis[a[i]] = 1;
+    }
+
+    FenwickTree fen(n + 1);
+
+    Z tot = 0;
+    vector<int> val {0};
+    for(int i = 1; i <= n; i++) {
+        if(!vis[i]) {
+            val.push_back(i);
+        } else {
+            fen.add(i, 1);
+        }
+    }
+
+    for(int i = 1; i <= n; i++) {
+        if(!vis[i]) {
+            tot += fen.query(i);
+        }
+    }
+
+    int sz = val.size() - 1;
+    int rem = sz;
+    Z ans = 0;
+    for(int i = 1; i <= n; i++) {
+        if(a[i]) {
+            int p = lower_bound(val.begin() + 1, val.end(), a[i]) - val.begin() - 1;
+            if(sz == 0) {
+                ans += (fen.query(a[i]) - 1) * comb.fac(n - i);
+            } else {
+                ans += (Z(p) * rem / sz + fen.query(a[i]) - 1) * comb.fac(n - i) * comb.fac(sz);
+            }
+
+            int q = sz - p;
+            tot -= q;
+
+            fen.add(a[i], -1);
+        } else {
+            ans += (1LL * rem * (rem - 1) / 2) * comb.fac(n - i) * comb.fac(sz) * comb.fac(rem - 1) * comb.invfac(rem) + tot * comb.fac(n - i) * comb.fac(sz - 1);
+            rem--;
+        }
+    }
+
+    ans += comb.fac(sz);
+
+    cout << ans << "\n";
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+
+    int t = 1;
+    while(t--) {
+        solve();
+    }
+    return 0;
+}

@@ -1,6 +1,14 @@
+#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+using db = double;
+using PII = pair<int,int>;
+using ull = unsigned long long;
+constexpr int inf = 1000000000;
+
 
 template<class T>
-constexpr T power(T a, i64 b) {
+constexpr T power(T a, ll b) {
     T res = 1;
     for (; b; b /= 2, a *= a) {
         if (b % 2) {
@@ -14,7 +22,7 @@ template<int P>
 struct MInt {
     int x;
     constexpr MInt() : x{} {}
-    constexpr MInt(i64 x) : x{norm(x % getMod())} {}
+    constexpr MInt(ll x) : x{norm(x % getMod())} {}
     
     static int Mod;
     constexpr static int getMod() {
@@ -87,7 +95,7 @@ struct MInt {
         return res;
     }
     friend constexpr std::istream &operator>>(std::istream &is, MInt &a) {
-        i64 v;
+        ll v;
         is >> v;
         a = MInt(v);
         return is;
@@ -109,7 +117,7 @@ int MInt<0>::Mod = 1;
 template<int V, int P>
 constexpr MInt<P> CInv = MInt<P>(V).inv();
  
-constexpr int P = 998244353;
+constexpr int P = 1000000007;
 using Z = MInt<P>;
 
 struct Comb {
@@ -158,3 +166,157 @@ struct Comb {
         return fac(n) * invfac(m) * invfac(n - m);
     }
 } comb;
+
+void fwht(vector<Z>& a, auto merge) {
+    int n = a.size();
+    for(int i = 1; i < n; i <<= 1) {
+        for(int j = 0; j < n; j += i << 1) {
+            for(int k = 0; k < i; k++) {
+                merge(a[j + k], a[j + i + k]);
+            }
+        }
+    }
+}
+
+void solve() {  
+    int n, k;
+    cin >> n >> k;
+    vector<vector<int>> adj(n + 1);
+    for(int i = 1; i < n; i++) {
+        int u, v;
+        cin >> u >> v;
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+
+    vector<int> a(n + 1);
+    for(int i = 1; i <= n; i++) {
+        cin >> a[i];
+    }
+    vector<int> b(k + 1);
+    for(int i = 1; i <= k; i++) {
+        cin >> b[i];
+    }
+
+    vector<int> xb;
+    for(int i = 1; i <= k; i++) {
+        int cur = b[i];
+        for(int e : xb) {
+            cur = min(cur, cur ^ e);
+        }
+        if(cur) {
+            xb.push_back(cur);
+            sort(xb.begin(), xb.end(), greater());
+        }
+    }
+
+    int d = xb.size();
+
+    const Z inv2d = Z(1 << d).inv();
+
+    auto getRem = [&](int x) {
+        for(int e : xb) {
+            x = min(x, x ^ e);
+        }
+        return x;
+    };
+
+    auto getMask = [&](int x) {
+        int res = 0;
+        for(int i = 0; i < d; i++) {
+            int e = xb[i];
+            if((x ^ e) < x) {
+                x = x ^ e;
+                res |= 1 << i;
+            }
+        }
+        return res;
+    };
+
+    vector<int> p(n + 1), q(n + 1);
+    for(int i = 1; i <= n; i++) {
+        p[i] = getMask(a[i]);
+        q[i] = getRem(a[i]);
+    }
+
+    vector<int> tar;
+    for(int i = 1; i <= k; i++) {
+        tar.push_back(getMask(b[i]));
+    }
+
+    vector<Z> w(1 << d);
+    for(int s : tar) {
+        w[s] = 1;
+    }
+
+    auto f = [](auto& x, auto& y) { 
+        auto u = x, v = y;
+        x = u + v;
+        y = u - v;
+    };
+
+    fwht(w, f);
+
+    vector<int> subq(n + 1);
+    vector<vector<Z>> dp(n + 1, vector<Z>(1 << d));
+
+    auto dfs = [&](this auto&& self, int u, int fa) -> void {
+        subq[u] = q[u];
+        for(int s = 0; s < 1 << d; s++) {
+            if(__builtin_popcount(p[u] & s) & 1) {
+                dp[u][s] = -1;
+            } else {
+                dp[u][s] = 1;
+            }
+        }
+
+        for(int v : adj[u]) {
+            if(v == fa) continue;
+            self(v, u);
+
+            if(subq[v] == 0) {
+                Z sum = 0;
+                for(int s = 0; s < 1 << d; s++) {
+                    sum += dp[v][s] * w[s];
+                }
+                sum *= inv2d;
+                for(int s = 0; s < 1 << d; s++) {
+                    dp[u][s] *= dp[v][s] + sum;
+                }
+            } else {
+                for(int s = 0; s < 1 << d; s++) {
+                    dp[u][s] *= dp[v][s];
+                }
+            }
+
+            subq[u] ^= subq[v];
+        }
+    };
+
+    dfs(1, 0);
+
+    if(subq[1]) {
+        cout << 0 << "\n";
+        return;
+    }
+
+    Z ans = 0;
+    for(int s = 0; s < 1 << d; s++) {
+        ans += dp[1][s] * w[s];
+    }
+    ans *= inv2d;
+
+    cout << ans << "\n";
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+
+    int t = 1;
+    cin >> t;
+    while(t--) {
+        solve();
+    }
+    return 0;
+}

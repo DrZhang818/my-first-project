@@ -6,7 +6,17 @@ using u64 = unsigned long long;
 constexpr int inf = 1000000000;
 
 void solve() {  
-
+    int n;
+    cin >> n;
+    cout << "YES\n";
+    int x = 1, y = n / 2 + 1;
+    for(int i = 1; i <= n; i++) {
+        if(i & 1) {
+            cout << y++ << " \n"[i == n];
+        } else {
+            cout << x++ << " \n"[i == n];
+        }
+    }
 }
 
 int main() {

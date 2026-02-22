@@ -1,5 +1,13 @@
+#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+using db = double;
+using PII = pair<int,int>;
+using ull = unsigned long long;
+constexpr int inf = 1000000000;
+
 template<class T> 
-constexpr T power(T a, i64 b) {
+constexpr T power(T a, ll b) {
     T res = 1;
     while(b) {
         if(b & 1) res *= a;
@@ -13,7 +21,7 @@ template<int P>
 struct MInt {
     int x;
     constexpr MInt() : x() {}
-    constexpr MInt(i64 x) : x(norm(x % getMod())) {}
+    constexpr MInt(ll x) : x(norm(x % getMod())) {}
 
     static int Mod;
     constexpr static int getMod() {
@@ -86,7 +94,7 @@ struct MInt {
         return res;
     }
     friend constexpr istream &operator>>(istream &is, MInt &a) {
-        i64 v;
+        ll v;
         is >> v;
         a = MInt(v);
         return is;
@@ -110,3 +118,57 @@ constexpr MInt<P> CInv = MInt<P>(V).inv();
 
 constexpr int P = 1000000007;
 using Z = MInt<P>;
+
+struct Info {
+    ll w;
+    int c;
+    friend bool operator<(const Info& a, const Info& b) {
+        return a.w > b.w;
+    }
+};
+
+void solve() {  
+    int n;
+    cin >> n;
+    vector<int> c(n + 1), w(n + 1);
+    priority_queue<Info> q;
+    for(int i = 1; i <= n; i++) {
+        cin >> c[i] >> w[i];
+        q.push({w[i], c[i]});
+    }
+
+    Z ans = 0;
+
+    while(!q.empty()) {
+        auto [w, c] = q.top(); q.pop();
+        if(c == 1) {
+            if(q.empty()) break;
+            auto [nw, nc] = q.top(); q.pop();
+            ans += w + nw;
+            q.push({w + nw, 1});
+            if(nc > 1) {
+                q.push({nw, nc - 1});
+            }
+        } else {
+            q.push({w * 2, c / 2});
+            ans += Z(2 * w) * (c / 2);
+            c %= 2;
+            if(c == 1) {
+                q.push({w, 1});
+            }
+        }
+    }
+
+    cout << ans << "\n";
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+
+    int t = 1;
+    while(t--) {
+        solve();
+    }
+    return 0;
+}

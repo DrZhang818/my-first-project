@@ -1,12 +1,21 @@
 #include <bits/stdc++.h>
 using namespace std;
-using i64 = long long;
+using ll = long long;
 using db = double;
-using u64 = unsigned long long;
+using PII = pair<int,int>;
+using ull = unsigned long long;
 constexpr int inf = 1000000000;
 
 void solve() {  
-
+    ll m, n, z;
+    cin >> m >> n >> z;
+    z %= (m + n);
+    if(z == 0) z = m + n;
+    if(z <= m) {
+        cout << "0";
+    } else {
+        cout << "1";
+    }
 }
 
 int main() {

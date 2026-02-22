@@ -1,6 +1,14 @@
+#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+using db = double;
+using PII = pair<int,int>;
+using ull = unsigned long long;
+constexpr int inf = 1000000000;
+
 
 template<class T>
-constexpr T power(T a, i64 b) {
+constexpr T power(T a, ll b) {
     T res = 1;
     for (; b; b /= 2, a *= a) {
         if (b % 2) {
@@ -14,7 +22,7 @@ template<int P>
 struct MInt {
     int x;
     constexpr MInt() : x{} {}
-    constexpr MInt(i64 x) : x{norm(x % getMod())} {}
+    constexpr MInt(ll x) : x{norm(x % getMod())} {}
     
     static int Mod;
     constexpr static int getMod() {
@@ -87,7 +95,7 @@ struct MInt {
         return res;
     }
     friend constexpr std::istream &operator>>(std::istream &is, MInt &a) {
-        i64 v;
+        ll v;
         is >> v;
         a = MInt(v);
         return is;
@@ -158,3 +166,32 @@ struct Comb {
         return fac(n) * invfac(m) * invfac(n - m);
     }
 } comb;
+
+Z calc(int n, int m) {
+    if(n < m) return 0;
+    if(m == 0) return n == 0;
+    return comb.binom(n - 1, m - 1);
+}
+
+void solve() {  
+    int n, x, t;
+    cin >> n >> x >> t;
+
+    int u = (t + 2) / 2, v = t + 1 - u;
+
+    Z ans = calc(x, u) * calc(n - x, v) + calc(x, v) * calc(n - x, u);
+
+    cout << ans << "\n";
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+
+    int t = 1;
+    cin >> t;
+    while(t--) {
+        solve();
+    }
+    return 0;
+}

@@ -10,6 +10,11 @@ void solve() {
     int n;
     cin >> n;
 
+    if(n == 3 || n == 5) {
+        cout << -1 << "\n";
+        return;
+    }
+
     vector<int> bad;
     vector<vector<int>> adj(3);
 
@@ -52,7 +57,6 @@ int main() {
     cin.tie(0);
 
     int t = 1;
-    cin >> t;
     while(t--) {
         solve();
     }

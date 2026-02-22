@@ -1,6 +1,14 @@
+#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+using db = double;
+using PII = pair<int,int>;
+using ull = unsigned long long;
+constexpr int inf = 1000000000;
+
 
 template<class T>
-constexpr T power(T a, i64 b) {
+constexpr T power(T a, ll b) {
     T res = 1;
     for (; b; b /= 2, a *= a) {
         if (b % 2) {
@@ -14,7 +22,7 @@ template<int P>
 struct MInt {
     int x;
     constexpr MInt() : x{} {}
-    constexpr MInt(i64 x) : x{norm(x % getMod())} {}
+    constexpr MInt(ll x) : x{norm(x % getMod())} {}
     
     static int Mod;
     constexpr static int getMod() {
@@ -87,7 +95,7 @@ struct MInt {
         return res;
     }
     friend constexpr std::istream &operator>>(std::istream &is, MInt &a) {
-        i64 v;
+        ll v;
         is >> v;
         a = MInt(v);
         return is;
@@ -109,7 +117,7 @@ int MInt<0>::Mod = 1;
 template<int V, int P>
 constexpr MInt<P> CInv = MInt<P>(V).inv();
  
-constexpr int P = 998244353;
+constexpr int P = 1000000007;
 using Z = MInt<P>;
 
 struct Comb {
@@ -158,3 +166,94 @@ struct Comb {
         return fac(n) * invfac(m) * invfac(n - m);
     }
 } comb;
+
+void solve() {  
+    int n, m;
+    cin >> n >> m;
+    vector<PII> e(m);
+    vector<vector<PII>> adj(n);
+
+    for(int i = 0; i < m; i++) {
+        int u, v;
+        cin >> u >> v;
+        u--;
+        v--;
+        if(i < n - 1) {
+            adj[u].emplace_back(v, i);
+            adj[v].emplace_back(u, i);
+        }
+        e[i] = {u, v};
+    }
+
+    vector<int> msk(m);
+
+    for(int i = n - 1; i < m; i++) {
+        auto [u, v] = e[i];
+
+        auto dfs = [&](auto&& self, int x, int fa, int s) -> bool {
+            if(x == v) {
+                msk[i] = s;
+                return true;
+            }
+            for(auto [y, j] : adj[x]) {
+                if(y != fa && self(self, y, x, s | (1 << j))) {
+                    return true;
+                }
+            }
+            return false;
+        };
+
+        dfs(dfs, u, -1, 0);
+    }
+
+    vector<int> f(1 << n - 1);
+    for(int i = n - 1; i < m; i++) {
+        f[msk[i]]++;
+    }
+    for(int i = 0; i < n - 1; i++) {
+        for(int s = 0; s < 1 << n - 1; s++) {
+            s |= 1 << i;
+            f[s] += f[s ^ (1 << i)];
+        }
+    }
+
+    const int N = (1 << n - 1) - 1;
+
+    vector<Z> cnt(N + 1);
+    vector<Z> sum(N + 1);
+    cnt[N] = 1;
+
+    for(int s = N; s >= 0; s--) {
+        if(cnt[s] == 0) continue;
+
+        int b = n - 1 - __builtin_popcount(s);
+        int cur = b + f[N] - f[s];
+
+        for(int i = 0; i < n - 1; i++) {
+            if(~s >> i & 1) continue;
+
+            int ns = s ^ (1 << i);
+            int k = f[s] - f[ns];
+
+            Z C = cnt[s] * comb.fac(cur + k) * comb.invfac(cur);
+            Z S = sum[s] * comb.fac(cur + k + 1) * comb.invfac(cur + 1);
+            S += C * (b + 1);
+
+            cnt[ns] += C;
+            sum[ns] += S;
+        }
+    }
+
+    cout << sum[0] << "\n";
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+
+    int t = 1;
+    while(t--) {
+        solve();
+    }
+    return 0;
+}

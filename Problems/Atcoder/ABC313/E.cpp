@@ -1,5 +1,13 @@
+#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+using db = double;
+using PII = pair<int,int>;
+using ull = unsigned long long;
+constexpr int inf = 1000000000;
+
 template<class T> 
-constexpr T power(T a, i64 b) {
+constexpr T power(T a, ll b) {
     T res = 1;
     while(b) {
         if(b & 1) res *= a;
@@ -13,7 +21,7 @@ template<int P>
 struct MInt {
     int x;
     constexpr MInt() : x() {}
-    constexpr MInt(i64 x) : x(norm(x % getMod())) {}
+    constexpr MInt(ll x) : x(norm(x % getMod())) {}
 
     static int Mod;
     constexpr static int getMod() {
@@ -86,7 +94,7 @@ struct MInt {
         return res;
     }
     friend constexpr istream &operator>>(istream &is, MInt &a) {
-        i64 v;
+        ll v;
         is >> v;
         a = MInt(v);
         return is;
@@ -108,5 +116,45 @@ int MInt<0>::Mod = 998244353;
 template<int V, int P>
 constexpr MInt<P> CInv = MInt<P>(V).inv();
 
-constexpr int P = 1000000007;
+constexpr int P = 998244353;
 using Z = MInt<P>;
+
+void solve() {  
+    int n;
+    cin >> n;
+    string s;
+    cin >> s;
+
+    vector<int> a(n + 1);
+    for(int i = 1; i <= n; i++) {
+        a[i] = s[i - 1] - '0';
+    }
+
+    for(int i = 1; i < n; i++) {
+        if(a[i] > 1 && a[i + 1] > 1) {
+            cout << -1 << "\n";
+            return;
+        }
+    }
+
+    vector<Z> dp(n + 1);
+    dp[n] = 1;
+
+    for(int i = n - 1; i >= 1; i--) {
+        dp[i] = dp[i + 1] + 1 + (a[i + 1] - 1) * dp[i + 1];
+    }
+
+    cout << dp[1] - 1 << "\n";
+
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+
+    int t = 1;
+    while(t--) {
+        solve();
+    }
+    return 0;
+}
