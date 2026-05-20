@@ -1,56 +1,50 @@
 //1-indexed
 struct BlockCutTree {
-    int n;
-    vector<vector<int>> adj;
+    int n, cnt;
+    vector<vector<int>> adj, bct;
     vector<int> dfn, low, stk;
-    int cnt, cur;
-    vector<pair<int,int>> edges;
-    BlockCutTree() {}
-    BlockCutTree(int n) {
-        init(n);
-    }
-    void init(int n) {
-        this->n = n;
-        adj.assign(n, {});
-        dfn.assign(n, -1);
-        low.resize(n);
-        stk.clear();
-        cnt = cur = 0;
-        edges.clear();
-    }
+
+    BlockCutTree(int n) : n(n), cnt(n), adj(n), bct(n << 1), dfn(n, 0), low(n, 0) {}
+
     void addEdge(int u, int v) {
         adj[u].push_back(v);
         adj[v].push_back(u);
     }
-    void dfs(int x) {
-        stk.push_back(x);
-        dfn[x] = low[x] = cur++;
-        for(auto y : adj[x]) {
-            if(dfn[y] == -1) {
-                dfs(y);
-                low[x] = min(low[x], low[y]);
-                if(low[y] == dfn[x]) {
-                    int v;
-                    do {
-                        v = stk.back();
-                        stk.pop_back();
-                        edges.emplace_back(n + cnt, v);
-                    } while (v != y);
-                    edges.emplace_back(x, n + cnt);
-                    cnt++;
-                } 
-            } else {
-                low[x] = min(low[x], dfn[y]);
+
+    void build() {
+        int timer = 0;
+        auto dfs = [&](auto&& self, int u) -> void {
+            dfn[u] = low[u] = ++timer;
+            stk.push_back(u);
+
+            for(int v : adj[u]) {
+                if(!dfn[v]) {
+                    self(self, v);
+                    low[u] = min(low[u], low[v]);
+
+                    if(low[v] == dfn[u]) {
+                        int sq = cnt++;
+                        int x;
+                        do {
+                            x = stk.back();
+                            stk.pop_back();
+                            bct[sq].push_back(x);
+                            bct[x].push_back(sq);
+                        } while(x != v);
+                        bct[sq].push_back(u);
+                        bct[u].push_back(sq);
+                    }
+                } else {
+                    low[u] = min(low[u], dfn[v]);
+                }
             }
-        }
-    }
-    pair<int,vector<pair<int,int>>> work() {
+        };
+
         for(int i = 1; i < n; i++) {
-            if(dfn[i] == -1) {
+            if(!dfn[i]) {
                 stk.clear();
-                dfs(i);
+                dfs(dfs, i);
             }
         }
-        return {cnt, edges};
     }
 };

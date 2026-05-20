@@ -1,0 +1,22 @@
+bitcoin LotsizeStep 10% risk:
+d: 1490
+f: 151
+g: 319
+h: 7779
+i: 3585
+j: 3412
+K: 4073
+l: 4138
+m: 1355
+
+
+bitcoin LotsizeStep 20% risk:
+d: 745
+f: 75.5
+g: 159.5
+h: 3889.5
+i: 1792.5
+j: 1706
+k: 2036.5
+l: 2069
+m: 677.5

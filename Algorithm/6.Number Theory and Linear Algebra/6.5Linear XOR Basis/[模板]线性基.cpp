@@ -1,16 +1,16 @@
 class XorBasis {
-    vector<ll> b;
+    vector<i64> b;
 
     int num;
-    ll _or;
+    i64 _or;
     
     bool canBeZero;
-    vector<ll> basis;
+    vector<i64> basis;
 
     vector<int> rightMost;
     int rightMostZero;
 public:
-    XorBasis(vector<ll> &a) {
+    XorBasis(vector<i64> &a) {
         b.resize(64);
         rightMost.resize(b.size(), 0);
         rightMostZero = -1;
@@ -18,7 +18,7 @@ public:
         _or = 0;
         canBeZero = false;
 
-        for(ll v : a) {
+        for(i64 v : a) {
             insert(v);
         }
     };
@@ -30,7 +30,7 @@ public:
         _or = 0;
         canBeZero = false;
     }
-    bool insert(ll v) {
+    bool insert(i64 v) {
         _or |= v;
         for(int i = b.size() - 1; i >= 0; i--) {
             if(!(v >> i)) {
@@ -46,7 +46,7 @@ public:
         canBeZero = true;
         return false;
     }
-    bool insertRightMost(int idx, ll v) {
+    bool insertRightMost(int idx, i64 v) {
         for(int i = b.size() - 1; i >= 0; i--) {
             if(!(v >> i)) {
                 continue;
@@ -67,7 +67,7 @@ public:
         rightMostZero = max(rightMostZero, idx);
         return false;
     }
-    bool decompose(ll v) {
+    bool decompose(i64 v) {
         for(int i = b.size() - 1; i >= 0; i--) {
             if(!(v >> i)) {
                 continue;
@@ -79,22 +79,22 @@ public:
         }
         return true;
     }
-    ll maxXor() {
-        ll res = 0;
+    i64 maxXor() {
+        i64 res = 0;
         for(int i = b.size() - 1; i >= 0; i--) {
             res = max(res, res ^ b[i]);
         }
         return res;
     }
-    ll maxXorWithVal(ll v) {
-        ll res = v;
+    i64 maxXorWithVal(i64 v) {
+        i64 res = v;
         for(int i = b.size() - 1; i >= 0; i--) {
             res = max(res, res ^ b[i]);
         }
         return res;
     }
-    ll maxXorWithLowerIndex(int lowerIndex) {
-        ll res = 0;
+    i64 maxXorWithLowerIndex(int lowerIndex) {
+        i64 res = 0;
         for(int i = b.size() - 1; i >= 0; i--) {
             if(!(res >> i & 1) && rightMost[i] >= lowerIndex) {
                 res = max(res, res ^ b[i]);
@@ -102,7 +102,7 @@ public:
         }
         return res;
     }
-    ll minXor() {
+    i64 minXor() {
         if(canBeZero) {
             return 0;
         }
@@ -117,7 +117,7 @@ public:
         if(!basis.empty()) {
             return;
         }
-        vector<ll> tmp = b;
+        vector<i64> tmp = b;
         for(int i = 0; i < tmp.size(); i++) {
             if(tmp[i] == 0) {
                 continue;
@@ -130,7 +130,7 @@ public:
             basis.push_back(tmp[i]);
         }
     }
-    ll kthXor(ll k) {
+    i64 kthXor(i64 k) {
         initOnce();
         if(canBeZero) {
             k--;
@@ -138,7 +138,7 @@ public:
         if(k >= (1LL << basis.size())) {
             return -1;
         }
-        ll _xor = 0;
+        i64 _xor = 0;
         for(int i = 0; i < basis.size(); i++) {
             if(k >> i & 1) {
                 _xor ^= basis[i];
@@ -157,7 +157,7 @@ public:
     }
     void merge(const XorBasis& other) {
         for(int i = other.b.size() - 1; i >= 0; i--) {
-            ll v = other.b[i];
+            i64 v = other.b[i];
             if(v > 0) {
                 insert(v);
             }

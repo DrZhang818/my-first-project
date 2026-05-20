@@ -1,13 +1,10 @@
 #include <bits/stdc++.h>
 using namespace std;
-typedef long long ll;
-typedef double db;
-typedef pair<int,int> PII;
-typedef unsigned long long ull;
-const int inf = 1000000000;
-const int MOD = 998244353;
+using i64 = long long;
+using db = double;
+using u64 = unsigned long long;
+constexpr int inf = 1E9;
 
-//https://atcoder.jp/contests/abc215/tasks/abc215_g
 void solve() {
     int n;
     cin >> n;
@@ -15,7 +12,17 @@ void solve() {
     for(int i = 1; i <= n; i++) {
         cin >> a[i];
     }
+    sort(a.begin() + 1, a.end());
+    
+    vector<int> cnt;
+    for(int i = 1, j = 1; i <= n; i = j) {
+        while(j <= n && a[j] == a[i]) {
+            j++;
+        }
+        cnt.push_back(j - i);
+    }
 
+    
 }
 
 int main() {

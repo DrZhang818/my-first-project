@@ -3,15 +3,15 @@
 #include <ext/pb_ds/hash_policy.hpp>
 using namespace __gnu_pbds;
 using namespace std;
-using ll = long long;
+using i64 = long long;
 using db = double;
 using PII = pair<int,int>;
 using ull = unsigned long long;
 constexpr int inf = 1000000000;
 constexpr int N = 2000000;
 
-ll phi[N + 1];
-ll mu[N + 1];
+i64 phi[N + 1];
+i64 mu[N + 1];
 int minp[N + 1];
 vector<int> primes;
 
@@ -47,9 +47,9 @@ void init() {
 
 };
 
-map<ll, pair<ll, ll>> memo;
+map<i64, pair<i64, i64>> memo;
 
-pair<ll,ll> get(ll n) {
+pair<i64,i64> get(i64 n) {
     if(n <= N) {
         return {phi[n], mu[n]};
     }
@@ -58,9 +58,9 @@ pair<ll,ll> get(ll n) {
         return it->second;
     }
     
-    ll sum_phi = n * (n + 1) / 2;
-    ll sum_mu = 1;
-    for(ll L = 2, R; L <= n; L = R + 1) {
+    i64 sum_phi = n * (n + 1) / 2;
+    i64 sum_mu = 1;
+    for(i64 L = 2, R; L <= n; L = R + 1) {
         R = n / (n / L);
         auto [x, y] = get(n / L);
         sum_phi -= x * (R - L + 1);

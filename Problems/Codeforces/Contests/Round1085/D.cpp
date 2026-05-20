@@ -16,32 +16,28 @@ void solve() {
         adj[v].push_back(u);
     }
 
-    vector<int> ok(n + 1);
-
-    auto dfs = [&](this auto&& self, int u, int fa, int d) -> bool {
+    auto dfs = [&](this auto&& self, int u, int fa) -> int {
         if(adj[u].size() == 1) {
-            return true;
+            return 0;
         }
-        int cnt = 0;
+        int d1 = inf, d2 = inf;
         for(int v : adj[u]) {
             if(v == fa) continue;
-            if(self(v, u, (d + 1) % k)) {
-                cnt++;
+            int d = self(v, u) + 1;
+            if(d < d1) {
+                d2 = d1;
+                d1 = d;
+            } else if(d < d2) {
+                d2 = d;
             }
         }
-
-        if(d == 0 && k > 1) {
-            ok[u] = self(u, fa, 1);
+        if(d1 + d2 <= k + 1) {
+            return 0;
         }
-
-        if(d == 0) {
-            return cnt >= 2 || (cnt >= 1 && ok[fa]);
-        }
-        return cnt >= 1;
+        return d1;
     };
-    bool ans = dfs(st, 0, 0);
 
-    if(ans) {
+    if(dfs(st, 0) == 0) {
         cout << "YES\n";
     } else {
         cout << "NO\n";

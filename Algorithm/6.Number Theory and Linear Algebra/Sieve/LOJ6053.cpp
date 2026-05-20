@@ -1,13 +1,13 @@
 #include <bits/stdc++.h>
 using namespace std;
-using ll = long long;
+using i64 = long long;
 using db = double;
 using PII = pair<int,int>;
 using ull = unsigned long long;
 constexpr int inf = 1000000000;
 
 template<class T> 
-constexpr T power(T a, ll b) {
+constexpr T power(T a, i64 b) {
     T res = 1;
     while(b) {
         if(b & 1) res *= a;
@@ -21,7 +21,7 @@ template<int P>
 struct MInt {
     int x;
     constexpr MInt() : x() {}
-    constexpr MInt(ll x) : x(norm(x % getMod())) {}
+    constexpr MInt(i64 x) : x(norm(x % getMod())) {}
 
     static int Mod;
     constexpr static int getMod() {
@@ -94,7 +94,7 @@ struct MInt {
         return res;
     }
     friend constexpr istream &operator>>(istream &is, MInt &a) {
-        ll v;
+        i64 v;
         is >> v;
         a = MInt(v);
         return is;
@@ -144,16 +144,16 @@ void init(int n) {
 }
 
 void solve() {  
-    ll n;
+    i64 n;
     cin >> n;
     int sq = sqrt(n);
     init(sq);
 
-    vector<ll> w;
+    vector<i64> w;
     vector<int> id1(sq + 1), id2(sq + 1);
-    for(ll L = 1, R; L <= n; L = R + 1) {
+    for(i64 L = 1, R; L <= n; L = R + 1) {
         R = n / (n / L);
-        ll v = n / L;
+        i64 v = n / L;
         w.push_back(v);
         if(v <= sq) id1[v] = w.size() - 1;
         else id2[R] = w.size() - 1;
@@ -166,13 +166,13 @@ void solve() {
         g1[i] = x * (x + 1) * inv2 - 1;
     }
 
-    auto get = [&](ll x) {
+    auto get = [&](i64 x) {
         return x <= sq ? id1[x] : id2[n / x];
     };
 
     for(int j = 0; j < primes.size(); j++) {
-        ll p = primes[j];
-        ll p2 = p * p;
+        i64 p = primes[j];
+        i64 p2 = p * p;
         for(int i = 0; i < w.size(); i++) {
             if(w[i] < p2) break;
             int k = get(w[i] / p);
@@ -181,7 +181,7 @@ void solve() {
         }
     }
 
-    auto S = [&](auto&& self, ll x, int j) -> Z {
+    auto S = [&](auto&& self, i64 x, int j) -> Z {
         if(x <= 1 || j < primes.size() && primes[j] > x) return 0;
 
         int k = get(x);
@@ -192,9 +192,9 @@ void solve() {
         }
 
         for(int i = j; i < primes.size(); i++) {
-            ll p = primes[i];
+            i64 p = primes[i];
             if(p * p > x) break;
-            for(ll pe = p, e = 1; pe * p <= x; pe *= p, e++) {
+            for(i64 pe = p, e = 1; pe * p <= x; pe *= p, e++) {
                 Z cur = Z(p ^ e);
                 ans += cur * self(self, x / pe, i + 1);
                 ans += Z(p ^ (e + 1));

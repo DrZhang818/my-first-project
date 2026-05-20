@@ -123,10 +123,10 @@ constexpr Z inv2 = (P + 1) / 2;
 
 void fwht(vector<Z>& a, auto combine) {
     int n = a.size();
-    for(int i = 1; i < n; i <<= 1) {
-        for(int j = 0; j < n; j += i << 1) {
-            for(int k = 0; k < i; k++) {
-                combine(a[j + k], a[j + i + k]);
+    for(int len = 1; len < n; len <<= 1) {
+        for(int i = 0; i < n; i += len << 1) {
+            for(int j = 0; j < len; j++) {
+                combine(a[i + j], a[i + j + len]);
             }
         }
     }
