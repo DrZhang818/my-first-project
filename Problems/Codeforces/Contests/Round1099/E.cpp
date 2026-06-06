@@ -1,3 +1,11 @@
+#include <bits/stdc++.h>
+using namespace std;
+using i64 = long long;
+using u64 = unsigned long long;
+using i128 = __int128;
+using db = double;
+constexpr int inf = 1E9;
+
 // [in[u], out[u] - 1] 是以u为根的子树的dfs序区间
 struct HLD {
     int n;
@@ -109,3 +117,76 @@ struct HLD {
         return lca(a, b) ^ lca(b, c) ^ lca(c, a);
     }
 };
+
+
+void solve() {
+    int n, d;
+    cin >> n >> d;
+
+    HLD tr(n + 1);
+    for(int i = 1; i < n; i++) {
+        int u, v;
+        cin >> u >> v;
+        tr.addEdge(u, v);
+    }
+    tr.work();
+    vector<vector<int>> down(n + 1, vector<int>(n + 1)), out(n + 1, vector<int>(n + 1));
+    for(int i = 1; i <= n; i++) {
+        down[i][0] = 1;
+    }
+
+    for(int u = 1; u <= n; u++) {
+        for(int v = 1; v <= n; v++) {
+            if(v == u) continue;
+            int dis = tr.dist(u, v);
+            if(tr.isAncestor(u, v)) {
+                down[u][dis]++;
+            } else {
+                out[u][dis]++;
+            }
+        }
+    }
+
+    int D = d - 1;
+    i64 ans = 0;
+    i64 cntDown = 0;
+    i64 cntOut = 0;
+
+    for(int u = 1; u <= n; u++) {
+        for(int v = u + 1; v <= n; v++) {
+            int dis = tr.dist(u, v);
+            if(dis > D) continue;
+            if(dis == D) {
+                ans += D - 1;
+                continue;
+            }
+
+            int w = tr.lca(u, v);
+            if(w == u || w == v) continue;
+            
+            int fu = tr.jump(u, tr.dist(u, w) - 1);
+            int fv = tr.jump(v, tr.dist(v, w) - 1);
+
+            int rem = D - dis;
+                
+            cntDown += down[w][rem] - down[fu][rem - 1] - down[fv][rem - 1];
+            cntOut += out[w][rem];
+        }
+    }
+
+    ans += cntDown / 3 + cntOut;
+
+    cout << ans << "\n";
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int t = 1;
+    cin >> t;
+    while(t--) {
+        solve();
+    }
+    return 0;
+}

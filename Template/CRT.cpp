@@ -1,4 +1,3 @@
-using i128 = __int128;
 i64 norm(i64 x, i64 m) {
     x %= m;
     if(x < 0) x += m;

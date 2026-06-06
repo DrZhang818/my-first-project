@@ -21,7 +21,7 @@ T power(T a, int b) {
 struct Z {
     int x;
     Z(int x = 0) : x(norm(x)) {}
-    Z(ll x) : x(norm(x % P)) {}
+    Z(i64 x) : x(norm(x % P)) {}
     int val() const {
         return x;
     }
@@ -33,7 +33,7 @@ struct Z {
         return power(*this, P - 2);
     }
     Z &operator *= (const Z &rhs) {
-        x = ll(x) * rhs.x % P;
+        x = i64(x) * rhs.x % P;
         return *this;
     }
     Z &operator += (const Z &rhs) {
@@ -68,7 +68,7 @@ struct Z {
         return res;
     }
     friend istream &operator >> (istream &is, Z &a) {
-        ll v;
+        i64 v;
         is >> v;
         a = Z(v);
         return is;
