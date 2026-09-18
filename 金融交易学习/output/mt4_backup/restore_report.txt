@@ -1,0 +1,6 @@
+11:14:49  waiting for MetaTrader 4 to close (timeout 20m) ...
+11:14:52  MetaTrader 4 closed - applying restore.
+11:14:52  backup written to D:\Programme\GitCode\金融交易学习\output\mt4_backup\20260918-111452
+11:14:52  terminal.ini: VirtualMigrationFlag -> 0, per-EA live trading -> 2
+11:14:53  no chart needed patching (no flags=279 found)
+11:14:53  DONE - start MetaTrader 4 again.
