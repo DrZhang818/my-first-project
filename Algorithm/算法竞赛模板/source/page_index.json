@@ -1,0 +1,1143 @@
+[
+  {
+    "id": 0,
+    "number": "1.1",
+    "title": "并查集 DSU",
+    "page": 7,
+    "print": true
+  },
+  {
+    "id": 1,
+    "number": "1.2",
+    "title": "可撤销并查集",
+    "page": 7,
+    "print": true
+  },
+  {
+    "id": 2,
+    "number": "1.3",
+    "title": "带权并查集",
+    "page": 8,
+    "print": true
+  },
+  {
+    "id": 3,
+    "number": "1.4",
+    "title": "跳跃并查集",
+    "page": 9,
+    "print": true
+  },
+  {
+    "id": 4,
+    "number": "1.5",
+    "title": "树状数组 BIT",
+    "page": 10,
+    "print": true
+  },
+  {
+    "id": 5,
+    "number": "1.6",
+    "title": "稀疏表 ST",
+    "page": 10,
+    "print": true
+  },
+  {
+    "id": 6,
+    "number": "1.7",
+    "title": "线段树 Seg",
+    "page": 11,
+    "print": true
+  },
+  {
+    "id": 7,
+    "number": "1.8",
+    "title": "懒标记线段树 LazySeg",
+    "page": 13,
+    "print": true
+  },
+  {
+    "id": 8,
+    "number": "1.9",
+    "title": "可持久化线段树 PST",
+    "page": 16,
+    "print": true
+  },
+  {
+    "id": 9,
+    "number": "1.10",
+    "title": "动态开点线段树",
+    "page": 19,
+    "print": true
+  },
+  {
+    "id": 10,
+    "number": "1.11",
+    "title": "Segment Tree Beats",
+    "page": 20,
+    "print": true
+  },
+  {
+    "id": 11,
+    "number": "1.12",
+    "title": "FHQ Treap 多重集",
+    "page": 22,
+    "print": true
+  },
+  {
+    "id": 12,
+    "number": "1.13",
+    "title": "隐式 Treap 序列",
+    "page": 24,
+    "print": true
+  },
+  {
+    "id": 13,
+    "number": "1.14",
+    "title": "PBDS 可重多重集",
+    "page": 27,
+    "print": true
+  },
+  {
+    "id": 14,
+    "number": "1.15",
+    "title": "李超线段树",
+    "page": 28,
+    "print": true
+  },
+  {
+    "id": 15,
+    "number": "1.16",
+    "title": "凸包优化 DP",
+    "page": 29,
+    "print": true
+  },
+  {
+    "id": 16,
+    "number": "1.17",
+    "title": "笛卡尔树",
+    "page": 30,
+    "print": true
+  },
+  {
+    "id": 17,
+    "number": "1.18",
+    "title": "Link-Cut Tree 动态森林",
+    "page": 31,
+    "print": true
+  },
+  {
+    "id": 18,
+    "number": "1.19",
+    "title": "按类别维护 Top-K",
+    "page": 33,
+    "print": true
+  },
+  {
+    "id": 19,
+    "number": "2.1",
+    "title": "Dijkstra",
+    "page": 35,
+    "print": true
+  },
+  {
+    "id": 20,
+    "number": "2.2",
+    "title": "0-1 BFS",
+    "page": 35,
+    "print": true
+  },
+  {
+    "id": 21,
+    "number": "2.3",
+    "title": "Floyd",
+    "page": 36,
+    "print": true
+  },
+  {
+    "id": 22,
+    "number": "2.4",
+    "title": "拓扑排序",
+    "page": 36,
+    "print": true
+  },
+  {
+    "id": 23,
+    "number": "2.5",
+    "title": "Kruskal 最小生成森林",
+    "page": 37,
+    "print": true
+  },
+  {
+    "id": 24,
+    "number": "2.6",
+    "title": "二分图度数序列构造",
+    "page": 38,
+    "print": true
+  },
+  {
+    "id": 25,
+    "number": "2.7",
+    "title": "增量 APSP",
+    "page": 38,
+    "print": true
+  },
+  {
+    "id": 26,
+    "number": "2.8",
+    "title": "强连通分量 SCC",
+    "page": 39,
+    "print": true
+  },
+  {
+    "id": 27,
+    "number": "2.9",
+    "title": "2-SAT",
+    "page": 40,
+    "print": true
+  },
+  {
+    "id": 28,
+    "number": "2.10",
+    "title": "桥与割点 Lowlink",
+    "page": 42,
+    "print": true
+  },
+  {
+    "id": 29,
+    "number": "2.11",
+    "title": "边双连通分量",
+    "page": 43,
+    "print": true
+  },
+  {
+    "id": 30,
+    "number": "2.12",
+    "title": "点双连通分量与圆方树",
+    "page": 43,
+    "print": true
+  },
+  {
+    "id": 31,
+    "number": "2.13",
+    "title": "欧拉通路",
+    "page": 45,
+    "print": true
+  },
+  {
+    "id": 32,
+    "number": "2.14",
+    "title": "二分图最大匹配 Hopcroft-Karp",
+    "page": 46,
+    "print": true
+  },
+  {
+    "id": 33,
+    "number": "2.15",
+    "title": "二分图最大权匹配 Hungarian",
+    "page": 48,
+    "print": true
+  },
+  {
+    "id": 34,
+    "number": "2.16",
+    "title": "最大流 Dinic",
+    "page": 50,
+    "print": true
+  },
+  {
+    "id": 35,
+    "number": "2.17",
+    "title": "最小费用流 MCF",
+    "page": 52,
+    "print": true
+  },
+  {
+    "id": 36,
+    "number": "2.18",
+    "title": "上下界网络流",
+    "page": 54,
+    "print": true
+  },
+  {
+    "id": 37,
+    "number": "2.19",
+    "title": "差分约束",
+    "page": 56,
+    "print": true
+  },
+  {
+    "id": 38,
+    "number": "2.20",
+    "title": "函数图",
+    "page": 58,
+    "print": true
+  },
+  {
+    "id": 39,
+    "number": "2.21",
+    "title": "线段树优化建图",
+    "page": 59,
+    "print": true
+  },
+  {
+    "id": 40,
+    "number": "2.22",
+    "title": "增量最大流",
+    "page": 60,
+    "print": true
+  },
+  {
+    "id": 41,
+    "number": "2.23",
+    "title": "严格次小生成树",
+    "page": 60,
+    "print": true
+  },
+  {
+    "id": 42,
+    "number": null,
+    "title": "阈值激活与事件扫描",
+    "page": null,
+    "print": false
+  },
+  {
+    "id": 43,
+    "number": "2.24",
+    "title": "隐式 XOR 完全图 MST",
+    "page": 62,
+    "print": true
+  },
+  {
+    "id": 44,
+    "number": "2.25",
+    "title": "最大权闭合子图",
+    "page": 64,
+    "print": true
+  },
+  {
+    "id": 45,
+    "number": "2.26",
+    "title": "Boruvka 最小生成森林",
+    "page": 64,
+    "print": true
+  },
+  {
+    "id": 46,
+    "number": null,
+    "title": "指定拓扑序的约束",
+    "page": null,
+    "print": false
+  },
+  {
+    "id": 47,
+    "number": "3.1",
+    "title": "树的直径",
+    "page": 66,
+    "print": true
+  },
+  {
+    "id": 48,
+    "number": "3.2",
+    "title": "树的重心",
+    "page": 66,
+    "print": true
+  },
+  {
+    "id": 49,
+    "number": "3.3",
+    "title": "Kruskal 重构树",
+    "page": 67,
+    "print": true
+  },
+  {
+    "id": 50,
+    "number": "3.4",
+    "title": "倍增 LCA",
+    "page": 69,
+    "print": true
+  },
+  {
+    "id": 51,
+    "number": "3.5",
+    "title": "重链剖分 HLD",
+    "page": 70,
+    "print": true
+  },
+  {
+    "id": 52,
+    "number": "3.6",
+    "title": "树上差分",
+    "page": 73,
+    "print": true
+  },
+  {
+    "id": 53,
+    "number": "3.7",
+    "title": "虚树",
+    "page": 73,
+    "print": true
+  },
+  {
+    "id": 54,
+    "number": "3.8",
+    "title": "带信息倍增",
+    "page": 74,
+    "print": true
+  },
+  {
+    "id": 55,
+    "number": "3.9",
+    "title": "DSU on Tree",
+    "page": 75,
+    "print": true
+  },
+  {
+    "id": 56,
+    "number": "3.10",
+    "title": "点分治与点分树",
+    "page": 77,
+    "print": true
+  },
+  {
+    "id": 57,
+    "number": "3.11",
+    "title": "换根 DP 速查",
+    "page": 78,
+    "print": true
+  },
+  {
+    "id": 58,
+    "number": "3.12",
+    "title": "Small-to-Large",
+    "page": 78,
+    "print": true
+  },
+  {
+    "id": 59,
+    "number": "3.13",
+    "title": "长链剖分",
+    "page": 78,
+    "print": true
+  },
+  {
+    "id": 60,
+    "number": null,
+    "title": "树上仿射关系",
+    "page": null,
+    "print": false
+  },
+  {
+    "id": 61,
+    "number": "4.1",
+    "title": "LIS / 最长不下降子序列",
+    "page": 79,
+    "print": true
+  },
+  {
+    "id": 62,
+    "number": "4.2",
+    "title": "多重背包：单调队列",
+    "page": 79,
+    "print": true
+  },
+  {
+    "id": 63,
+    "number": "4.3",
+    "title": "数位 DP 速查",
+    "page": 79,
+    "print": true
+  },
+  {
+    "id": 64,
+    "number": "4.4",
+    "title": "轮廓线 DP",
+    "page": 80,
+    "print": true
+  },
+  {
+    "id": 65,
+    "number": "4.5",
+    "title": "中位数阈值变换",
+    "page": 80,
+    "print": true
+  },
+  {
+    "id": 66,
+    "number": null,
+    "title": "稀疏矩阵事件 DP",
+    "page": null,
+    "print": false
+  },
+  {
+    "id": 67,
+    "number": "4.6",
+    "title": "排列 LCS 转 LIS",
+    "page": 80,
+    "print": true
+  },
+  {
+    "id": 68,
+    "number": "4.7",
+    "title": "背包循环方向",
+    "page": 80,
+    "print": true
+  },
+  {
+    "id": 69,
+    "number": "4.8",
+    "title": "单调队列优化 DP",
+    "page": 80,
+    "print": true
+  },
+  {
+    "id": 70,
+    "number": "4.9",
+    "title": "区间 DP",
+    "page": 80,
+    "print": true
+  },
+  {
+    "id": 71,
+    "number": "4.10",
+    "title": "树上背包",
+    "page": 80,
+    "print": true
+  },
+  {
+    "id": 72,
+    "number": "4.11",
+    "title": "SOS 子集和与反演",
+    "page": 80,
+    "print": true
+  },
+  {
+    "id": 73,
+    "number": "4.12",
+    "title": "分治 DP 优化",
+    "page": 80,
+    "print": true
+  },
+  {
+    "id": 74,
+    "number": "4.13",
+    "title": "状态压缩与 Gray code",
+    "page": 80,
+    "print": true
+  },
+  {
+    "id": 75,
+    "number": "4.14",
+    "title": "Knuth 优化",
+    "page": 81,
+    "print": true
+  },
+  {
+    "id": 76,
+    "number": "4.15",
+    "title": "WQS / Aliens trick",
+    "page": 81,
+    "print": true
+  },
+  {
+    "id": 77,
+    "number": "4.16",
+    "title": "bitset 优化",
+    "page": 81,
+    "print": true
+  },
+  {
+    "id": 78,
+    "number": "5.1",
+    "title": "模整数 MInt",
+    "page": 82,
+    "print": true
+  },
+  {
+    "id": 79,
+    "number": "5.2",
+    "title": "exgcd / 扩展 CRT",
+    "page": 83,
+    "print": true
+  },
+  {
+    "id": 80,
+    "number": "5.3",
+    "title": "阶乘组合数",
+    "page": 84,
+    "print": true
+  },
+  {
+    "id": 81,
+    "number": "5.4",
+    "title": "Lucas",
+    "page": 85,
+    "print": true
+  },
+  {
+    "id": 82,
+    "number": "5.5",
+    "title": "连续点拉格朗日插值",
+    "page": 85,
+    "print": true
+  },
+  {
+    "id": 83,
+    "number": "5.6",
+    "title": "线性筛",
+    "page": 87,
+    "print": true
+  },
+  {
+    "id": 84,
+    "number": "5.7",
+    "title": "φ / μ 前缀与反演",
+    "page": 87,
+    "print": true
+  },
+  {
+    "id": 85,
+    "number": "5.8",
+    "title": "Miller-Rabin 64 位素性",
+    "page": 88,
+    "print": true
+  },
+  {
+    "id": 86,
+    "number": "5.9",
+    "title": "Pollard-Rho 分解",
+    "page": 89,
+    "print": true
+  },
+  {
+    "id": 87,
+    "number": "5.10",
+    "title": "整除分块",
+    "page": 91,
+    "print": true
+  },
+  {
+    "id": 88,
+    "number": "5.11",
+    "title": "类欧几里得 floor sum",
+    "page": 91,
+    "print": true
+  },
+  {
+    "id": 89,
+    "number": "5.12",
+    "title": "扩展 BSGS",
+    "page": 92,
+    "print": true
+  },
+  {
+    "id": 90,
+    "number": "5.13",
+    "title": "模矩阵与快速幂",
+    "page": 94,
+    "print": true
+  },
+  {
+    "id": 91,
+    "number": "5.14",
+    "title": "杜教筛：φ 与 μ",
+    "page": 95,
+    "print": true
+  },
+  {
+    "id": 92,
+    "number": "5.15",
+    "title": "Min_25 积性函数求和",
+    "page": 96,
+    "print": true
+  },
+  {
+    "id": 93,
+    "number": null,
+    "title": "约数枚举更新",
+    "page": null,
+    "print": false
+  },
+  {
+    "id": 94,
+    "number": "5.16",
+    "title": "半环矩阵",
+    "page": 99,
+    "print": true
+  },
+  {
+    "id": 95,
+    "number": null,
+    "title": "按 gcd 分类计数",
+    "page": null,
+    "print": false
+  },
+  {
+    "id": 96,
+    "number": null,
+    "title": "2-adic 估值",
+    "page": null,
+    "print": false
+  },
+  {
+    "id": 97,
+    "number": "5.17",
+    "title": "扩展欧拉降幂",
+    "page": 100,
+    "print": true
+  },
+  {
+    "id": 98,
+    "number": null,
+    "title": "欧几里得批量跳跃",
+    "page": null,
+    "print": false
+  },
+  {
+    "id": 99,
+    "number": "6.1",
+    "title": "FFT 整数卷积",
+    "page": 101,
+    "print": true
+  },
+  {
+    "id": 100,
+    "number": "6.2",
+    "title": "NTT 模 998244353",
+    "page": 102,
+    "print": true
+  },
+  {
+    "id": 101,
+    "number": "6.3",
+    "title": "FWT：OR / AND / XOR",
+    "page": 104,
+    "print": true
+  },
+  {
+    "id": 102,
+    "number": "6.4",
+    "title": "形式幂级数 inv / ln / exp",
+    "page": 106,
+    "print": true
+  },
+  {
+    "id": 103,
+    "number": "7.1",
+    "title": "Gauss-Jordan 消元",
+    "page": 110,
+    "print": true
+  },
+  {
+    "id": 104,
+    "number": "7.2",
+    "title": "64 位异或线性基",
+    "page": 112,
+    "print": true
+  },
+  {
+    "id": 105,
+    "number": "7.3",
+    "title": "GF(2) bitset 方程组",
+    "page": 114,
+    "print": true
+  },
+  {
+    "id": 106,
+    "number": "8.1",
+    "title": "KMP",
+    "page": 116,
+    "print": true
+  },
+  {
+    "id": 107,
+    "number": "8.2",
+    "title": "Z / 扩展 KMP",
+    "page": 116,
+    "print": true
+  },
+  {
+    "id": 108,
+    "number": "8.3",
+    "title": "64 位滚动哈希",
+    "page": 117,
+    "print": true
+  },
+  {
+    "id": 109,
+    "number": "8.4",
+    "title": "子序列自动机",
+    "page": 118,
+    "print": true
+  },
+  {
+    "id": 110,
+    "number": "8.5",
+    "title": "Trie 多重字符串集",
+    "page": 118,
+    "print": true
+  },
+  {
+    "id": 111,
+    "number": "8.6",
+    "title": "AC 自动机",
+    "page": 120,
+    "print": true
+  },
+  {
+    "id": 112,
+    "number": "8.7",
+    "title": "后缀自动机 SAM",
+    "page": 121,
+    "print": true
+  },
+  {
+    "id": 113,
+    "number": "8.8",
+    "title": "后缀数组 SA",
+    "page": 123,
+    "print": true
+  },
+  {
+    "id": 114,
+    "number": "8.9",
+    "title": "最小循环表示",
+    "page": 125,
+    "print": true
+  },
+  {
+    "id": 115,
+    "number": "8.10",
+    "title": "Manacher",
+    "page": 125,
+    "print": true
+  },
+  {
+    "id": 116,
+    "number": "8.11",
+    "title": "回文自动机 PAM",
+    "page": 126,
+    "print": true
+  },
+  {
+    "id": 117,
+    "number": "9.1",
+    "title": "点与基础几何运算",
+    "page": 129,
+    "print": true
+  },
+  {
+    "id": 118,
+    "number": "9.2",
+    "title": "直线",
+    "page": 130,
+    "print": true
+  },
+  {
+    "id": 119,
+    "number": "9.3",
+    "title": "线段交与距离",
+    "page": 131,
+    "print": true
+  },
+  {
+    "id": 120,
+    "number": "9.4",
+    "title": "凸包 Andrew",
+    "page": 133,
+    "print": true
+  },
+  {
+    "id": 121,
+    "number": "9.5",
+    "title": "点在简单多边形内",
+    "page": 133,
+    "print": true
+  },
+  {
+    "id": 122,
+    "number": "9.6",
+    "title": "最近点对",
+    "page": 134,
+    "print": true
+  },
+  {
+    "id": 123,
+    "number": "9.7",
+    "title": "旋转卡壳：凸包直径",
+    "page": 135,
+    "print": true
+  },
+  {
+    "id": 124,
+    "number": "9.8",
+    "title": "外接圆与圆交",
+    "page": 135,
+    "print": true
+  },
+  {
+    "id": 125,
+    "number": "9.9",
+    "title": "半平面交",
+    "page": 136,
+    "print": true
+  },
+  {
+    "id": 126,
+    "number": "9.10",
+    "title": "Minkowski 和",
+    "page": 138,
+    "print": true
+  },
+  {
+    "id": 127,
+    "number": "9.11",
+    "title": "矩形面积并",
+    "page": 140,
+    "print": true
+  },
+  {
+    "id": 128,
+    "number": "10.1",
+    "title": "二分答案边界",
+    "page": 142,
+    "print": true
+  },
+  {
+    "id": 129,
+    "number": "10.2",
+    "title": "普通莫队：不同数计数",
+    "page": 142,
+    "print": true
+  },
+  {
+    "id": 130,
+    "number": "10.3",
+    "title": "CDQ 三维偏序",
+    "page": 143,
+    "print": true
+  },
+  {
+    "id": 131,
+    "number": "10.4",
+    "title": "整体二分：动态区间第k小",
+    "page": 144,
+    "print": true
+  },
+  {
+    "id": 132,
+    "number": "10.5",
+    "title": "时间线段树 + 回滚 DSU",
+    "page": 146,
+    "print": true
+  },
+  {
+    "id": 133,
+    "number": "10.6",
+    "title": "根号分块",
+    "page": 147,
+    "print": true
+  },
+  {
+    "id": 134,
+    "number": "10.7",
+    "title": "图上重轻点",
+    "page": 148,
+    "print": true
+  },
+  {
+    "id": 135,
+    "number": "10.8",
+    "title": "时间分块",
+    "page": 148,
+    "print": true
+  },
+  {
+    "id": 136,
+    "number": "10.9",
+    "title": "倒序离线",
+    "page": 148,
+    "print": true
+  },
+  {
+    "id": 137,
+    "number": "10.10",
+    "title": "双指针",
+    "page": 148,
+    "print": true
+  },
+  {
+    "id": 138,
+    "number": "10.11",
+    "title": "折半搜索",
+    "page": 148,
+    "print": true
+  },
+  {
+    "id": 139,
+    "number": "10.12",
+    "title": "坐标压缩",
+    "page": 148,
+    "print": true
+  },
+  {
+    "id": 140,
+    "number": "10.13",
+    "title": "扫描线",
+    "page": 148,
+    "print": true
+  },
+  {
+    "id": 141,
+    "number": "10.14",
+    "title": "Log Trick",
+    "page": 148,
+    "print": true
+  },
+  {
+    "id": 142,
+    "number": "10.15",
+    "title": "前缀与差分",
+    "page": 148,
+    "print": true
+  },
+  {
+    "id": 143,
+    "number": "10.16",
+    "title": "贡献法",
+    "page": 148,
+    "print": true
+  },
+  {
+    "id": 144,
+    "number": "10.17",
+    "title": "有限群状态",
+    "page": 149,
+    "print": true
+  },
+  {
+    "id": 145,
+    "number": "10.18",
+    "title": "容斥",
+    "page": 149,
+    "print": true
+  },
+  {
+    "id": 146,
+    "number": "10.19",
+    "title": "反悔贪心",
+    "page": 149,
+    "print": true
+  },
+  {
+    "id": 147,
+    "number": null,
+    "title": "状态保留 Top-K",
+    "page": null,
+    "print": false
+  },
+  {
+    "id": 148,
+    "number": "10.20",
+    "title": "上次出现位置",
+    "page": 149,
+    "print": true
+  },
+  {
+    "id": 149,
+    "number": "10.21",
+    "title": "二进制对齐区间",
+    "page": 149,
+    "print": true
+  },
+  {
+    "id": 150,
+    "number": "10.22",
+    "title": "相邻交换排序",
+    "page": 149,
+    "print": true
+  },
+  {
+    "id": 151,
+    "number": "10.23",
+    "title": "区间与点匹配",
+    "page": 149,
+    "print": true
+  },
+  {
+    "id": 152,
+    "number": "10.24",
+    "title": "可行性判定构造",
+    "page": 149,
+    "print": true
+  },
+  {
+    "id": 153,
+    "number": "10.25",
+    "title": "加权中位数",
+    "page": 149,
+    "print": true
+  },
+  {
+    "id": 154,
+    "number": "10.26",
+    "title": "固定半径空间哈希",
+    "page": 149,
+    "print": true
+  },
+  {
+    "id": 155,
+    "number": "10.27",
+    "title": "L1 坐标变换",
+    "page": 150,
+    "print": true
+  },
+  {
+    "id": 156,
+    "number": null,
+    "title": "重置分段",
+    "page": null,
+    "print": false
+  },
+  {
+    "id": 157,
+    "number": null,
+    "title": "频次状态记忆化",
+    "page": null,
+    "print": false
+  },
+  {
+    "id": 158,
+    "number": "10.28",
+    "title": "预留坐标",
+    "page": 150,
+    "print": true
+  },
+  {
+    "id": 159,
+    "number": "10.29",
+    "title": "区间取模剪枝",
+    "page": 150,
+    "print": true
+  },
+  {
+    "id": 160,
+    "number": null,
+    "title": "布尔仿射链",
+    "page": null,
+    "print": false
+  },
+  {
+    "id": 161,
+    "number": "11.1",
+    "title": "常用恒等式",
+    "page": 151,
+    "print": true
+  },
+  {
+    "id": 162,
+    "number": "11.2",
+    "title": "SG / Nim",
+    "page": 151,
+    "print": true
+  }
+]

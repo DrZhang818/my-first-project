@@ -1,0 +1,522 @@
+[
+  {
+    "file": "aho_corasick.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "bipartite_degree_sequence.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "boruvka.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "bridge_articulation.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "bsgs.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "cartesian_tree.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "cdq.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "centroid_decomposition.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "circle.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "closest_pair.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "combination.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "convex_hull.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "convex_hull_dp.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "difference_constraints.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "dijkstra.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "dinic.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "division_blocks.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "doubling.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "dsu.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "dsu_on_tree.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "dujiao_sieve.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "dynamic_segment_tree.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "edge_bcc.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "eertree.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "euler_trail.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "exgcd_crt.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "fenwick.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "fft.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "fhq_treap.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "floor_sum.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "floyd.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "fps.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "functional_graph.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "fwt.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "gauss.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "half_plane_intersection.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "hld.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "hopcroft_karp.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "hungarian.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "implicit_treap.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "incremental_apsp.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "kmp.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "kruskal.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "kruskal_reconstruction_tree.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "lagrange.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "lazy_segment_tree.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "lca.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "li_chao.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "line.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "linear_sieve.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "link_cut_tree.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "lis.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "lower_bound_flow.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "lucas.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "manacher.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "matrix.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "max_weight_closure.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "miller_rabin.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "min25_sieve.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "min_cost_flow.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "minimal_rotation.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "minkowski_sum.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "mo.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "mobius_phi.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "modint.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "multi_knapsack.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "ntt.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "offline_connectivity.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "ordered_multiset.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "parallel_binary_search.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "persistent_segment_tree.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "point.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "point_in_polygon.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "pollard_rho.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "range_graph.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "rectangle_union.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "rollback_dsu.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "rolling_hash.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "rotating_calipers.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "sam.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "scc.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "second_mst.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "segment.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "segment_tree.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "segment_tree_beats.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "sparse_table.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "subsequence_automaton.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "successor_dsu.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "suffix_array.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "topk.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "topological_sort.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "tree_centroids.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "tree_diameter.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "tree_difference.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "trie.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "two_sat.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "vertex_bcc.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "virtual_tree.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "weighted_dsu.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "xor_basis.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "xor_mst.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "xor_system.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "z_function.hpp",
+    "ok": true,
+    "log": ""
+  },
+  {
+    "file": "zero_one_bfs.hpp",
+    "ok": true,
+    "log": ""
+  }
+]

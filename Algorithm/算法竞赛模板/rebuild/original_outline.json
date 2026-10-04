@@ -1,0 +1,1058 @@
+[
+  {
+    "title": "算法竞赛模板与技巧手册",
+    "page": 1,
+    "top": 789.0,
+    "level": 0
+  },
+  {
+    "title": "目录",
+    "page": 1,
+    "top": 725.25,
+    "level": 1
+  },
+  {
+    "title": "1. 数据结构",
+    "page": 3,
+    "top": 693.0,
+    "level": 0
+  },
+  {
+    "title": "并查集（DSU）",
+    "page": 3,
+    "top": 655.5,
+    "level": 1
+  },
+  {
+    "title": "可撤销并查集",
+    "page": 4,
+    "top": 798.0,
+    "level": 1
+  },
+  {
+    "title": "带权并查集",
+    "page": 5,
+    "top": 670.5,
+    "level": 1
+  },
+  {
+    "title": "后继并查集",
+    "page": 6,
+    "top": 516.0,
+    "level": 1
+  },
+  {
+    "title": "树状数组",
+    "page": 6,
+    "top": 125.25000499999999,
+    "level": 1
+  },
+  {
+    "title": "稀疏表（ST 表）",
+    "page": 7,
+    "top": 228.75,
+    "level": 1
+  },
+  {
+    "title": "线段树",
+    "page": 8,
+    "top": 544.5,
+    "level": 1
+  },
+  {
+    "title": "懒标记线段树",
+    "page": 10,
+    "top": 459.75,
+    "level": 1
+  },
+  {
+    "title": "可持久化线段树",
+    "page": 13,
+    "top": 614.25,
+    "level": 1
+  },
+  {
+    "title": "动态开点线段树",
+    "page": 15,
+    "top": 459.75,
+    "level": 1
+  },
+  {
+    "title": "吉司机线段树（Segment Tree Beats）",
+    "page": 16,
+    "top": 361.5,
+    "level": 1
+  },
+  {
+    "title": "无旋 Treap（FHQ）",
+    "page": 18,
+    "top": 333.75,
+    "level": 1
+  },
+  {
+    "title": "隐式 Treap",
+    "page": 21,
+    "top": 642.75,
+    "level": 1
+  },
+  {
+    "title": "有序多重集（PBDS）",
+    "page": 24,
+    "top": 670.5,
+    "level": 1
+  },
+  {
+    "title": "李超线段树",
+    "page": 24,
+    "top": 97.50000499999999,
+    "level": 1
+  },
+  {
+    "title": "凸包优化 DP",
+    "page": 26,
+    "top": 657.0,
+    "level": 1
+  },
+  {
+    "title": "笛卡尔树",
+    "page": 27,
+    "top": 726.75,
+    "level": 1
+  },
+  {
+    "title": "动态树（LCT）",
+    "page": 27,
+    "top": 223.5,
+    "level": 1
+  },
+  {
+    "title": "按不同键维护 Top-K",
+    "page": 30,
+    "top": 798.0,
+    "level": 1
+  },
+  {
+    "title": "2. 图论",
+    "page": 31,
+    "top": 769.5,
+    "level": 0
+  },
+  {
+    "title": "单源最短路（Dijkstra）",
+    "page": 31,
+    "top": 732.0,
+    "level": 1
+  },
+  {
+    "title": "0-1 最短路（BFS）",
+    "page": 31,
+    "top": 130.500005,
+    "level": 1
+  },
+  {
+    "title": "全源最短路（Floyd）",
+    "page": 32,
+    "top": 306.0,
+    "level": 1
+  },
+  {
+    "title": "拓扑排序",
+    "page": 33,
+    "top": 699.0,
+    "level": 1
+  },
+  {
+    "title": "最小生成树（Kruskal）",
+    "page": 33,
+    "top": 153.000005,
+    "level": 1
+  },
+  {
+    "title": "二分图度序列构造（Gale–Ryser）",
+    "page": 34,
+    "top": 221.25,
+    "level": 1
+  },
+  {
+    "title": "增量 APSP（只加边）",
+    "page": 36,
+    "top": 741.0,
+    "level": 1
+  },
+  {
+    "title": "强连通分量（SCC）",
+    "page": 37,
+    "top": 798.0,
+    "level": 1
+  },
+  {
+    "title": "二元可满足性（2-SAT）",
+    "page": 38,
+    "top": 798.0,
+    "level": 1
+  },
+  {
+    "title": "桥与割点",
+    "page": 39,
+    "top": 432.0,
+    "level": 1
+  },
+  {
+    "title": "边双连通分量（EBCC）",
+    "page": 40,
+    "top": 333.75,
+    "level": 1
+  },
+  {
+    "title": "点双连通分量与圆方树",
+    "page": 42,
+    "top": 502.5,
+    "level": 1
+  },
+  {
+    "title": "欧拉路径",
+    "page": 44,
+    "top": 798.0,
+    "level": 1
+  },
+  {
+    "title": "二分图最大匹配",
+    "page": 46,
+    "top": 670.5,
+    "level": 1
+  },
+  {
+    "title": "二分图最大权匹配（Hungarian）",
+    "page": 47,
+    "top": 741.0,
+    "level": 1
+  },
+  {
+    "title": "最大流（Dinic）",
+    "page": 48,
+    "top": 137.250005,
+    "level": 1
+  },
+  {
+    "title": "最小费用流",
+    "page": 50,
+    "top": 221.25,
+    "level": 1
+  },
+  {
+    "title": "有上下界网络流",
+    "page": 52,
+    "top": 123.00000499999999,
+    "level": 1
+  },
+  {
+    "title": "差分约束",
+    "page": 56,
+    "top": 306.0,
+    "level": 1
+  },
+  {
+    "title": "函数图",
+    "page": 56,
+    "top": 232.5,
+    "level": 1
+  },
+  {
+    "title": "优化建图",
+    "page": 56,
+    "top": 176.25,
+    "level": 1
+  },
+  {
+    "title": "增量容量最大流",
+    "page": 57,
+    "top": 798.0,
+    "level": 1
+  },
+  {
+    "title": "严格次小生成树",
+    "page": 57,
+    "top": 462.75,
+    "level": 1
+  },
+  {
+    "title": "阈值激活事件堆",
+    "page": 57,
+    "top": 389.25,
+    "level": 1
+  },
+  {
+    "title": "异或最小生成树",
+    "page": 58,
+    "top": 798.0,
+    "level": 1
+  },
+  {
+    "title": "最大权闭合子图",
+    "page": 58,
+    "top": 395.25,
+    "level": 1
+  },
+  {
+    "title": "隐式完全图 Boruvka",
+    "page": 58,
+    "top": 144.750005,
+    "level": 1
+  },
+  {
+    "title": "指定拓扑序的稀疏约束",
+    "page": 59,
+    "top": 720.0,
+    "level": 1
+  },
+  {
+    "title": "3. 树上算法",
+    "page": 59,
+    "top": 483.0,
+    "level": 0
+  },
+  {
+    "title": "树的直径",
+    "page": 59,
+    "top": 445.5,
+    "level": 1
+  },
+  {
+    "title": "树的重心",
+    "page": 60,
+    "top": 600.75,
+    "level": 1
+  },
+  {
+    "title": "最小生成树重构树（Kruskal）",
+    "page": 60,
+    "top": 153.750005,
+    "level": 1
+  },
+  {
+    "title": "最近公共祖先（LCA）",
+    "page": 62,
+    "top": 137.250005,
+    "level": 1
+  },
+  {
+    "title": "重链剖分（HLD）",
+    "page": 64,
+    "top": 657.0,
+    "level": 1
+  },
+  {
+    "title": "树上差分",
+    "page": 66,
+    "top": 488.25,
+    "level": 1
+  },
+  {
+    "title": "虚树",
+    "page": 67,
+    "top": 137.250005,
+    "level": 1
+  },
+  {
+    "title": "倍增",
+    "page": 69,
+    "top": 516.0,
+    "level": 1
+  },
+  {
+    "title": "树上启发式合并（DSU on Tree）",
+    "page": 70,
+    "top": 600.75,
+    "level": 1
+  },
+  {
+    "title": "点分治",
+    "page": 71,
+    "top": 375.75,
+    "level": 1
+  },
+  {
+    "title": "换根 DP",
+    "page": 72,
+    "top": 432.0,
+    "level": 1
+  },
+  {
+    "title": "启发式合并（Small-to-Large）",
+    "page": 72,
+    "top": 358.5,
+    "level": 1
+  },
+  {
+    "title": "长链剖分优化深度 DP",
+    "page": 72,
+    "top": 261.0,
+    "level": 1
+  },
+  {
+    "title": "树上仿射约束传播",
+    "page": 73,
+    "top": 636.0,
+    "level": 1
+  },
+  {
+    "title": "4. 动态规划",
+    "page": 73,
+    "top": 495.75,
+    "level": 0
+  },
+  {
+    "title": "最长上升子序列（LIS）",
+    "page": 73,
+    "top": 458.25,
+    "level": 1
+  },
+  {
+    "title": "多重背包（单调队列优化）",
+    "page": 74,
+    "top": 798.0,
+    "level": 1
+  },
+  {
+    "title": "数位 DP",
+    "page": 74,
+    "top": 352.5,
+    "level": 1
+  },
+  {
+    "title": "轮廓线 DP",
+    "page": 75,
+    "top": 798.0,
+    "level": 1
+  },
+  {
+    "title": "中位数阈值 ±1 变换",
+    "page": 75,
+    "top": 618.0,
+    "level": 1
+  },
+  {
+    "title": "稀疏事件线性 DP（矩阵幂）",
+    "page": 75,
+    "top": 449.25,
+    "level": 1
+  },
+  {
+    "title": "排列 LCS → LIS",
+    "page": 75,
+    "top": 309.0,
+    "level": 1
+  },
+  {
+    "title": "背包",
+    "page": 75,
+    "top": 156.750005,
+    "level": 1
+  },
+  {
+    "title": "单调队列优化 DP",
+    "page": 76,
+    "top": 798.0,
+    "level": 1
+  },
+  {
+    "title": "区间 DP",
+    "page": 76,
+    "top": 727.5,
+    "level": 1
+  },
+  {
+    "title": "树上背包",
+    "page": 76,
+    "top": 504.75,
+    "level": 1
+  },
+  {
+    "title": "子集和 DP（SOS DP）",
+    "page": 76,
+    "top": 310.5,
+    "level": 1
+  },
+  {
+    "title": "分治优化 DP",
+    "page": 76,
+    "top": 156.000005,
+    "level": 1
+  },
+  {
+    "title": "状压 DP / Gray code",
+    "page": 77,
+    "top": 621.75,
+    "level": 1
+  },
+  {
+    "title": "四边形不等式优化（Knuth）",
+    "page": 77,
+    "top": 411.0,
+    "level": 1
+  },
+  {
+    "title": "带权二分（WQS）",
+    "page": 77,
+    "top": 353.25,
+    "level": 1
+  },
+  {
+    "title": "位集优化（Bitset）",
+    "page": 77,
+    "top": 280.5,
+    "level": 1
+  },
+  {
+    "title": "5. 数学",
+    "page": 77,
+    "top": 224.25,
+    "level": 0
+  },
+  {
+    "title": "模整数（MInt）",
+    "page": 77,
+    "top": 186.0,
+    "level": 1
+  },
+  {
+    "title": "扩展欧几里得 / 中国剩余定理（CRT）",
+    "page": 79,
+    "top": 628.5,
+    "level": 1
+  },
+  {
+    "title": "组合数",
+    "page": 80,
+    "top": 137.250005,
+    "level": 1
+  },
+  {
+    "title": "卢卡斯定理（Lucas）",
+    "page": 81,
+    "top": 137.250005,
+    "level": 1
+  },
+  {
+    "title": "拉格朗日插值",
+    "page": 82,
+    "top": 108.75000499999999,
+    "level": 1
+  },
+  {
+    "title": "线性筛",
+    "page": 84,
+    "top": 502.5,
+    "level": 1
+  },
+  {
+    "title": "莫比乌斯 / 欧拉函数前缀和",
+    "page": 85,
+    "top": 600.75,
+    "level": 1
+  },
+  {
+    "title": "米勒–拉宾素性测试",
+    "page": 86,
+    "top": 558.0,
+    "level": 1
+  },
+  {
+    "title": "波拉德–ρ 大整数分解",
+    "page": 87,
+    "top": 375.75,
+    "level": 1
+  },
+  {
+    "title": "整除分块",
+    "page": 90,
+    "top": 712.5,
+    "level": 1
+  },
+  {
+    "title": "类欧几里得（Floor Sum）",
+    "page": 90,
+    "top": 432.0,
+    "level": 1
+  },
+  {
+    "title": "离散对数（BSGS）",
+    "page": 91,
+    "top": 249.75,
+    "level": 1
+  },
+  {
+    "title": "矩阵快速幂（模质数）",
+    "page": 93,
+    "top": 375.75,
+    "level": 1
+  },
+  {
+    "title": "杜教筛（phi / mu 前缀和）",
+    "page": 95,
+    "top": 798.0,
+    "level": 1
+  },
+  {
+    "title": "亚线性筛（Min_25）",
+    "page": 96,
+    "top": 488.25,
+    "level": 1
+  },
+  {
+    "title": "约数触发更新",
+    "page": 99,
+    "top": 600.75,
+    "level": 1
+  },
+  {
+    "title": "半环矩阵幂",
+    "page": 99,
+    "top": 433.5,
+    "level": 1
+  },
+  {
+    "title": "同余按 gcd 分类计数",
+    "page": 99,
+    "top": 359.25,
+    "level": 1
+  },
+  {
+    "title": "二进制逐位提升（2-adic）",
+    "page": 99,
+    "top": 285.75,
+    "level": 1
+  },
+  {
+    "title": "欧拉降幂幂塔",
+    "page": 100,
+    "top": 798.0,
+    "level": 1
+  },
+  {
+    "title": "欧几里得批量跳跃",
+    "page": 100,
+    "top": 726.0,
+    "level": 1
+  },
+  {
+    "title": "6. 多项式",
+    "page": 100,
+    "top": 669.0,
+    "level": 0
+  },
+  {
+    "title": "快速傅里叶变换（FFT，整数卷积）",
+    "page": 100,
+    "top": 631.5,
+    "level": 1
+  },
+  {
+    "title": "数论变换（NTT，模 998244353）",
+    "page": 101,
+    "top": 348.0,
+    "level": 1
+  },
+  {
+    "title": "快速沃尔什变换（FWT，OR / AND / XOR 卷积）",
+    "page": 104,
+    "top": 502.5,
+    "level": 1
+  },
+  {
+    "title": "形式幂级数：逆 / ln / exp",
+    "page": 107,
+    "top": 741.0,
+    "level": 1
+  },
+  {
+    "title": "7. 线性代数",
+    "page": 110,
+    "top": 222.0,
+    "level": 0
+  },
+  {
+    "title": "高斯消元（Gauss-Jordan）",
+    "page": 110,
+    "top": 184.5,
+    "level": 1
+  },
+  {
+    "title": "异或线性基（u64）",
+    "page": 113,
+    "top": 657.0,
+    "level": 1
+  },
+  {
+    "title": "二元域多右端项线性方程组（GF(2)）",
+    "page": 115,
+    "top": 474.0,
+    "level": 1
+  },
+  {
+    "title": "8. 字符串",
+    "page": 117,
+    "top": 798.0,
+    "level": 0
+  },
+  {
+    "title": "前缀函数匹配（KMP）",
+    "page": 117,
+    "top": 762.75,
+    "level": 1
+  },
+  {
+    "title": "Z 函数 / 扩展 KMP",
+    "page": 118,
+    "top": 798.0,
+    "level": 1
+  },
+  {
+    "title": "滚动哈希",
+    "page": 119,
+    "top": 798.0,
+    "level": 1
+  },
+  {
+    "title": "子序列自动机（next-occurrence）",
+    "page": 119,
+    "top": 378.75,
+    "level": 1
+  },
+  {
+    "title": "字典树（Trie）",
+    "page": 120,
+    "top": 657.0,
+    "level": 1
+  },
+  {
+    "title": "AC 自动机",
+    "page": 122,
+    "top": 798.0,
+    "level": 1
+  },
+  {
+    "title": "后缀自动机（SAM）",
+    "page": 123,
+    "top": 306.0,
+    "level": 1
+  },
+  {
+    "title": "后缀数组（SA）",
+    "page": 125,
+    "top": 530.25,
+    "level": 1
+  },
+  {
+    "title": "最小循环同构",
+    "page": 127,
+    "top": 544.5,
+    "level": 1
+  },
+  {
+    "title": "回文半径（Manacher）",
+    "page": 128,
+    "top": 755.25,
+    "level": 1
+  },
+  {
+    "title": "回文自动机（Eertree）",
+    "page": 128,
+    "top": 195.75,
+    "level": 1
+  },
+  {
+    "title": "9. 计算几何",
+    "page": 130,
+    "top": 474.75,
+    "level": 0
+  },
+  {
+    "title": "点（Point）",
+    "page": 130,
+    "top": 437.25,
+    "level": 1
+  },
+  {
+    "title": "直线（Line）",
+    "page": 133,
+    "top": 684.75,
+    "level": 1
+  },
+  {
+    "title": "线段（Segment）",
+    "page": 135,
+    "top": 432.0,
+    "level": 1
+  },
+  {
+    "title": "凸包（Andrew 单调链）",
+    "page": 139,
+    "top": 558.0,
+    "level": 1
+  },
+  {
+    "title": "点在多边形内（射线法）",
+    "page": 141,
+    "top": 586.5,
+    "level": 1
+  },
+  {
+    "title": "最近点对（分治）",
+    "page": 143,
+    "top": 628.5,
+    "level": 1
+  },
+  {
+    "title": "旋转卡壳（凸多边形直径）",
+    "page": 144,
+    "top": 558.0,
+    "level": 1
+  },
+  {
+    "title": "圆（外接圆 / 两圆交点）",
+    "page": 145,
+    "top": 123.00000499999999,
+    "level": 1
+  },
+  {
+    "title": "半平面交（直线左侧，需有界）",
+    "page": 147,
+    "top": 348.0,
+    "level": 1
+  },
+  {
+    "title": "闵可夫斯基和",
+    "page": 150,
+    "top": 516.0,
+    "level": 1
+  },
+  {
+    "title": "矩形面积并",
+    "page": 152,
+    "top": 108.75000499999999,
+    "level": 1
+  },
+  {
+    "title": "10. 离线算法与经典技巧",
+    "page": 154,
+    "top": 503.25,
+    "level": 0
+  },
+  {
+    "title": "二分答案",
+    "page": 154,
+    "top": 465.75,
+    "level": 1
+  },
+  {
+    "title": "莫队",
+    "page": 154,
+    "top": 392.25,
+    "level": 1
+  },
+  {
+    "title": "离线分治（CDQ）",
+    "page": 154,
+    "top": 318.75,
+    "level": 1
+  },
+  {
+    "title": "整体二分",
+    "page": 154,
+    "top": 246.0,
+    "level": 1
+  },
+  {
+    "title": "线段树分治",
+    "page": 154,
+    "top": 174.0,
+    "level": 1
+  },
+  {
+    "title": "根号分治 / 序列分块",
+    "page": 154,
+    "top": 101.25000499999999,
+    "level": 1
+  },
+  {
+    "title": "度数定向 / 重轻点",
+    "page": 155,
+    "top": 798.0,
+    "level": 1
+  },
+  {
+    "title": "时间分块",
+    "page": 155,
+    "top": 726.75,
+    "level": 1
+  },
+  {
+    "title": "离线倒序",
+    "page": 155,
+    "top": 654.0,
+    "level": 1
+  },
+  {
+    "title": "双指针 / 滑动窗口",
+    "page": 155,
+    "top": 597.75,
+    "level": 1
+  },
+  {
+    "title": "折半搜索",
+    "page": 155,
+    "top": 540.75,
+    "level": 1
+  },
+  {
+    "title": "坐标压缩",
+    "page": 155,
+    "top": 483.0,
+    "level": 1
+  },
+  {
+    "title": "扫描线",
+    "page": 155,
+    "top": 426.0,
+    "level": 1
+  },
+  {
+    "title": "对数段技巧（Log Trick）",
+    "page": 155,
+    "top": 352.5,
+    "level": 1
+  },
+  {
+    "title": "前缀和 / 差分",
+    "page": 155,
+    "top": 280.5,
+    "level": 1
+  },
+  {
+    "title": "贡献法 / 动态维护贡献",
+    "page": 155,
+    "top": 222.75,
+    "level": 1
+  },
+  {
+    "title": "有限群惰性标记",
+    "page": 155,
+    "top": 150.000005,
+    "level": 1
+  },
+  {
+    "title": "容斥",
+    "page": 156,
+    "top": 798.0,
+    "level": 1
+  },
+  {
+    "title": "反悔贪心",
+    "page": 156,
+    "top": 741.75,
+    "level": 1
+  },
+  {
+    "title": "单调状态空间 Top-K",
+    "page": 156,
+    "top": 685.5,
+    "level": 1
+  },
+  {
+    "title": "最后出现位置单调栈",
+    "page": 156,
+    "top": 627.75,
+    "level": 1
+  },
+  {
+    "title": "二进制对齐块分解",
+    "page": 156,
+    "top": 570.75,
+    "level": 1
+  },
+  {
+    "title": "相邻交换排序",
+    "page": 156,
+    "top": 496.5,
+    "level": 1
+  },
+  {
+    "title": "区间-点贪心匹配",
+    "page": 156,
+    "top": 423.75,
+    "level": 1
+  },
+  {
+    "title": "可行性 Oracle 构造",
+    "page": 156,
+    "top": 366.0,
+    "level": 1
+  },
+  {
+    "title": "加权中位数",
+    "page": 156,
+    "top": 309.0,
+    "level": 1
+  },
+  {
+    "title": "固定半径空间哈希",
+    "page": 156,
+    "top": 251.25,
+    "level": 1
+  },
+  {
+    "title": "曼哈顿距离符号变换（L1）",
+    "page": 156,
+    "top": 195.0,
+    "level": 1
+  },
+  {
+    "title": "重置点分段",
+    "page": 156,
+    "top": 137.250005,
+    "level": 1
+  },
+  {
+    "title": "频次排序记忆化",
+    "page": 157,
+    "top": 798.0,
+    "level": 1
+  },
+  {
+    "title": "预留坐标",
+    "page": 157,
+    "top": 727.5,
+    "level": 1
+  },
+  {
+    "title": "势能剪枝线段树",
+    "page": 157,
+    "top": 669.75,
+    "level": 1
+  },
+  {
+    "title": "布尔格对称链",
+    "page": 157,
+    "top": 597.0,
+    "level": 1
+  },
+  {
+    "title": "11. 公式与博弈",
+    "page": 157,
+    "top": 540.75,
+    "level": 0
+  },
+  {
+    "title": "常用恒等式",
+    "page": 157,
+    "top": 503.25,
+    "level": 1
+  },
+  {
+    "title": "博弈（SG / Nim）",
+    "page": 157,
+    "top": 382.5,
+    "level": 1
+  }
+]

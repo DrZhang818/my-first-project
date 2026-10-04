@@ -109,63 +109,49 @@ private:
     }
 };
 
-vector<int> reach(const vector<vector<int>>& adj, int s) {
-    vector<int> vis(adj.size()), q{s};
-    vis[s] = 1;
-    for(int i = 0; i < q.size(); i++) {
-        for(int v : adj[q[i]]) {
-            if(!vis[v]) {
-                vis[v] = 1;
-                q.push_back(v);
-            }
-        }
-    }
-    return vis;
-}
 
 void solve() {
     int n, m;
     cin >> n >> m;
     int s = 2 * n, t = s + 1;
-    Dinic f(t + 1);
+    Dinic graph(t + 1);
     for(int i = 0; i < n; i++) {
-        f.addEdge(s, i, 1);
-        f.addEdge(n + i, t, 1);
+        graph.addEdge(s, i, 1);
+        graph.addEdge(n + i, t, 1);
     }
     for(int i = 0; i < m; i++) {
         int u, v;
         cin >> u >> v;
         u--;
         v--;
-        f.addEdge(u, n + v, n + 1);
+        graph.addEdge(u, n + v, 1);
     }
-    f.maxFlow(s, t);
-
-    auto a = f.minCut(s);
-
-    vector<vector<int>> rev(t + 1);
-    for(int u = 0; u <= t; u++) {
-        for(const auto& e : f.adj[u]) {
-            if(e.cap > 0) {
-                rev[e.to].push_back(u);
-            }
-        }
-    }
-
-    vector<int> b(t + 1), q{t};
-    b[t] = 1;
-    for(int i = 0; i < q.size(); i++) {
-        for(int v : rev[q[i]]) {
-            if(!b[v]) {
-                b[v] = 1;
-                q.push_back(v);
-            }
-        }
-    }
+    graph.maxFlow(s, t);
 
     i64 x = 0, y = 0;
     for(int i = 0; i < n; i++) {
-        x += a[i];
+        x += graph.level[i] != -1;
+    }
+    if(!x) {
+        cout << 0 << "\n";
+        return;
+    }
+
+    vector<int> b(t + 1), q;
+    q.reserve(t + 1);
+    q.push_back(t);
+    b[t] = 1;
+    for(int h = 0; h < q.size(); h++) {
+        int u = q[h];
+        for(const auto& [v, rev, _] : graph.adj[u]) {
+            if(graph.adj[v][rev].cap > 0 && !b[v]) {
+                q.push_back(v);
+                b[v] = 1;
+            }
+        }
+    }
+
+    for(int i = 0; i < n; i++) {
         y += b[n + i];
     }
 

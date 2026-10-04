@@ -1,0 +1,38 @@
+[
+  {
+    "group": 0,
+    "ok": true,
+    "phase": "run",
+    "log": "PASS dsu 4\nPASS rollback_dsu 7\nPASS weighted_dsu 29\nPASS successor_dsu 30\nPASS fenwick 8030\nPASS sparse_table 30130\nPASS segment_tree 37131\nPASS lazy_segment_tree 38381\nPASS persistent_segment_tree 43755\nPASS dynamic_segment_tree 44255\nPASS segment_tree_beats 62256\nPASS fhq_treap 333356\nPASS implicit_treap 337557\nPASS ordered_multiset 378776\nPASS li_chao 439076\nPASS convex_hull_dp 439486\nPASS cartesian_tree 449587\nPASS link_cut_tree 453100\n"
+  },
+  {
+    "group": 1,
+    "ok": true,
+    "phase": "run",
+    "log": "PASS topk 200\nPASS dijkstra 1000\nPASS zero_one_bfs 1800\nPASS floyd 1802\nPASS topological_sort 1807\nPASS kruskal 1809\nPASS bipartite_degree_sequence 3910\nPASS incremental_apsp 4810\nPASS scc 11210\nPASS two_sat 13730\nPASS bridge_articulation 17530\nPASS edge_bcc 17532\nPASS vertex_bcc 21736\nPASS euler_trail 21742\nPASS hopcroft_karp 24821\nPASS hungarian 25021\nPASS dinic 25921\nPASS min_cost_flow 26071\n"
+  },
+  {
+    "group": 2,
+    "ok": true,
+    "phase": "run",
+    "log": "PASS lower_bound_flow 796\nPASS difference_constraints 2064\nPASS functional_graph 270865\nPASS range_graph 271565\nPASS second_mst 272115\nPASS xor_mst 272515\nPASS max_weight_closure 272615\nPASS boruvka 272815\nPASS tree_diameter 272915\nPASS tree_centroids 273015\nPASS kruskal_reconstruction_tree 292729\nPASS lca 312731\nPASS hld 492731\nPASS tree_difference 492733\nPASS virtual_tree 499219\nPASS doubling 499522\nPASS dsu_on_tree 520052\nPASS centroid_decomposition 532052\n"
+  },
+  {
+    "group": 3,
+    "ok": true,
+    "phase": "run",
+    "log": "PASS lis 400\nPASS multi_knapsack 600\nPASS modint 603\nPASS exgcd_crt 4123\nPASS combination 9274\nPASS lucas 29878\nPASS lagrange 68878\nPASS linear_sieve 70878\nPASS mobius_phi 72878\nPASS miller_rabin 82880\nPASS pollard_rho 82895\nPASS division_blocks 83896\nPASS floor_sum 88896\nPASS bsgs 112676\nPASS matrix 112712\nPASS dujiao_sieve 113511\nPASS min25_sieve 114011\nPASS fft 114111\n"
+  },
+  {
+    "group": 4,
+    "ok": true,
+    "phase": "run",
+    "log": "PASS ntt 100\nPASS fwt 400\nPASS fps 3141\nPASS gauss 4215\nPASS xor_basis 255713\nPASS xor_system 256623\nPASS kmp 256923\nPASS z_function 265691\nPASS rolling_hash 298587\nPASS subsequence_automaton 318787\nPASS trie 320046\nPASS aho_corasick 322146\nPASS sam 341420\nPASS suffix_array 349151\nPASS minimal_rotation 349451\nPASS manacher 349751\nPASS eertree 350351\nPASS point 350353\n"
+  },
+  {
+    "group": 5,
+    "ok": true,
+    "phase": "run",
+    "log": "PASS line 4\nPASS segment 3014\nPASS convex_hull 3018\nPASS point_in_polygon 3022\nPASS closest_pair 3223\nPASS rotating_calipers 3523\nPASS circle 3530\nPASS half_plane_intersection 65802\nPASS minkowski_sum 66002\nPASS rectangle_union 66202\nPASS mo 66402\nPASS cdq 74624\nPASS parallel_binary_search 74724\nPASS offline_connectivity 77724\n"
+  }
+]

@@ -1,0 +1,3657 @@
+[
+  {
+    "id": 0,
+    "key": "dsu",
+    "title": "并查集 DSU",
+    "chapter": "1. 数据结构",
+    "old_page": 3,
+    "notes": [
+      "点为 1..n。merge(u,v) 返回是否真的合并；same、size 查询。路径压缩 + 按大小合并，均摊 O(α(n))。"
+    ],
+    "examples": [],
+    "code": "dsu.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "1.1",
+    "page": 7
+  },
+  {
+    "id": 1,
+    "key": "rollback_dsu",
+    "title": "可撤销并查集",
+    "chapter": "1. 数据结构",
+    "old_page": 4,
+    "notes": [
+      "snapshot() 记录栈大小，rollback(s) 回到该状态。不能做路径压缩；按大小合并，单次 O(log n)。一次失败的合并也必须按实现的栈约定处理，直接使用快照回滚最稳妥。"
+    ],
+    "examples": [],
+    "code": "rollback_dsu.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "1.2",
+    "page": 7
+  },
+  {
+    "id": 2,
+    "key": "weighted_dsu",
+    "title": "带权并查集",
+    "chapter": "1. 数据结构",
+    "old_page": 5,
+    "notes": [
+      "维护势能差；merge(u,v,w) 表示 value[v] - value[u] = w。返回 false 表示与已有关系矛盾。跨连通块不能直接读取差值；权值及沿链累加需在 i64 内。"
+    ],
+    "examples": [],
+    "code": "weighted_dsu.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "1.3",
+    "page": 8
+  },
+  {
+    "id": 3,
+    "key": "successor_dsu",
+    "title": "跳跃并查集",
+    "chapter": "1. 数据结构",
+    "old_page": 6,
+    "notes": [
+      "erase(x) 删除位置，find(x) 返回不小于 x 的第一个未删位置；n+1 是哨兵。只支持永久删除，不支持插回。查找用循环压缩，连续删除不会形成递归栈风险。"
+    ],
+    "examples": [],
+    "code": "successor_dsu.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "1.4",
+    "page": 9
+  },
+  {
+    "id": 4,
+    "key": "fenwick",
+    "title": "树状数组 BIT",
+    "chapter": "1. 数据结构",
+    "old_page": 6,
+    "notes": [
+      "1-based；add(x,v)、query(x) 前缀和、query(l,r) 闭区间和。select(k) 找前缀和首次达到 k 的位置：所有频次非负，1 <= k <= 总和；无答案会返回 n+1。O(log n)。"
+    ],
+    "examples": [],
+    "code": "fenwick.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "1.5",
+    "page": 10
+  },
+  {
+    "id": 5,
+    "key": "sparse_table",
+    "title": "稀疏表 ST",
+    "chapter": "1. 数据结构",
+    "old_page": 7,
+    "notes": [
+      "输入数组含下标 0 占位，query(l,r) 为闭区间。Op 满足结合律与幂等性，例如 min/max/gcd；不能用 sum。预处理 O(n log n)，查询 O(1)。重叠两段按原序合并，不强制交换律。"
+    ],
+    "examples": [],
+    "code": "sparse_table.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "1.6",
+    "page": 10
+  },
+  {
+    "id": 6,
+    "key": "segment_tree",
+    "title": "线段树 Seg",
+    "chapter": "1. 数据结构",
+    "old_page": 8,
+    "notes": [
+      "输入 1-based；modify 是单点赋值；query(l,r) 为闭区间。Info() 是单位元，operator+ 按左到右合并。first/last 的判定须满足区间整体可排除性，不能把任意判断当作二分条件。"
+    ],
+    "examples": [
+      {
+        "title": "Info：区间和与前缀找第 k 个",
+        "code": "struct Info {\n    long long sum = 0;\n    Info operator+(Info b) const {\n        return {sum + b.sum};\n    }\n};\nint main() {\n    vector<Info> a = {{0}, {2}, {0}, {3}};\n    Seg<Info> s(a);\n    assert(s.query(1, 3).sum == 5);\n    int p = s.first(1, 3, [](Info x) { return x.sum >= 3; });\n    assert(p == 3); // 频次必须非负，判定才单调。\n}",
+        "deps": [],
+        "file": "examples/segment_tree_1.cpp"
+      }
+    ],
+    "code": "segment_tree.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "1.7",
+    "page": 11
+  },
+  {
+    "id": 7,
+    "key": "lazy_segment_tree",
+    "title": "懒标记线段树 LazySeg",
+    "chapter": "1. 数据结构",
+    "old_page": 10,
+    "notes": [
+      "Info.apply(Tag) 更新区间信息；Tag.apply(Tag) 把新操作接在旧操作之后。所有区间闭合，modify 为单点赋值，apply 为区间操作。合并信息与标记时都要保持时间顺序。下面的完整例子支持区间仿射变换和区间求和。",
+      "叶子 len=1，单位元 len=0；初始化 LazySeg(n) 的默认 Info 没有实际区间长度，不能直接用于此 Info。输入与 Tag 的模值先归一化。"
+    ],
+    "examples": [
+      {
+        "title": "Info / Tag：区间仿射与区间和",
+        "code": "const int P = 998244353;\nstruct Tag {\n    long long mul = 1, add = 0;\n    void apply(Tag t) {\n        mul = mul * t.mul % P;\n        add = (add * t.mul + t.add) % P;\n    }\n};\nstruct Info {\n    long long sum = 0;\n    int len = 0;\n    void apply(Tag t) {\n        sum = (sum * t.mul + t.add * len) % P;\n    }\n    Info operator+(Info b) const {\n        return {(sum + b.sum) % P, len + b.len};\n    }\n};\nint main() {\n    vector<Info> a = {{0, 0}, {1, 1}, {2, 1}, {3, 1}};\n    LazySeg<Info, Tag> s(a);\n    s.apply(1, 3, {2, 1}); // x -> 2x+1，得到 3,5,7。\n    s.apply(2, 3, {0, 4}); // 赋值为4；加c用 {1,c}。\n    assert(s.query(1, 3).sum == 11);\n}",
+        "deps": [],
+        "file": "examples/lazy_segment_tree_1.cpp"
+      }
+    ],
+    "code": "lazy_segment_tree.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "1.8",
+    "page": 13
+  },
+  {
+    "id": 8,
+    "key": "persistent_segment_tree",
+    "title": "可持久化线段树 PST",
+    "chapter": "1. 数据结构",
+    "old_page": 13,
+    "notes": [
+      "modify(old,x,v) 生成新根，旧根不变；叶子调用 Info.apply(v)，赋值还是增量由此函数决定；频率例子用 +=。版本根单独保存。查询两个前缀版本的差得到区间频率；first 的谓词基于累计 Info，需单调。单次新建 O(log n) 节点。",
+      "输入位置和值域下标是两套编号，rt[i] 是前 i 个元素形成的值域频率版本。减根的顺序为 rt[r]-rt[l-1]。"
+    ],
+    "examples": [
+      {
+        "title": "前缀版本：静态区间第 k 小",
+        "code": "struct Info {\n    int sum = 0;\n    void apply(Info b) {\n        sum += b.sum;\n    }\n    Info operator+(Info b) const {\n        return {sum + b.sum};\n    }\n    Info operator-(Info b) const {\n        return {sum - b.sum};\n    }\n};\nint main() {\n    vector<int> a = {0, 5, 1, 5, 3}, v(a.begin() + 1, a.end());\n    sort(v.begin(), v.end());\n    v.erase(unique(v.begin(), v.end()), v.end());\n    int n = a.size() - 1, m = v.size();\n    PST<Info> s(m, n);\n    vector<int> rt(n + 1);\n    for(int i = 1; i <= n; i++) {\n        int x = lower_bound(v.begin(), v.end(), a[i]) - v.begin() + 1;\n        rt[i] = s.modify(rt[i - 1], x, {1});\n    }\n    int l = 2, r = 4, k = 2; // 闭区间；k需合法。\n    int x = s.first(rt[l - 1], rt[r], 1, m, [&](Info t) { return t.sum >= k; });\n    assert(v[x - 1] == 3);\n}",
+        "deps": [],
+        "file": "examples/persistent_segment_tree_1.cpp"
+      }
+    ],
+    "code": "persistent_segment_tree.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "1.9",
+    "page": 16
+  },
+  {
+    "id": 9,
+    "key": "dynamic_segment_tree",
+    "title": "动态开点线段树",
+    "chapter": "1. 数据结构",
+    "old_page": 15,
+    "notes": [
+      "DynSeg<Info>(L,R)，root 初始为 0；modify(root,x,v) 是点赋值，query(root,l,r) 为闭区间。空节点返回 Info()。节点用编号访问，扩容后不能保存 vector 内引用；内存 O(q log(R-L+1))。"
+    ],
+    "examples": [
+      {
+        "title": "动态开点：点赋值",
+        "code": "struct Info {\n    long long sum = 0;\n    Info operator+(Info b) const {\n        return {sum + b.sum};\n    }\n};\nint main() {\n    DynSeg<Info> s(-1000000000, 1000000000);\n    int rt = 0;\n    s.modify(rt, -7, {3});\n    s.modify(rt, 12, {5});\n    s.modify(rt, 12, {1});\n    assert(s.query(rt, -10, 20).sum == 4);\n}",
+        "deps": [],
+        "file": "examples/dynamic_segment_tree_1.cpp"
+      }
+    ],
+    "code": "dynamic_segment_tree.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "1.10",
+    "page": 19
+  },
+  {
+    "id": 10,
+    "key": "segment_tree_beats",
+    "title": "Segment Tree Beats",
+    "chapter": "1. 数据结构",
+    "old_page": 16,
+    "notes": [
+      "本版支持区间 chmin、sum、maxi；不包含区间加、chmax。维护最大值、严格次大值和最大值个数；仅在新上界高于次大值时整段修改，否则下推。均摊 O((n+q) log n)，区间和必须在 i64 内。"
+    ],
+    "examples": [],
+    "code": "segment_tree_beats.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "1.11",
+    "page": 20
+  },
+  {
+    "id": 11,
+    "key": "fhq_treap",
+    "title": "FHQ Treap 多重集",
+    "chapter": "1. 数据结构",
+    "old_page": 18,
+    "notes": [
+      "允许重复，erase 删一个；rank(v)=小于 v 的个数+1；kth 从 1 开始且必须合法。prev/next 为严格前驱/后继，用 bool 和输出参数接收。期望 O(log n)，历史节点不回收。"
+    ],
+    "examples": [],
+    "code": "fhq_treap.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "1.12",
+    "page": 22
+  },
+  {
+    "id": 12,
+    "key": "implicit_treap",
+    "title": "隐式 Treap 序列",
+    "chapter": "1. 数据结构",
+    "old_page": 21,
+    "notes": [
+      "位置从 1 开始，insert(root,k,t) 在前 k 个元素后插入子树；erase(root,l,r) 返回被剪下的子树，可再插回。kth 返回节点编号。Policy 的 merge 必须按序，reverseInfo 必须真实反转有方向的信息；本例的区间加和反转互相可交换。",
+      "split(rt,k) 拆成前 k 个和余下；merge 只按顺序拼接。若维护字符串哈希，Info 要存正反两个哈希，reverseInfo 交换它们。"
+    ],
+    "examples": [
+      {
+        "title": "完整 Policy：区间加、反转、求和",
+        "code": "struct Policy {\n    using Val = long long;\n    using Info = long long;\n    using Tag = long long;\n    static Info identity() {\n        return 0;\n    }\n    static Tag tagIdentity() {\n        return 0;\n    }\n    static bool tagEmpty(Tag t) {\n        return t == 0;\n    }\n    static Info make(Val v) {\n        return v;\n    }\n    static Info merge(Info a, Info b) {\n        return a + b;\n    }\n    static void apply(Val& v, Info& sum, int len, Tag t) {\n        v += t;\n        sum += len * t;\n    }\n    static void compose(Tag& a, Tag b) {\n        a += b;\n    }\n    static void reverseInfo(Info&) {\n    } // 和与方向无关，才能留空。\n};\nint main() {\n    Treap<Policy> s;\n    int rt = s.build(vector<long long>{1, 2, 3, 4}); // build为0-based。\n    s.apply(rt, 2, 4, 10);\n    s.rangeReverse(rt, 1, 3);\n    assert(s.query(rt, 1, 2) == 25);\n    int t = s.erase(rt, 2, 3);\n    s.insert(rt, 0, t);\n    assert(s.size(rt) == 4);\n}",
+        "deps": [],
+        "file": "examples/implicit_treap_1.cpp"
+      }
+    ],
+    "code": "implicit_treap.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "1.13",
+    "page": 24
+  },
+  {
+    "id": 13,
+    "key": "ordered_multiset",
+    "title": "PBDS 可重多重集",
+    "chapter": "1. 数据结构",
+    "old_page": 24,
+    "notes": [
+      "GNU 扩展；用 (值,唯一编号) 处理重复。orderOfKey(v) 返回严格小于 v 的个数，kth(k,ans) 从 1 开始，越界返回 false。仅支持元素级操作，不能替代带区间信息的平衡树。"
+    ],
+    "examples": [],
+    "code": "ordered_multiset.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "1.14",
+    "page": 27
+  },
+  {
+    "id": 14,
+    "key": "li_chao",
+    "title": "李超线段树",
+    "chapter": "1. 数据结构",
+    "old_page": 24,
+    "notes": [
+      "维护整数 x∈[L,R] 上的最小 kx+b，addLine(k,b)，query(x) 返回 i128；空集合返回 inf。插入与查询 O(log(R-L+1))。无需斜率或查询顺序单调。值域中点及乘法范围要符合本版类型。"
+    ],
+    "examples": [
+      {
+        "title": "斜率任意顺序：最小直线值",
+        "code": "int main() {\n    LiChao s(-1000000, 1000000);\n    s.addLine(3, 5);\n    s.addLine(-2, 1);\n    assert(s.query(7) == -13);\n}",
+        "deps": [],
+        "file": "examples/li_chao_1.cpp"
+      }
+    ],
+    "code": "li_chao.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "1.15",
+    "page": 28
+  },
+  {
+    "id": 15,
+    "key": "convex_hull_dp",
+    "title": "凸包优化 DP",
+    "chapter": "1. 数据结构",
+    "old_page": 26,
+    "notes": [
+      "CHT 保存点 (x,y)，按 x 非递减插入，query({a,b}) 求最小 ax+by，要求 b>0。点积/叉积用 i128。把转移写成这个点积再代入；若条件不满足改用李超树。插入均摊 O(1)，查询 O(log n)。",
+      "把候选 j 写成点 (j,dp[j]+j²)，查询向量(-2i,1)，常数 i² 最后加；插入点横坐标递增。"
+    ],
+    "examples": [
+      {
+        "title": "转移 dp[i]=min(dp[j]+(i-j)²)",
+        "code": "int main() {\n    CHT s;\n    vector<long long> dp(9);\n    s.addPoint({0, 0});\n    for(int i = 1; i <= 8; i++) {\n        dp[i] = (long long)(s.query({-2LL * i, 1}) + 1LL * i * i);\n        s.addPoint({i, dp[i] + 1LL * i * i});\n    }\n    assert(dp[8] == 8);\n}",
+        "deps": [],
+        "file": "examples/convex_hull_dp_1.cpp"
+      }
+    ],
+    "code": "convex_hull_dp.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "1.16",
+    "page": 29
+  },
+  {
+    "id": 16,
+    "key": "cartesian_tree",
+    "title": "笛卡尔树",
+    "chapter": "1. 数据结构",
+    "old_page": 27,
+    "notes": [
+      "输入含下标 0，占位不参与；小根堆，等值按本版栈条件决定归属。root、left、right 描述树；中序遍历就是原下标顺序。O(n)，递归遍历它时要注意单调数组会退化成链。"
+    ],
+    "examples": [],
+    "code": "cartesian_tree.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "1.17",
+    "page": 30
+  },
+  {
+    "id": 17,
+    "key": "link_cut_tree",
+    "title": "Link-Cut Tree 动态森林",
+    "chapter": "1. 数据结构",
+    "old_page": 27,
+    "notes": [
+      "本版信息为点权异或，setValue、link、cut、connected、pathXor。link 拒绝成环，cut 只删除直接相邻的边；查询 pathXor 前先确认连通。makeroot 会改变代表根，不能把 findRoot 当固定根 LCA。均摊 O(log n)。"
+    ],
+    "examples": [
+      {
+        "title": "动态树点权异或",
+        "code": "int main() {\n    LCT s(3);\n    for(int i = 1; i <= 3; i++) {\n        s.setValue(i, i);\n    }\n    assert(s.link(1, 2) && s.link(2, 3));\n    assert(s.pathXor(1, 3) == (1 ^ 2 ^ 3));\n    assert(!s.link(1, 3));\n    assert(s.cut(1, 2));\n    assert(!s.connected(1, 3));\n}",
+        "deps": [],
+        "file": "examples/link_cut_tree_1.cpp"
+      }
+    ],
+    "code": "link_cut_tree.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "1.18",
+    "page": 31
+  },
+  {
+    "id": 18,
+    "key": "topk",
+    "title": "按类别维护 Top-K",
+    "chapter": "1. 数据结构",
+    "old_page": 30,
+    "notes": [
+      "同类别只保留最大值；get(ban1,ban2) 排除至多两个类别。默认 -1 表示没有这个排除条件，因此类别不能使用 -1。K 至少为排除类别数+1；空答案为 -INF。可用于换根时排除来源子树。"
+    ],
+    "examples": [],
+    "code": "topk.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "1.19",
+    "page": 33
+  },
+  {
+    "id": 19,
+    "key": "dijkstra",
+    "title": "Dijkstra",
+    "chapter": "2. 图论与建模",
+    "old_page": 31,
+    "notes": [
+      "1-based，有向 addEdge；无向边添加两次。边权必须非负，run(s) 返回距离数组，不可达为 inf。堆实现 O((n+m) log n)；所有有限路径和必须小于 inf，不能拿 inf 直接参与答案运算。"
+    ],
+    "examples": [],
+    "code": "dijkstra.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "2.1",
+    "page": 35
+  },
+  {
+    "id": 20,
+    "key": "zero_one_bfs",
+    "title": "0-1 BFS",
+    "chapter": "2. 图论与建模",
+    "old_page": 31,
+    "notes": [
+      "边权只能为 0 或 1；0 放队首、1 放队尾，O(n+m)。接口同 Dijkstra，不能推广为任意小整数边权。"
+    ],
+    "examples": [],
+    "code": "zero_one_bfs.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "2.2",
+    "page": 35
+  },
+  {
+    "id": 21,
+    "key": "floyd",
+    "title": "Floyd",
+    "chapter": "2. 图论与建模",
+    "old_page": 32,
+    "notes": [
+      "d 为 1-based 方阵，初值对角 0，重边取 min，不可达 inf；支持负边但最短路意义要求无负环。O(n³)。若 d[k][k]<0，则经 k 可达的点对没有有限最短路，需另行标记。"
+    ],
+    "examples": [],
+    "code": "floyd.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "2.3",
+    "page": 36
+  },
+  {
+    "id": 22,
+    "key": "topological_sort",
+    "title": "拓扑排序",
+    "chapter": "2. 图论与建模",
+    "old_page": 33,
+    "notes": [
+      "输入 1-based 邻接表；返回全体点的一个拓扑序，空返回值在 n>0 时表示存在环。重复边计入入度也必须逐条减回。O(n+m)；要字典序最小则队列换小根堆。"
+    ],
+    "examples": [],
+    "code": "topological_sort.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "2.4",
+    "page": 36
+  },
+  {
+    "id": 23,
+    "key": "kruskal",
+    "title": "Kruskal 最小生成森林",
+    "chapter": "2. 图论与建模",
+    "old_page": 33,
+    "notes": [
+      "run(n,e) 返回权重和与选边；不连通也返回森林。选边数等于 n-1 才是生成树。支持负边、重边，自环自动跳过；O(m log m)。"
+    ],
+    "examples": [],
+    "code": "kruskal.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "2.5",
+    "page": 37
+  },
+  {
+    "id": 24,
+    "key": "bipartite_degree_sequence",
+    "title": "二分图度数序列构造",
+    "chapter": "2. 图论与建模",
+    "old_page": 34,
+    "notes": [
+      "输入左右度数 1-based；run(n,m,a,b,c) 返回可行性与 0/1 邻接矩阵。度数非负，左不超过 m、右不超过 n，总和必须相等。构造矩阵本身需 O(nm) 空间，稠密输出时使用。"
+    ],
+    "examples": [],
+    "code": "bipartite_degree_sequence.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "2.6",
+    "page": 38
+  },
+  {
+    "id": 25,
+    "key": "incremental_apsp",
+    "title": "增量 APSP",
+    "chapter": "2. 图论与建模",
+    "old_page": 36,
+    "notes": [
+      "APSP(n)，addDirected(u,v,w) 在已有最短路上加入一条边，O(n²)，只支持加边。要求每次加入后无负环，距离在 INF 范围内；无向边用 addUndirected。删除/加大权值不能这样更新。"
+    ],
+    "examples": [],
+    "code": "incremental_apsp.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "2.7",
+    "page": 38
+  },
+  {
+    "id": 26,
+    "key": "scc",
+    "title": "强连通分量 SCC",
+    "chapter": "2. 图论与建模",
+    "old_page": 37,
+    "notes": [
+      "SCC(g) 接收 1-based 有向邻接表；id 从 0 起，comp 按 Tarjan 出栈顺序，跨分量边 u→v 满足 id[u]>id[v]。缩点后去重可选；时间 O(n+m)，遍历为显式栈，支持深链。"
+    ],
+    "examples": [],
+    "code": "scc.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "2.8",
+    "page": 39
+  },
+  {
+    "id": 27,
+    "key": "two_sat",
+    "title": "2-SAT",
+    "chapter": "2. 图论与建模",
+    "old_page": 38,
+    "notes": [
+      "变量 1..n；addClause(u,a,v,b) 表示 (xu=a) 或 (xv=b)，setValue 固定变量。solve() 返回可行性，answer[1..n] 给一组解；支持加约束后重新 solve。不能把单条蕴含误当一个完整析取，否定与逆否必须成对。"
+    ],
+    "examples": [
+      {
+        "title": "析取与固定变量",
+        "code": "int main() {\n    TwoSAT s(2);\n    s.addClause(1, true, 2, false); // x1 或 非x2。\n    s.setValue(1, false);\n    assert(s.solve());\n    assert(!s.answer[1] && !s.answer[2]);\n}",
+        "deps": [],
+        "file": "examples/two_sat_1.cpp"
+      }
+    ],
+    "code": "two_sat.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "2.9",
+    "page": 40
+  },
+  {
+    "id": 28,
+    "key": "bridge_articulation",
+    "title": "桥与割点 Lowlink",
+    "chapter": "2. 图论与建模",
+    "old_page": 39,
+    "notes": [
+      "无向图，addEdge 返回 1-based 边编号，work 后 bridge[id]、cut[u]。用父边编号而非父点跳过，正确处理平行边；自环不影响桥割点。O(n+m)，支持不连通与深链。"
+    ],
+    "examples": [],
+    "code": "bridge_articulation.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "2.10",
+    "page": 42
+  },
+  {
+    "id": 29,
+    "key": "edge_bcc",
+    "title": "边双连通分量",
+    "chapter": "2. 图论与建模",
+    "old_page": 40,
+    "notes": [
+      "EdgeBCC 内含 Lowlink；work 后 id[u] 从 1 起、comp[1..] 是删去所有桥后的连通块。缩成森林时每条桥连接其端点所属块；包含孤立点。"
+    ],
+    "examples": [],
+    "code": "edge_bcc.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "2.11",
+    "page": 43
+  },
+  {
+    "id": 30,
+    "key": "vertex_bcc",
+    "title": "点双连通分量与圆方树",
+    "chapter": "2. 图论与建模",
+    "old_page": 42,
+    "notes": [
+      "VertexBCC.work()，comp[1..] 为块，原点 1..n，方点从 n+1 开始，tree 为圆方森林。桥本身也形成二点块，孤立点单独成块；自环不产生额外块。本版只构建一次，O(n+m)。"
+    ],
+    "examples": [],
+    "code": "vertex_bcc.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "2.12",
+    "page": 43
+  },
+  {
+    "id": 31,
+    "key": "euler_trail",
+    "title": "欧拉通路",
+    "chapter": "2. 图论与建模",
+    "old_page": 44,
+    "notes": [
+      "solve(n,e,dir,ans)：dir=true 有向，false 无向；边允许重边、自环。返回 bool，ans 为 m+1 个点；度数条件与最终耗尽所有边同时检验。无边时 n>0 返回单点；n=0 返回空路径。O(n+m)。"
+    ],
+    "examples": [],
+    "code": "euler_trail.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "2.13",
+    "page": 45
+  },
+  {
+    "id": 32,
+    "key": "hopcroft_karp",
+    "title": "二分图最大匹配 Hopcroft-Karp",
+    "chapter": "2. 图论与建模",
+    "old_page": 46,
+    "notes": [
+      "HK(n,m)，左右点各自从 1 编号，addEdge(u,v)，solve() 返回匹配数；left/right 为匹配对象，0 表示未匹配。O(E√V)，替换朴素增广。solve 后 minVertexCover() 返回左右最小点覆盖；补集为最大独立集。增广使用显式栈，支持深交替链。",
+      "最小点覆盖：从未匹配左点出发，走未匹配边到右边，再走匹配边回左边；取未到达左点+到达右点。"
+    ],
+    "examples": [
+      {
+        "title": "最大匹配与最小点覆盖",
+        "code": "int main() {\n    HK s(3, 3);\n    s.addEdge(1, 1);\n    s.addEdge(1, 2);\n    s.addEdge(2, 2);\n    s.addEdge(3, 2);\n    assert(s.solve() == 2);\n    auto [a, b] = s.minVertexCover();\n    assert(a.size() + b.size() == 2);\n    for(int u = 1; u <= 3; u++) {\n        if(s.left[u]) {\n            cout << u << ' ' << s.left[u] << '\\n';\n        }\n    }\n}",
+        "deps": [],
+        "file": "examples/hopcroft_karp_1.cpp"
+      }
+    ],
+    "code": "hopcroft_karp.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "2.14",
+    "page": 46
+  },
+  {
+    "id": 33,
+    "key": "hungarian",
+    "title": "二分图最大权匹配 Hungarian",
+    "chapter": "2. 图论与建模",
+    "old_page": 47,
+    "notes": [
+      "maximum(w) 接受 1-based 矩阵，返回权重与行匹配，较小一侧全部匹配；n>m 时内部转置，原行中未匹配的为 0。复杂度 O(min(n,m)² max(n,m))。负权允许；缺边不能用 0 代替，可设足够负值并检查是否选中缺边。"
+    ],
+    "examples": [],
+    "code": "hungarian.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "2.15",
+    "page": 48
+  },
+  {
+    "id": 34,
+    "key": "dinic",
+    "title": "最大流 Dinic",
+    "chapter": "2. 图论与建模",
+    "old_page": 48,
+    "notes": [
+      "与其他图模板不同：点为 0..n-1。addEdge 返回正向边在 g[u] 内的下标，cap 为剩余容量，初始容量需自己保存。maxFlow(s,t,limit) 返回本次新增流，s!=t；可在残量图上继续加边再增广。minCut(s) 返回残量可达集合。一般 O(V²E)，单位网络可更快；增广使用显式栈，支持深链。"
+    ],
+    "examples": [
+      {
+        "title": "读回边流量",
+        "code": "int main() {\n    Dinic s(3);\n    int id = s.addEdge(0, 1, 5);\n    s.addEdge(1, 2, 3);\n    assert(s.maxFlow(0, 2) == 3);\n    assert(5 - s.g[0][id].cap == 3);\n    s.addEdge(1, 2, 2);\n    assert(s.maxFlow(0, 2) == 2); // 本次新增量。\n}",
+        "deps": [],
+        "file": "examples/dinic_1.cpp"
+      }
+    ],
+    "code": "dinic.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "2.16",
+    "page": 50
+  },
+  {
+    "id": 35,
+    "key": "min_cost_flow",
+    "title": "最小费用流 MCF",
+    "chapter": "2. 图论与建模",
+    "old_page": 50,
+    "notes": [
+      "点为 0..n-1，容量和费用 i64；flow(s,t,limit) 返回 (本次新增流,费用)。初始 Bellman-Ford 势能（O(VE)）允许负边，但从源可达处不能有负费用环；否则这个接口不适用。后续用势能 Dijkstra，约 O(增广次数·E log V)，费用总和不能溢出。",
+      "要“必须发送 K 流”就检查 f==K；要最大流最小费用则不传 limit。仅需负费用增广直到不划算的建模，不能直接把该接口当最大收益可选流。"
+    ],
+    "examples": [
+      {
+        "title": "指定流量的最小费用",
+        "code": "int main() {\n    MCF s(3);\n    s.addEdge(0, 1, 2, -3);\n    s.addEdge(1, 2, 2, 5);\n    auto [f, c] = s.flow(0, 2, 2);\n    assert(f == 2 && c == 4);\n}",
+        "deps": [],
+        "file": "examples/min_cost_flow_1.cpp"
+      }
+    ],
+    "code": "min_cost_flow.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "2.17",
+    "page": 52
+  },
+  {
+    "id": 36,
+    "key": "lower_bound_flow",
+    "title": "上下界网络流",
+    "chapter": "2. 图论与建模",
+    "old_page": 52,
+    "notes": [
+      "BoundFlow(n)，点 0..n-1，addEdge(u,v,lo,hi)，0<=lo<=hi。circulation(f) 判断无源汇可行环流；maxFlow(s,t,res) 求非负流值的最大可行 s→t 流，返回值表示是否存在该类流。res.flow 按输入边顺序含原下界。两个求解均重新建图，可多次调用。",
+      "下界预流导致 balance[u]-=lo,balance[v]+=lo；balance>0 接 SS→u，<0 接 u→TT。源汇版本加 t→s 的INF边，再跑 SS→TT。可行后读人工边流量为base，删掉人工边的正反残量与超级点关联边；最大再跑 s→t，最小跑 t→s 且 limit=base，以保持非负流值。总需求和与最大流值均应小于 inf。",
+      "minFlow(s,t,res) 同样限制非负流值，最大/最小结果都返回每条输入边的实际流量。"
+    ],
+    "examples": [
+      {
+        "title": "可行环流 / 最大流 / 最小流",
+        "code": "int main() {\n    BoundFlow s(3);\n    s.addEdge(0, 1, 1, 3);\n    s.addEdge(1, 2, 1, 2);\n    BoundFlow::Result a, b;\n    assert(s.maxFlow(0, 2, a) && a.value == 2);\n    assert(s.minFlow(0, 2, b) && b.value == 1);\n    assert(a.flow[0] == 2 && b.flow[1] == 1);\n    vector<long long> f;\n    assert(!s.circulation(f)); // 此图没有回边，无法形成环流。\n}",
+        "deps": [],
+        "file": "examples/lower_bound_flow_1.cpp"
+      }
+    ],
+    "code": "lower_bound_flow.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "2.18",
+    "page": 54
+  },
+  {
+    "id": 37,
+    "key": "difference_constraints",
+    "title": "差分约束",
+    "chapter": "2. 图论与建模",
+    "old_page": 56,
+    "notes": [
+      "le(u,v,w) 就是 xv-xu<=w，建 u→v 权 w；xv-xu>=w 改为 le(v,u,-w)，等式 eq(u,v,w)。整数严格小于 w 改成 <=w-1。所有点初距为 0 等价超级源，能查出任意分量负环；solve(d) 返回 bool，解用 i128。SPFA 最坏 O(VE)，solve(d,false) 为确定轮次的 Bellman-Ford。",
+      "得到的是一组可行势能；若要让 x1=0，可把全部值减 d[1]，不改变差。要求最小/最大某变量时必须按边方向推导界，不能把任意可行解当最优解。"
+    ],
+    "examples": [
+      {
+        "title": "把不等式翻译成边",
+        "code": "int main() {\n    Diff s(3);\n    s.le(2, 1, -3); // x2 >= x1+3。\n    s.le(2, 3, 2);  // x3 <= x2+2。\n    s.eq(1, 3, 4);  // x3=x1+4。\n    vector<__int128> d;\n    assert(s.solve(d));\n    assert(d[2] - d[1] >= 3 && d[3] - d[1] == 4);\n    s.le(1, 3, 3);\n    assert(!s.solve(d));\n}",
+        "deps": [],
+        "file": "examples/difference_constraints_1.cpp"
+      }
+    ],
+    "code": "difference_constraints.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "2.19",
+    "page": 56
+  },
+  {
+    "id": 38,
+    "key": "functional_graph",
+    "title": "函数图",
+    "chapter": "2. 图论与建模",
+    "old_page": 56,
+    "notes": [
+      "输入 to[1..n] 且每点恰好一条出边。FuncGraph 预处理 O(64n)，jump(u,k) 支持完整 uint64_t 步数；dis(u,v) 为沿出边到 v 的最少步数，不可达 -1。区分树上祖先、入环点和同环偏移，不能套无向距离。"
+    ],
+    "examples": [],
+    "code": "functional_graph.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "2.20",
+    "page": 58
+  },
+  {
+    "id": 39,
+    "key": "range_graph",
+    "title": "线段树优化建图",
+    "chapter": "2. 图论与建模",
+    "old_page": 56,
+    "notes": [
+      "RangeGraph(n) 中原点始终为 1..n；pointRange、rangePoint、rangeRange 均为闭区间，有向边且权非负。辅助点内部创建，distances(s) 只返回原点距离。出树父→子、入树子→父，叶子共用原点，区间到区间用一个中转点只支付一次权值。边 O(n+q log n)，点 O(n+q)。",
+      "在原点周围走辅助零边只代表集合覆盖；入树与出树方向相反，写错会凭空把一个区间里的点互相连通。"
+    ],
+    "examples": [
+      {
+        "title": "点 / 区间到区间的有向边",
+        "code": "int main() {\n    RangeGraph s(6);\n    s.pointRange(1, 2, 3, 5); // 1→[2,3]，每条权5。\n    s.rangePoint(2, 3, 4, 2); // [2,3]→4，权2。\n    s.rangeRange(4, 4, 5, 6, 1);\n    auto d = s.distances(1);\n    assert(d[2] == 5 && d[4] == 7 && d[6] == 8);\n}",
+        "deps": [],
+        "file": "examples/range_graph_1.cpp"
+      }
+    ],
+    "code": "range_graph.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "2.21",
+    "page": 59
+  },
+  {
+    "id": 40,
+    "key": "incremental_flow",
+    "title": "增量最大流",
+    "chapter": "2. 图论与建模",
+    "old_page": 57,
+    "notes": [
+      "见 Dinic 的残量图接口：保留同一对象，加入新边或增加正向剩余容量后，再调用 maxFlow 得到新增量，累计到原答案。容量减小或删边可能破坏可行流，不能直接复用。每轮遍历游标由算法重置。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "删除题意占位代码，重写为条件与公式速查",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": true,
+    "number": "2.22",
+    "page": 60
+  },
+  {
+    "id": 41,
+    "key": "second_mst",
+    "title": "严格次小生成树",
+    "chapter": "2. 图论与建模",
+    "old_page": 57,
+    "notes": [
+      "SecondMST::solve(n,e,mst,second)；false 表示图不连通，second==INF 表示不存在权重严格更大的生成树。树路径维护最大与严格次大边：候选边等于最大时要删次大。负权、重边允许；O(m log m+(n+m) log n)。"
+    ],
+    "examples": [],
+    "code": "second_mst.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "2.23",
+    "page": 60
+  },
+  {
+    "id": 42,
+    "key": "activation_events",
+    "title": "阈值激活与事件扫描",
+    "chapter": "2. 图论与建模",
+    "old_page": 57,
+    "notes": [
+      "先按阈值排序操作与询问，相同阈值的激活/查询顺序按题目 <= 或 < 决定。只在激活集合单调扩大时能用普通 DSU；有删除则考虑倒序、回滚或时间线段树。不提供依赖题意的空框架。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "移出打印正文；保留经过修订的适用条件于完整源稿/复核记录",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": false,
+    "page": null
+  },
+  {
+    "id": 43,
+    "key": "xor_mst",
+    "title": "隐式 XOR 完全图 MST",
+    "chapter": "2. 图论与建模",
+    "old_page": 58,
+    "notes": [
+      "XorMST::run(a) 返回 (权重,边列表)，a 为 0-based uint32_t，边端点同为 0-based。Boruvka 每轮 Trie 保存两个来自不同分量的代表，查询最小外部异或边。重复值与第 31 位均支持；O(32n log n)，避免枚举 n² 条边。"
+    ],
+    "examples": [],
+    "code": "xor_mst.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "2.24",
+    "page": 62
+  },
+  {
+    "id": 44,
+    "key": "max_weight_closure",
+    "title": "最大权闭合子图",
+    "chapter": "2. 图论与建模",
+    "old_page": 58,
+    "notes": [
+      "权重 w 为 1-based，依赖 (u,v) 表示选 u 必须选 v。正权连 S→u，负权连 u→T，依赖 u→v 连 INF；答案=正权和-最小割。maxClosure 返回权重与选点。INF=正权和+1，不能随便取小常数；本版要求正权和 < LLONG_MAX/4。"
+    ],
+    "examples": [],
+    "code": "max_weight_closure.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "2.25",
+    "page": 64
+  },
+  {
+    "id": 45,
+    "key": "boruvka",
+    "title": "Boruvka 最小生成森林",
+    "chapter": "2. 图论与建模",
+    "old_page": 58,
+    "notes": [
+      "Boruvka::run(n,e)，点 1..n，返回 weight、edges（1-based 输入边编号）、comp。每轮按轮初分量选最便宜外连边，再统一合并；平权用编号稳定比较，合并前再次判同根防重复。显式图 O(m log n)。隐式图的关键是实现每分量最便宜外连边查询，不能只打印一个 findBest 空函数。"
+    ],
+    "examples": [
+      {
+        "title": "森林返回值也要检查",
+        "code": "int main() {\n    vector<Boruvka::Edge> e = {{1, 2, 4}, {2, 3, 1}, {1, 3, 2}};\n    auto a = Boruvka::run(4, e);\n    assert(a.weight == 3 && a.comp == 2);\n    assert(a.edges.size() == 2); // 第4点孤立，不能当生成树。\n}",
+        "deps": [],
+        "file": "examples/boruvka_1.cpp"
+      }
+    ],
+    "code": "boruvka.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "2.26",
+    "page": 64
+  },
+  {
+    "id": 46,
+    "key": "prescribed_topological_order",
+    "title": "指定拓扑序的约束",
+    "chapter": "2. 图论与建模",
+    "old_page": 59,
+    "notes": [
+      "完整总序 p 要成为图的拓扑序，充要条件是每条有向边位置严格递增；只需检查所有边。若要求唯一拓扑序，还需相邻 p[i]→p[i+1] 有边。部分顺序约束用加边并检查 DAG；不存在普适的“稀疏化后同义”模板。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "移出打印正文；保留经过修订的适用条件于完整源稿/复核记录",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": false,
+    "page": null
+  },
+  {
+    "id": 47,
+    "key": "tree_diameter",
+    "title": "树的直径",
+    "chapter": "3. 树上算法",
+    "old_page": 59,
+    "notes": [
+      "非负边权的连通树，TreeDiameter::run(g) 两次找最远点，返回 a、b、dis，O(n)。允许零边权；负权时两次最远点法可能失败，需树形 DP。遍历用显式栈。"
+    ],
+    "examples": [],
+    "code": "tree_diameter.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "3.1",
+    "page": 66
+  },
+  {
+    "id": 48,
+    "key": "tree_centroids",
+    "title": "树的重心",
+    "chapter": "3. 树上算法",
+    "old_page": 60,
+    "notes": [
+      "删除后每块大小 <= n/2，至多两个；centroids(g) 返回全部重心，O(n)。这是点数重心，不是直径中心，也不是按边权定义的中心。"
+    ],
+    "examples": [],
+    "code": "tree_centroids.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "3.2",
+    "page": 66
+  },
+  {
+    "id": 49,
+    "key": "kruskal_reconstruction_tree",
+    "title": "Kruskal 重构树",
+    "chapter": "3. 树上算法",
+    "old_page": 60,
+    "notes": [
+      "KRT(n,e)，原点为叶子1..n，合并点编号>n，权为合并边权。bottle(u,v,ans) 查询原图 u-v 路径最小可能的最大边；跨分量 false，u=v 约定 0。构造 O(m log m+n log n)，查询 O(log n)，树高可为 n，预处理已用显式栈。"
+    ],
+    "examples": [
+      {
+        "title": "路径瓶颈查询",
+        "code": "int main() {\n    KRT s(4, {{1, 2, 4}, {2, 3, 7}, {1, 3, 10}});\n    long long w;\n    assert(s.bottle(1, 3, w) && w == 7);\n    assert(!s.bottle(1, 4, w));\n}",
+        "deps": [],
+        "file": "examples/kruskal_reconstruction_tree_1.cpp"
+      }
+    ],
+    "code": "kruskal_reconstruction_tree.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "3.3",
+    "page": 67
+  },
+  {
+    "id": 50,
+    "key": "lca",
+    "title": "倍增 LCA",
+    "chapter": "3. 树上算法",
+    "old_page": 62,
+    "notes": [
+      "连通无向树邻接表 1-based，LCA(g,root)；lca、jump、dis、isAnc。tin/tout 为 0-based 半开子树区间 [tin,tout)，order 是 DFS 先序；jump 超过根深度返回 0。预处理 O(n log n)，查询 O(log n)，支持深链。"
+    ],
+    "examples": [],
+    "code": "lca.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "3.4",
+    "page": 69
+  },
+  {
+    "id": 51,
+    "key": "hld",
+    "title": "重链剖分 HLD",
+    "chapter": "3. 树上算法",
+    "old_page": 64,
+    "notes": [
+      "HLD(n) 的 n 就是点数；addEdge 后仅调用一次 work(root)。in 从1起，out 为半开端点，子树闭区间是 [in[u],out[u]-1]；seq 把 DFS 下标映回点。根固定于 work，rootedParent/Size/Lca 支持临时换根查询。路径拆链 O(log n)，接线段树为 O(log² n)。",
+      "边权存较深端点，最后同链段改为 [in[lca]+1,in[另一点]]，空段跳过；跨链仍包含链头。非交换信息需要分别积累 u/v 两端并反转方向，不能像求和这样随意交换。"
+    ],
+    "examples": [
+      {
+        "title": "点权路径求和：连接 Seg",
+        "code": "struct Info {\n    long long sum = 0;\n    Info operator+(Info b) const {\n        return {sum + b.sum};\n    }\n};\nint main() {\n    HLD h(4);\n    h.addEdge(1, 2);\n    h.addEdge(1, 3);\n    h.addEdge(2, 4);\n    h.work();\n    vector<Info> a(5);\n    for(int u = 1; u <= 4; u++) {\n        a[h.in[u]] = {u};\n    }\n    Seg<Info> s(a);\n    auto query = [&](int u, int v) {\n        long long ans = 0;\n        while(h.top[u] != h.top[v]) {\n            if(h.dep[h.top[u]] < h.dep[h.top[v]]) {\n                swap(u, v);\n            }\n            ans += s.query(h.in[h.top[u]], h.in[u]).sum;\n            u = h.parent[h.top[u]];\n        }\n        if(h.dep[u] > h.dep[v]) {\n            swap(u, v);\n        }\n        return ans + s.query(h.in[u], h.in[v]).sum;\n    };\n    assert(query(4, 3) == 10);\n}",
+        "deps": [
+          "segment_tree.hpp"
+        ],
+        "file": "examples/hld_1.cpp"
+      }
+    ],
+    "code": "hld.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "3.5",
+    "page": 70
+  },
+  {
+    "id": 52,
+    "key": "tree_difference",
+    "title": "树上差分",
+    "chapter": "3. 树上算法",
+    "old_page": 66,
+    "notes": [
+      "TreeDiff 基于 LCA。addVertexPath(d,u,v,w) 用 d[u]+=w,d[v]+=w,d[lca]-=w,d[parent(lca)]-=w；边差分在 lca 减2w。所有操作完成后 accumulate(d,parent,order) 自底向上一次汇总。边权存在较深端点；传给 vector<i64> 的权值用 i64 或 7LL。"
+    ],
+    "examples": [],
+    "code": "tree_difference.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "3.6",
+    "page": 73
+  },
+  {
+    "id": 53,
+    "key": "virtual_tree",
+    "title": "虚树",
+    "chapter": "3. 树上算法",
+    "old_page": 67,
+    "notes": [
+      "原树 LCA 只预处理一次；build(keys) 返回 (根,父子边)。先按 DFS 序排序，加相邻 LCA，再去重，点数 <=2k-1；空集根0。边表示原树上一整段路径，无权距离为 dis(u,v)，加权距离用根距差，边上 min/max 要另查原树。每次只清理触及点，不能每询问清空 n 个位置。",
+      "本例算连接所有关键点的最小树边数；若原题必须从固定根出发，就把固定根也加入 keys。做DP时把虚树边建成父→子，反向处理 DFS 序；先确认关键点标记不能被加入的 LCA 混淆。"
+    ],
+    "examples": [
+      {
+        "title": "虚树边权与 Steiner 子树长度",
+        "code": "int main() {\n    vector<vector<int>> g(6);\n    for(auto [u, v] : vector<pair<int, int>>{{1, 2}, {1, 3}, {2, 4}, {2, 5}}) {\n        g[u].push_back(v);\n        g[v].push_back(u);\n    }\n    VirtualTree s(g);\n    auto [root, e] = s.build({4, 5, 3, 4});\n    long long ans = 0;\n    for(auto [u, v] : e) {\n        ans += s.dis(u, v);\n    }\n    assert(root == 1 && ans == 4);\n}",
+        "deps": [],
+        "file": "examples/virtual_tree_1.cpp"
+      }
+    ],
+    "code": "virtual_tree.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "3.7",
+    "page": 73
+  },
+  {
+    "id": 54,
+    "key": "doubling",
+    "title": "带信息倍增",
+    "chapter": "3. 树上算法",
+    "old_page": 69,
+    "notes": [
+      "Doubling<T,Op>(to,w,maxStep,identity)，信息描述从点 x 跳一次的权值。Op 为有单位元的结合运算，按路径先后合并；允许非交换。0 为吸收哨兵，信息已置单位元。jump(x,k) 返回终点与累计信息，0<=k<=maxStep；超范围高位不能静默使用。"
+    ],
+    "examples": [],
+    "code": "doubling.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "3.8",
+    "page": 74
+  },
+  {
+    "id": 55,
+    "key": "dsu_on_tree",
+    "title": "DSU on Tree",
+    "chapter": "3. 树上算法",
+    "old_page": 70,
+    "notes": [
+      "固定根子树统计，轻子树算完清空，重子树保留，再加轻子树与当前点。run(add,answer) 的 add(u,+1/-1) 必须可逆，answer(u) 读取当前整个子树。tin/tout 是1-based闭区间；总操作 O(n log n)，本版控制流为显式栈，run 结束清空统计。"
+    ],
+    "examples": [
+      {
+        "title": "子树不同颜色数",
+        "code": "int main() {\n    vector<vector<int>> g(5);\n    for(int u = 2; u <= 4; u++) {\n        g[1].push_back(u), g[u].push_back(1);\n    }\n    vector<int> color = {0, 1, 1, 2, 2}, cnt(3), ans(5);\n    int cur = 0;\n    DSUOnTree s(g);\n    s.run(\n        [&](int u, int d) {\n            if(cnt[color[u]]) {\n                cur--;\n            }\n            cnt[color[u]] += d;\n            if(cnt[color[u]]) {\n                cur++;\n            }\n        },\n        [&](int u) { ans[u] = cur; });\n    assert(ans[1] == 2 && ans[2] == 1 && cur == 0);\n}",
+        "deps": [],
+        "file": "examples/dsu_on_tree_1.cpp"
+      }
+    ],
+    "code": "dsu_on_tree.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "3.9",
+    "page": 75
+  },
+  {
+    "id": 56,
+    "key": "centroid_decomposition",
+    "title": "点分治与点分树",
+    "chapter": "3. 树上算法",
+    "old_page": 71,
+    "notes": [
+      "Centroid(g) 返回点分树 parent、level，O(n log n)；build 后 blocked 全为 true，只是构建时的内部标记。点分祖先链长度 O(log n)。下面给完整“染色点最近距离”用法；若做路径计数，分治中心时逐子树查询、再插入，避免同子树对被重复计算。",
+      "每个点更新/查询所有点分祖先。能保证某个分治中心落在原树查询点与最近染色点的路径上，故取最小正确。此实现结合倍增LCA为 O(log² n) 每次；若预存各点到点分祖先的距离可做到 O(log n)。只支持添加染色点，删除要把每个中心 best 改成可删多重集。"
+    ],
+    "examples": [
+      {
+        "title": "点分树：动态染色后的最近点",
+        "code": "int main() {\n    vector<vector<int>> g(6);\n    for(int u = 2; u <= 5; u++) {\n        g[u - 1].push_back(u), g[u].push_back(u - 1);\n    }\n    LCA l(g);\n    Centroid c(g);\n    const int INF = 1000000000;\n    vector<int> best(6, INF);\n    auto add = [&](int u) {\n        for(int x = u; x; x = c.parent[x]) {\n            best[x] = min(best[x], l.dis(u, x));\n        }\n    };\n    auto query = [&](int u) {\n        int ans = INF;\n        for(int x = u; x; x = c.parent[x]) {\n            ans = min(ans, best[x] + l.dis(u, x));\n        }\n        return ans;\n    };\n    add(1);\n    add(5);\n    assert(query(3) == 2 && query(4) == 1);\n}",
+        "deps": [
+          "lca.hpp"
+        ],
+        "file": "examples/centroid_decomposition_1.cpp"
+      }
+    ],
+    "code": "centroid_decomposition.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "3.10",
+    "page": 77
+  },
+  {
+    "id": 57,
+    "key": "rerooting",
+    "title": "换根 DP 速查",
+    "chapter": "3. 树上算法",
+    "old_page": 72,
+    "notes": [
+      "两遍：子→父计算 down，父→子计算 up。若合并可逆可减掉该子贡献；不可逆用前后缀合并，保持原顺序。根上的单位元、点权加入次数、边方向各自定义，不能复用一个不说明状态的空模板。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "删除题意占位代码，重写为条件与公式速查",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": true,
+    "number": "3.11",
+    "page": 78
+  },
+  {
+    "id": 58,
+    "key": "small_to_large",
+    "title": "Small-to-Large",
+    "chapter": "3. 树上算法",
+    "old_page": 72,
+    "notes": [
+      "把较小容器逐元素并入较大容器，元素所在容器大小至少翻倍，移动 O(n log n) 次；若每次插入 O(log n)，总 O(n log² n)。合并后旧容器应释放或复用，持久保存所有中间大容器会额外耗内存。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "删除题意占位代码，重写为条件与公式速查",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": true,
+    "number": "3.12",
+    "page": 78
+  },
+  {
+    "id": 59,
+    "key": "long_chain",
+    "title": "长链剖分",
+    "chapter": "3. 树上算法",
+    "old_page": 72,
+    "notes": [
+      "选深度最大的儿子，把其深度 DP 数组向父偏移一格复用；轻子数组逐项合并。只有合并代价与轻子数组长度成正比等条件下能得 O(n) 摊还。按子树大小选重儿子是重链剖分，不等价；数组缓冲区扩容会使引用失效。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "删除题意占位代码，重写为条件与公式速查",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": true,
+    "number": "3.13",
+    "page": 78
+  },
+  {
+    "id": 60,
+    "key": "affine_tree",
+    "title": "树上仿射关系",
+    "chapter": "3. 树上算法",
+    "old_page": 73,
+    "notes": [
+      "对关系 xu=a*xp+b，在固定根上组合为 xu=A*xroot+B。额外约束再解根变量。a 不可逆时不能贸然反向建关系，模数非素数时需 gcd 条件；它是建模公式，不是通用树模板。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "移出打印正文；保留经过修订的适用条件于完整源稿/复核记录",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": false,
+    "page": null
+  },
+  {
+    "id": 61,
+    "key": "lis",
+    "title": "LIS / 最长不下降子序列",
+    "chapter": "4. DP：实用代码与条件速查",
+    "old_page": 73,
+    "notes": [
+      "lisLength(a,true) 严格上升用 lower_bound；false 为不下降用 upper_bound。输入 0-based，O(n log n)，仅返回长度；恢复方案需记录前驱与每个长度结尾下标。"
+    ],
+    "examples": [],
+    "code": "lis.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "4.1",
+    "page": 79
+  },
+  {
+    "id": 62,
+    "key": "multi_knapsack",
+    "title": "多重背包：单调队列",
+    "chapter": "4. DP：实用代码与条件速查",
+    "old_page": 74,
+    "notes": [
+      "物品 1-based，w>0,m>=0；multiKnapsack 返回总重量不超过 capacity 的最大价值，允许不选，因此初值0。按重量模 w 的同余类维护 pre[j]-j/w*v 的滑窗，O(nV)，i64 价值。要求“恰好装满”需把不可达设负无穷并跳过不可达转移。"
+    ],
+    "examples": [],
+    "code": "multi_knapsack.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "4.2",
+    "page": 79
+  },
+  {
+    "id": 63,
+    "key": "digit_dp",
+    "title": "数位 DP 速查",
+    "chapter": "4. DP：实用代码与条件速查",
+    "old_page": 74,
+    "notes": [
+      "处理 [0,R]，区间答案 F(R)-F(L-1)，L=0 单独处理。状态常含 pos、lead、性质状态；tight 依上界变化，通常只缓存非 tight 状态。必须明确 0 是否计入、前导0是否影响性质；多次查询要清理依赖上界/长度的缓存。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "删除题意占位代码，重写为条件与公式速查",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": true,
+    "number": "4.3",
+    "page": 79
+  },
+  {
+    "id": 64,
+    "key": "profile_dp",
+    "title": "轮廓线 DP",
+    "chapter": "4. DP：实用代码与条件速查",
+    "old_page": 75,
+    "notes": [
+      "状态保留扫描线上的连通性/占用，每格更新并移动边界。插头连通标号需规范化后合并状态；行末移位不可丢掉未闭合连通块。一般状态数随宽度指数增长，先把较短边作为宽度。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "删除题意占位代码，重写为条件与公式速查",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": true,
+    "number": "4.4",
+    "page": 80
+  },
+  {
+    "id": 65,
+    "key": "median_transform",
+    "title": "中位数阈值变换",
+    "chapter": "4. DP：实用代码与条件速查",
+    "old_page": 75,
+    "notes": [
+      "判断中位数 >=x：ai>=x 映为+1，否则-1。奇数长度要求和>0；偶数取上中位数要求和>=0，取下中位数要求和>0（等价>=2）。前缀和把区间条件转成两前缀比较，须同时满足长度限制。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "删除题意占位代码，重写为条件与公式速查",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": true,
+    "number": "4.5",
+    "page": 80
+  },
+  {
+    "id": 66,
+    "key": "sparse_matrix_events",
+    "title": "稀疏矩阵事件 DP",
+    "chapter": "4. DP：实用代码与条件速查",
+    "old_page": 75,
+    "notes": [
+      "只有少数位置改变转移矩阵时，连续普通区段用 M^len 跳过，再处理特殊事件。使用列向量时先发生的矩阵写在乘积右侧；同坐标事件顺序与“该步是否已经走完”必须明确。预处理矩阵幂 O(d³ log len)。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "移出打印正文；保留经过修订的适用条件于完整源稿/复核记录",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": false,
+    "page": null
+  },
+  {
+    "id": 67,
+    "key": "permutation_lcs",
+    "title": "排列 LCS 转 LIS",
+    "chapter": "4. DP：实用代码与条件速查",
+    "old_page": 75,
+    "notes": [
+      "仅当映射序列中每个值唯一时，记录第一序列 pos，把第二序列映成 pos 后求严格 LIS。一般重复元素 LCS 不能这样做；可用 Hunt-Szymanski 对每次匹配位置倒序展开，规模取决于匹配对数。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "删除题意占位代码，重写为条件与公式速查",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": true,
+    "number": "4.6",
+    "page": 80
+  },
+  {
+    "id": 68,
+    "key": "knapsack",
+    "title": "背包循环方向",
+    "chapter": "4. DP：实用代码与条件速查",
+    "old_page": 75,
+    "notes": [
+      "01 背包容量降序；完全背包升序；多重可二进制拆分或用前述单调队列。至多容量初值0，恰好容量 dp[0]=0、其余-INF；计数背包的循环顺序决定计算排列还是组合。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "删除题意占位代码，重写为条件与公式速查",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": true,
+    "number": "4.7",
+    "page": 80
+  },
+  {
+    "id": 69,
+    "key": "monotone_dp",
+    "title": "单调队列优化 DP",
+    "chapter": "4. DP：实用代码与条件速查",
+    "old_page": 76,
+    "notes": [
+      "把转移写为 dp[i]=A(i)+min/max{B(j)} 且 j 的合法窗口左右端点单调移动。入队按 B 优劣弹尾，窗口过期弹头。平值弹不弹会影响方案选取；没有固定窗口或候选比较随 i 改变时不能直接套。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "删除题意占位代码，重写为条件与公式速查",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": true,
+    "number": "4.8",
+    "page": 80
+  },
+  {
+    "id": 70,
+    "key": "interval_dp",
+    "title": "区间 DP",
+    "chapter": "4. DP：实用代码与条件速查",
+    "old_page": 76,
+    "notes": [
+      "常见 dp[l][r]=min_k(dp[l][k]+dp[k+1][r]+w(l,r))，按长度递增。明确空区间、单点、INF 与合法分割点。三重循环只是问题骨架，此处只留状态与条件速查。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "删除题意占位代码，重写为条件与公式速查",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": true,
+    "number": "4.9",
+    "page": 80
+  },
+  {
+    "id": 71,
+    "key": "tree_knapsack",
+    "title": "树上背包",
+    "chapter": "4. DP：实用代码与条件速查",
+    "old_page": 76,
+    "notes": [
+      "合并儿子 v：new[i+j]=max(new[i+j],dp[u][i]+dp[v][j]+边贡献)，从合法容量与可达状态转移；原数组若就地更新必须防重复使用儿子。复杂度由子树容量和截断方式分析，不能把任意合并笼统写成 O(nK)。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "删除题意占位代码，重写为条件与公式速查",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": true,
+    "number": "4.10",
+    "page": 80
+  },
+  {
+    "id": 72,
+    "key": "sos_dp",
+    "title": "SOS 子集和与反演",
+    "chapter": "4. DP：实用代码与条件速查",
+    "old_page": 76,
+    "notes": [
+      "F[S]=Σ(T⊆S)f[T]：每位 b，对含 b 的 S 执行 F[S]+=F[S^(1<<b)]，O(B2^B)。反演把加改减；超集和条件改为不含 b。普通 SOS 不是按子集大小分层的子集卷积。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "删除题意占位代码，重写为条件与公式速查",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": true,
+    "number": "4.11",
+    "page": 80
+  },
+  {
+    "id": 73,
+    "key": "divide_conquer_dp",
+    "title": "分治 DP 优化",
+    "chapter": "4. DP：实用代码与条件速查",
+    "old_page": 76,
+    "notes": [
+      "上一层已固定，dp[i]=min_{j<i}(pre[j]+w(j,i))，最优决策 opt[i] 单调时递归求中点并缩小候选范围，一层 O(n log n) 次转移。需证明决策单调或 Monge 条件；当前层内互相依赖的转移不能照搬。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "删除题意占位代码，重写为条件与公式速查",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": true,
+    "number": "4.12",
+    "page": 80
+  },
+  {
+    "id": 74,
+    "key": "gray_code",
+    "title": "状态压缩与 Gray code",
+    "chapter": "4. DP：实用代码与条件速查",
+    "old_page": 77,
+    "notes": [
+      "Gray(i)=i^(i>>1)，相邻只改变一位；可用 __builtin_ctz(diff) 定位（diff!=0）。只适合能 O(1) 增删单元素贡献的枚举。uint64_t 全位移时避免 1<<64；一般子集枚举 sub=(sub-1)&S 的终止要显式处理0。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "删除题意占位代码，重写为条件与公式速查",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": true,
+    "number": "4.13",
+    "page": 80
+  },
+  {
+    "id": 75,
+    "key": "knuth",
+    "title": "Knuth 优化",
+    "chapter": "4. DP：实用代码与条件速查",
+    "old_page": 77,
+    "notes": [
+      "dp[l][r]=min_k(dp[l][k]+dp[k+1][r]+w(l,r))；要求区间代价满足包含单调性和四边形不等式，推出 opt[l][r-1]<=opt[l][r]<=opt[l+1][r]。只检查四边形不等式不足以自动成立。单点 opt 初始化，候选截到 [l,r-1]，O(n²)。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "删除题意占位代码，重写为条件与公式速查",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": true,
+    "number": "4.14",
+    "page": 81
+  },
+  {
+    "id": 76,
+    "key": "wqs",
+    "title": "WQS / Aliens trick",
+    "chapter": "4. DP：实用代码与条件速查",
+    "old_page": 77,
+    "notes": [
+      "给每段/每选项加惩罚 λ，求 min(F(k)+λk) 并同时记录 k；λ 增大时最优 k 非增，平值偏向统一方向。只有目标点在相应凸包上等条件才可从惩罚答案减 λK 恢复恰好 K 的值。计数跳过 K 时不能无证明输出这个式子。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "删除题意占位代码，重写为条件与公式速查",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": true,
+    "number": "4.15",
+    "page": 81
+  },
+  {
+    "id": 77,
+    "key": "bitset",
+    "title": "bitset 优化",
+    "chapter": "4. DP：实用代码与条件速查",
+    "old_page": 77,
+    "notes": [
+      "非负01背包：bs[0]=1，每物品 bs |= bs<<w。bitset<N> 的 N 是编译期常量，越界位自动截断；想用大范围时先计算可达和上界。移位/位运算约 O(N/机器字长)，负权不能直接使用左移。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "删除题意占位代码，重写为条件与公式速查",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": true,
+    "number": "4.16",
+    "page": 81
+  },
+  {
+    "id": 78,
+    "key": "modint",
+    "title": "模整数 MInt",
+    "chapter": "5. 数论与组合",
+    "old_page": 77,
+    "notes": [
+      "MInt<P> 保证值在 [0,P)；加减乘支持 2<=P<=INT_MAX。除法/逆元使用费马，要求 P 为素数且分母非0；非素数改用 exgcd，不能认为构造类型就自动保证可除。power 指数非负。"
+    ],
+    "examples": [],
+    "code": "modint.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "5.1",
+    "page": 82
+  },
+  {
+    "id": 79,
+    "key": "exgcd_crt",
+    "title": "exgcd / 扩展 CRT",
+    "chapter": "5. 数论与组合",
+    "old_page": 79,
+    "notes": [
+      "exgcd 用 i128 输出 x,y，满足 ax+by=gcd(a,b)，常用非负 a,b。invMod(a,m,res) 仅 gcd=1 可逆。crt 的每个元素是 (余数,正模数)；返回1成功、0不相容、-1合并模数超 i64，输出标准余数 r∈[0,mod)。不是所有同余都要求模数互素。"
+    ],
+    "examples": [
+      {
+        "title": "非互素 CRT",
+        "code": "int main() {\n    long long r, m;\n    int ok = crt({{2, 6}, {5, 9}}, r, m);\n    assert(ok == 1 && r == 14 && m == 18);\n    assert(crt({{1, 2}, {0, 4}}, r, m) == 0);\n}",
+        "deps": [],
+        "file": "examples/exgcd_crt_1.cpp"
+      }
+    ],
+    "code": "exgcd_crt.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "5.2",
+    "page": 83
+  },
+  {
+    "id": 80,
+    "key": "combination",
+    "title": "阶乘组合数",
+    "chapter": "5. 数论与组合",
+    "old_page": 80,
+    "notes": [
+      "Combination(N,P)，P 素数，预处理到 min(N,P-1)，查询要求 0<=n<=N 且 n<P；非法 k 返回0。n>=P 时要用 Lucas 或其他算法，本版不会静默返回错误0。O(N) 预处理、O(1) 查询。"
+    ],
+    "examples": [],
+    "code": "combination.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "5.3",
+    "page": 84
+  },
+  {
+    "id": 81,
+    "key": "lucas",
+    "title": "Lucas",
+    "chapter": "5. 数论与组合",
+    "old_page": 81,
+    "notes": [
+      "P 为小素数，预处理0..P-1 O(P)；C(n,k) 分 P 进制相乘 O(log_P n)。若 P≈1e9 无法开这么大的表；非素数不能直接用 Lucas，应分解素数幂处理。"
+    ],
+    "examples": [],
+    "code": "lucas.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "5.4",
+    "page": 85
+  },
+  {
+    "id": 82,
+    "key": "lagrange",
+    "title": "连续点拉格朗日插值",
+    "chapter": "5. 数论与组合",
+    "old_page": 82,
+    "notes": [
+      "y[i]=f(i),i=0..d，次数<=d；lagrange(y,x,P) O(d)，P 素数且 d<P，y 已规范化。x 可负或大于 P，先模 P；任意不连续横坐标需换通式，本版不适用。"
+    ],
+    "examples": [],
+    "code": "lagrange.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "5.5",
+    "page": 85
+  },
+  {
+    "id": 83,
+    "key": "linear_sieve",
+    "title": "线性筛",
+    "chapter": "5. 数论与组合",
+    "old_page": 84,
+    "notes": [
+      "LinearSieve(N)：primes、minp、phi、mu；phi[1]=mu[1]=1，0处为占位。O(N) 时间与空间。合数由最小质因子唯一筛出；分解小整数可反复除 minp。"
+    ],
+    "examples": [],
+    "code": "linear_sieve.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "5.6",
+    "page": 87
+  },
+  {
+    "id": 84,
+    "key": "mobius_phi",
+    "title": "φ / μ 前缀与反演",
+    "chapter": "5. 数论与组合",
+    "old_page": 85,
+    "notes": [
+      "MobiusPhi(N) 线性预处理，phiPrefix、muPrefix 查询至 N。Σ(d|n)φ(d)=n，Σ(d|n)μ(d)=[n=1]。互质对数=Σd μ(d)⌊A/d⌋⌊B/d⌋，结合整除分块；矩形与有序/无序定义要单独处理。"
+    ],
+    "examples": [],
+    "code": "mobius_phi.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "5.7",
+    "page": 87
+  },
+  {
+    "id": 85,
+    "key": "miller_rabin",
+    "title": "Miller-Rabin 64 位素性",
+    "chapter": "5. 数论与组合",
+    "old_page": 86,
+    "notes": [
+      "isPrime(u64) 使用确定性 64 位底数集合，mulMod 以 u128 乘法防溢出；0、1 为非素数。不能减少成只测2、3、5，也不要把浮点乘法取模替进去。"
+    ],
+    "examples": [],
+    "code": "miller_rabin.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "5.8",
+    "page": 88
+  },
+  {
+    "id": 86,
+    "key": "pollard_rho",
+    "title": "Pollard-Rho 分解",
+    "chapter": "5. 数论与组合",
+    "old_page": 87,
+    "notes": [
+      "PollardRho::factorize(n) 返回排好序、带重复的质因数；支持正 i64，n<=1 返回空。随机重试，不承诺最坏多项式时间；可传 seed 复现。对超出 i64 的无符号数，此分解接口不适用，虽素性判定支持 u64。"
+    ],
+    "examples": [],
+    "code": "pollard_rho.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "5.9",
+    "page": 89
+  },
+  {
+    "id": 87,
+    "key": "division_blocks",
+    "title": "整除分块",
+    "chapter": "5. 数论与组合",
+    "old_page": 90,
+    "notes": [
+      "sumFloorDiv(n,k)=Σ(i=1..n)⌊k/i⌋，n,k 非负，返回值需在 i64 内。同值块右端 r=min(n,k/(k/l))；商0时余下全为0。双商问题 r 同时取两者右端最小值，复杂度 O(√k)。"
+    ],
+    "examples": [],
+    "code": "division_blocks.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "5.10",
+    "page": 91
+  },
+  {
+    "id": 88,
+    "key": "floor_sum",
+    "title": "类欧几里得 floor sum",
+    "chapter": "5. 数论与组合",
+    "old_page": 90,
+    "notes": [
+      "floorSum(n,a,b,c)，c>0，i 从0到 n（包含 n）。返回 f=Σq_i、g=Σi*q_i、h=Σq_i²，其中 q_i=floor((ai+b)/c)。支持负 a,b，用向下取整而非 C++ 截断；中间 i128，输出三项需在 i64 内。O(log max(|a|,c))。"
+    ],
+    "examples": [],
+    "code": "floor_sum.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "5.11",
+    "page": 91
+  },
+  {
+    "id": 89,
+    "key": "bsgs",
+    "title": "扩展 BSGS",
+    "chapter": "5. 数论与组合",
+    "old_page": 91,
+    "notes": [
+      "BSGS::solve(a,b,m) 求 a^x≡b (mod m) 的最小 x>=0，无解 -1；m>0。处理不互素、a=0、m=1，模乘 i128；时间空间 O(√m)，m 很大时内存仍可能不可用。不能把哈希表重复值覆盖导致最小解丢失。"
+    ],
+    "examples": [
+      {
+        "title": "不互素与最小指数",
+        "code": "int main() {\n    assert(BSGS::solve(2, 4, 8) == 2);\n    assert(BSGS::solve(2, 3, 8) == -1);\n    assert(BSGS::solve(0, 0, 7) == 1);\n}",
+        "deps": [],
+        "file": "examples/bsgs_1.cpp"
+      }
+    ],
+    "code": "bsgs.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "5.12",
+    "page": 92
+  },
+  {
+    "id": 90,
+    "key": "matrix",
+    "title": "模矩阵与快速幂",
+    "chapter": "5. 数论与组合",
+    "old_page": 93,
+    "notes": [
+      "下标1-based，Matrix(row,col)，operator()(i,j)；乘法 O(rkc)，幂要求方阵与非负指数。固定 MOD=998244353，可换正模数，不做逆元时不要求素数。Matrix*vector 使用列向量：先 A 后 B 的总转移是 B*A；元素需在 [0,MOD)。"
+    ],
+    "examples": [
+      {
+        "title": "列向量：斐波那契",
+        "code": "int main() {\n    Matrix a(2, 2);\n    a(1, 1) = a(1, 2) = a(2, 1) = 1;\n    auto v = power(a, 10) * vector<int>{0, 1, 0};\n    assert(v[2] == 55); // [F(11),F(10)]，下标0占位。\n}",
+        "deps": [],
+        "file": "examples/matrix_1.cpp"
+      }
+    ],
+    "code": "matrix.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "5.13",
+    "page": 94
+  },
+  {
+    "id": 91,
+    "key": "dujiao_sieve",
+    "title": "杜教筛：φ 与 μ",
+    "chapter": "5. 数论与组合",
+    "old_page": 95,
+    "notes": [
+      "get(n) 返回 (Σφ,Σμ)，包括1..n，n<=0 为0。由 φ*1=id、μ*1=ε 得递推，分块减去 l>=2 的重复贡献，记忆化不同 n/l。Σφ 为 i128，Σμ 为 i64；不能直接 cout i128。预筛 limit 按内存与查询规模选，常取 n^(2/3) 量级；不同询问可共享 memo。",
+      "递推：Φ(n)=n(n+1)/2-Σ块(r-l+1)Φ(n/l)，M(n)=1-Σ块(r-l+1)M(n/l)，都从l=2开始。limit太小会拖慢，太大耗内存；按最大询问选一次预筛并复用对象。"
+    ],
+    "examples": [
+      {
+        "title": "查询与 i128 输出",
+        "code": "void print(__int128 x) {\n    if(x < 0) {\n        cout << '-', x = -x;\n    }\n    if(x >= 10) {\n        print(x / 10);\n    }\n    cout << char('0' + x % 10);\n}\nint main() {\n    DuJiaoSieve s(1000);\n    auto [a, b] = s.get(10);\n    assert(a == 32 && b == -1);\n    print(a);\n    cout << ' ' << b << '\\n';\n}",
+        "deps": [],
+        "file": "examples/dujiao_sieve_1.cpp"
+      }
+    ],
+    "code": "dujiao_sieve.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "5.14",
+    "page": 95
+  },
+  {
+    "id": 92,
+    "key": "min25_sieve",
+    "title": "Min_25 积性函数求和",
+    "chapter": "5. 数论与组合",
+    "old_page": 96,
+    "notes": [
+      "本版计算 Σ(i<=n)f(i) mod P，f(1)=1，P 为素数>3；默认洛谷 P5325：f(p^e)=p^e(p^e-1)。支持 f(p)=c0+c1*p+c2*p² 的积性函数，不是任意黑盒函数。修改时 fpe、sumFp、sumFpPrefix 三处必须一致；不能把积性误当完全积性。空间 O(√n)，经典筛阶段约 O(n^(3/4)/log n)，n还受 √n 数组与递归枚举耗时限制。",
+      "筛得到 g0/g1/g2 分别为不超过商值的质数个数、质数和、平方和；sp0/sp1/sp2 是前 j 个小质数相同前缀。S(x,j) 枚举最小质因子下标>=j的非1整数，先统计质数，再枚举p^e与更大质因子部分；solve 最后补 f(1)=1。g/sp取值本来已模P。"
+    ],
+    "examples": [
+      {
+        "title": "默认积性函数的调用",
+        "code": "int main() {\n    Min25Sieve s(10, 1000000007);\n    assert(s.solve() == 263);\n}",
+        "deps": [],
+        "file": "examples/min25_sieve_1.cpp"
+      },
+      {
+        "title": "改成 φ：替换三处函数",
+        "code": "i64 fpe(i64 p, int e) const {\n    return powerMod(p % mod, e - 1, mod) * ((p - 1) % mod) % mod;\n}\ni64 sumFp(i64 x) const {\n    int k = get(x);\n    return (g1[k] - g0[k] + mod) % mod;\n}\ni64 sumFpPrefix(int j) const {\n    return (sp1[j] - sp0[j] % mod + mod) % mod;\n}",
+        "file": "examples/min25_phi.cpp",
+        "deps": [],
+        "kind": "hooks"
+      },
+      {
+        "title": "改成约数个数 τ：替换三处函数",
+        "code": "i64 fpe(i64 p, int e) const {\n    return (e + 1) % mod;\n}\ni64 sumFp(i64 x) const {\n    return 2 * g0[get(x)] % mod;\n}\ni64 sumFpPrefix(int j) const {\n    return 2 * sp0[j] % mod;\n}",
+        "file": "examples/min25_tau.cpp",
+        "deps": [],
+        "kind": "hooks"
+      },
+      {
+        "title": "改成 μ：替换三处函数",
+        "code": "i64 fpe(i64 p, int e) const {\n    return e == 1 ? mod - 1 : 0;\n}\ni64 sumFp(i64 x) const {\n    return (mod - g0[get(x)]) % mod;\n}\ni64 sumFpPrefix(int j) const {\n    return (mod - sp0[j] % mod) % mod;\n}",
+        "file": "examples/min25_mu.cpp",
+        "deps": [],
+        "kind": "hooks"
+      }
+    ],
+    "code": "min25_sieve.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "5.15",
+    "page": 96
+  },
+  {
+    "id": 93,
+    "key": "divisor_updates",
+    "title": "约数枚举更新",
+    "chapter": "5. 数论与组合",
+    "old_page": 99,
+    "notes": [
+      "已知质因数幂分解，用每个质因数的0..e次幂组合生成所有约数，数量 τ(n)；排序不是必需。若更新所有倍数则是另一方向的筛法。不要依赖未定义的“贡献函数”当成可直接抄的代码。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "移出打印正文；保留经过修订的适用条件于完整源稿/复核记录",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": false,
+    "page": null
+  },
+  {
+    "id": 94,
+    "key": "semiring_matrix",
+    "title": "半环矩阵",
+    "chapter": "5. 数论与组合",
+    "old_page": 99,
+    "notes": [
+      "把普通乘法的 +、* 改为对应“加法”和“乘法”，需满足结合、分配与单位元。min-plus：加法=min、乘法=路径长度相加，单位矩阵对角0其余INF；算恰好 k 条边最短路。不可达先判断再相加，避免 INF 溢出。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "删除题意占位代码，重写为条件与公式速查",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": true,
+    "number": "5.16",
+    "page": 99
+  },
+  {
+    "id": 95,
+    "key": "gcd_counting",
+    "title": "按 gcd 分类计数",
+    "chapter": "5. 数论与组合",
+    "old_page": 99,
+    "notes": [
+      "若 H(d) 统计“每项均可被 d 整除”，恰好 gcd=g 的个数为 Σk μ(k)H(gk)。权重版 Σf(gcd)=Σd (f*μ)(d)H(d)。H 与 f 必须由题目定义；删除原资料缺少定义的式子，避免把符号 g(d) 误当 gcd。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "移出打印正文；保留经过修订的适用条件于完整源稿/复核记录",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": false,
+    "page": null
+  },
+  {
+    "id": 96,
+    "key": "two_adic",
+    "title": "2-adic 估值",
+    "chapter": "5. 数论与组合",
+    "old_page": 99,
+    "notes": [
+      "v2(x) 为2的指数，对非零无符号整数可用 __builtin_ctzll(x)；x=0 无有限估值且 builtin 未定义。只用于可证明每步去除2因子的过程，不能把未说明不变量的片段作为板子。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "移出打印正文；保留经过修订的适用条件于完整源稿/复核记录",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": false,
+    "page": null
+  },
+  {
+    "id": 97,
+    "key": "euler_tower",
+    "title": "扩展欧拉降幂",
+    "chapter": "5. 数论与组合",
+    "old_page": 100,
+    "notes": [
+      "模 m>1，指数 b>=φ(m) 时可用 b%φ(m)+φ(m)；小指数必须保留原值，需额外维护是否达到阈值。只记指数模 φ(m) 无法判断是否加 φ(m)。m=1 立即0，约定0^0=1；合数底数不互素时尤其不能直接费马降幂。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "删除题意占位代码，重写为条件与公式速查",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": true,
+    "number": "5.17",
+    "page": 100
+  },
+  {
+    "id": 98,
+    "key": "euclidean_batching",
+    "title": "欧几里得批量跳跃",
+    "chapter": "5. 数论与组合",
+    "old_page": 100,
+    "notes": [
+      "只有操作过程等价于对较大数连续减较小数时，才能用除法批量计算。必须处理整除后变0的停止条件、计步方式和额外代价；普通 gcd 的商并不自动等于题目的步数。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "移出打印正文；保留经过修订的适用条件于完整源稿/复核记录",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": false,
+    "page": null
+  },
+  {
+    "id": 99,
+    "key": "fft",
+    "title": "FFT 整数卷积",
+    "chapter": "6. 多项式",
+    "old_page": 100,
+    "notes": [
+      "convolutionFft(int向量,int向量) 返回 i64；空输入返回空。长度补到足够的2次幂，O(n log n)。浮点误差随长度与系数规模增长，没有统一“1e14都准确”保证；需要严格模结果用 NTT，任意模数可用多模 NTT+CRT。"
+    ],
+    "examples": [],
+    "code": "fft.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "6.1",
+    "page": 101
+  },
+  {
+    "id": 100,
+    "key": "ntt",
+    "title": "NTT 模 998244353",
+    "chapter": "6. 多项式",
+    "old_page": 101,
+    "notes": [
+      "convolution 支持负系数并归一化；结果长 a.size()+b.size()-1。大卷积的补齐长度 <=2^23，原根3；改模数时必须同时核对原根与2次幂上限。convolutionTrunc 先做足够长的线性卷积再截断，不能只按输出长度补齐。"
+    ],
+    "examples": [],
+    "code": "ntt.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "6.2",
+    "page": 102
+  },
+  {
+    "id": 101,
+    "key": "fwt",
+    "title": "FWT：OR / AND / XOR",
+    "chapter": "6. 多项式",
+    "old_page": 104,
+    "notes": [
+      "convOr/And/Xor 输出补齐到2次幂的按位卷积，系数模 P=998244353。OR/AND 的逆变换为加减反演；XOR 每层除2，故要求2可逆。空输入返回空；这些卷积下标是位集合运算，不是普通下标相加。"
+    ],
+    "examples": [],
+    "code": "fwt.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "6.3",
+    "page": 104
+  },
+  {
+    "id": 102,
+    "key": "fps",
+    "title": "形式幂级数 inv / ln / exp",
+    "chapter": "6. 多项式",
+    "old_page": 107,
+    "notes": [
+      "模998244353，输入系数已规范化，limit为保留系数个数。polyInv 要 a0!=0；polyLog 返回常数0的 ln(a/a0)，标准 ln 要 a0=1；polyExp 要 a0=0（空视为0）。limit<P且内部卷积补齐<=2^23。Newton 每轮加倍，O(n log n)；截断卷积不得发生循环混叠。"
+    ],
+    "examples": [
+      {
+        "title": "逆、对数与指数的约定",
+        "code": "int main() {\n    vector<int> a = {1, 2, 3};\n    auto b = polyInv(a, 8);\n    auto c = fpsConvTrunc(a, b, 8);\n    c.resize(8);\n    assert(c[0] == 1);\n    for(int i = 1; i < 8; i++) {\n        assert(c[i] == 0);\n    }\n    auto d = polyExp(polyLog(a, 8), 8);\n    a.resize(8);\n    assert(d == a);\n}",
+        "deps": [],
+        "file": "examples/fps_1.cpp"
+      }
+    ],
+    "code": "fps.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "6.4",
+    "page": 106
+  },
+  {
+    "id": 103,
+    "key": "gauss",
+    "title": "Gauss-Jordan 消元",
+    "chapter": "7. 线性代数",
+    "old_page": 110,
+    "notes": [
+      "a[1..n][1..m] 为系数，最后一列默认 RHS；矩形系统也按最后列处理，求纯矩阵秩传 variables=列数。返回秩与主元列对应行；必须另查零系数行非零 RHS 判断无解，秩<变量数为多解。mod版要求素数、输入归一化；double版采用最大绝对值主元，误差仍依条件数。",
+      "仅求秩而不带右端列：gaussMod(a,P,w,列数)。浮点判矛盾用 abs(rhs)>eps，输入条件很差时加大容差也未必可靠。"
+    ],
+    "examples": [
+      {
+        "title": "模素数方程：判无解并读答案",
+        "code": "int main() {\n    const int P = 101, n = 3, m = 2;\n    vector<vector<int>> a = {{0, 0, 0, 0}, {0, 1, 2, 5}, {0, 2, 100, 0}, {0, 3, 1, 5}};\n    vector<int> w;\n    int r = gaussMod(a, P, w);\n    bool ok = true;\n    for(int i = r + 1; i <= n; i++) {\n        if(a[i][m + 1]) {\n            ok = false;\n        }\n    }\n    assert(ok);\n    vector<int> x(m + 1); // 自由变量取0。\n    for(int j = 1; j <= m; j++) {\n        if(w[j]) {\n            x[j] = a[w[j]][m + 1];\n        }\n    }\n    assert(x[1] == 1 && x[2] == 2);\n}",
+        "deps": [],
+        "file": "examples/gauss_1.cpp"
+      }
+    ],
+    "code": "gauss.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "7.1",
+    "page": 110
+  },
+  {
+    "id": 104,
+    "key": "xor_basis",
+    "title": "64 位异或线性基",
+    "chapter": "7. 线性代数",
+    "old_page": 113,
+    "notes": [
+      "insert、decompose、maxXor、maxWith；zero 表示存在非空子集异或0。minXor(ans)、kth(k,ans) 的 bool 区分无答案与合法 ULLONG_MAX；k从1起，枚举非空子集的“不同异或值”，不是带重数第k项。rank64且包含0时共有2^64个值，最后那个序号无法用 u64 表示。"
+    ],
+    "examples": [
+      {
+        "title": "非空子集与第 k 个不同值",
+        "code": "int main() {\n    XorBasis s;\n    s.insert(1);\n    s.insert(2);\n    s.insert(3);\n    unsigned long long x;\n    assert(s.zero && s.kth(1, x) && x == 0);\n    assert(s.kth(4, x) && x == 3);\n    assert(!s.kth(5, x));\n}",
+        "deps": [],
+        "file": "examples/xor_basis_1.cpp"
+      }
+    ],
+    "code": "xor_basis.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "7.2",
+    "page": 112
+  },
+  {
+    "id": 105,
+    "key": "xor_system",
+    "title": "GF(2) bitset 方程组",
+    "chapter": "7. 线性代数",
+    "old_page": 115,
+    "notes": [
+      "XorLinearSystem<MAXC>(n,m,p)，行列0-based，m个变量+p个RHS需 <=MAXC。solve 消元，若某右端无解会整体 false；answer 把自由变量置0，给每个 RHS 一组解。单个RHS的解数可由自由变量数 m-rank 得2^(m-rank)，按题目取模或大数。"
+    ],
+    "examples": [],
+    "code": "xor_system.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "7.3",
+    "page": 114
+  },
+  {
+    "id": 106,
+    "key": "kmp",
+    "title": "KMP",
+    "chapter": "8. 字符串",
+    "old_page": 117,
+    "notes": [
+      "kmpMatch(text,pattern) 返回1-based匹配起点，允许重叠；空模式约定返回空列表。getNext 是1-based前缀函数，O(n+m)。字符串若有空格要用 getline 读入。"
+    ],
+    "examples": [],
+    "code": "kmp.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "8.1",
+    "page": 116
+  },
+  {
+    "id": 107,
+    "key": "z_function",
+    "title": "Z / 扩展 KMP",
+    "chapter": "8. 字符串",
+    "old_page": 118,
+    "notes": [
+      "zFunction(s) 为1-based，z[1]=n；exKmp(text,pattern)[i] 是文本第i位置后缀与模式的 LCP，都是 O(n+m)。空串安全。若用拼接求匹配，分隔符必须保证不在字符集中。"
+    ],
+    "examples": [],
+    "code": "z_function.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "8.2",
+    "page": 116
+  },
+  {
+    "id": 108,
+    "key": "rolling_hash",
+    "title": "64 位滚动哈希",
+    "chapter": "8. 字符串",
+    "old_page": 119,
+    "notes": [
+      "get(l,r) 为1-based闭区间，溢出按 unsigned 的2^64模运算，字节按 unsigned char 处理。两串比较要用同一 base；默认固定base不是抗构造保证。哈希有碰撞，要求确定性用 SA/KMP；可随机奇base、双模或最终原串核验。"
+    ],
+    "examples": [],
+    "code": "rolling_hash.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "8.3",
+    "page": 117
+  },
+  {
+    "id": 109,
+    "key": "subsequence_automaton",
+    "title": "子序列自动机",
+    "chapter": "8. 字符串",
+    "old_page": 119,
+    "notes": [
+      "SeqAM(s,sigma,base) 接连续字符集，例如数字 sigma=10,base='0'；构造 O(nσ)，check(t) O(|t|)，空串匹配。原串字符必须落在此范围；目标串越界返回 false。它匹配子序列，不是连续子串。"
+    ],
+    "examples": [],
+    "code": "subsequence_automaton.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "8.4",
+    "page": 118
+  },
+  {
+    "id": 110,
+    "key": "trie",
+    "title": "Trie 多重字符串集",
+    "chapter": "8. 字符串",
+    "old_page": 120,
+    "notes": [
+      "默认26小写，insert、erase删一份、count、countPrefix；空串合法。节点0为根，ch的0表示无边。空间 O(σ·总长度)，删除不回收节点；字符范围变大时考虑映射或稀疏边。"
+    ],
+    "examples": [],
+    "code": "trie.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "8.5",
+    "page": 118
+  },
+  {
+    "id": 111,
+    "key": "aho_corasick",
+    "title": "AC 自动机",
+    "chapter": "8. 字符串",
+    "old_page": 122,
+    "notes": [
+      "先 add(非空小写模式)，保存终点编号，再 build 一次；构建后不能再插入。match(text) 返回各状态计数，按保存终点读取每个模式次数，重复模式可共用同一终点。逆 BFS 累加 fail，O(σ·节点+文本长)；支持重叠，不按 fail 链逐字枚举全部模式。"
+    ],
+    "examples": [
+      {
+        "title": "重复模式、重叠匹配",
+        "code": "int main() {\n    AC s;\n    int x = s.add(\"aba\"), y = s.add(\"ba\"), z = s.add(\"aba\");\n    s.build();\n    auto cnt = s.match(\"ababa\");\n    assert(cnt[x] == 2 && cnt[y] == 2 && cnt[z] == 2);\n}",
+        "deps": [],
+        "file": "examples/aho_corasick_1.cpp"
+      }
+    ],
+    "code": "aho_corasick.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "8.6",
+    "page": 120
+  },
+  {
+    "id": 112,
+    "key": "sam",
+    "title": "后缀自动机 SAM",
+    "chapter": "8. 字符串",
+    "old_page": 123,
+    "notes": [
+      "顺序 add(c) 构建一个小写串，根0，fa=-1，无转移-1；普通新状态cnt=1，clonecnt=0。count() 按len降序沿fa累加，之后不可再add；可重复调用count而不重复累加。occ(t)、distinct()、lcs(t) 直接使用。状态u代表长度 (len[fa[u]],len[u]] 的一组子串，共享endpos，别把状态数当不同子串数。",
+      "cnt先按每个前缀终点统计，再向fa传递，正是endpos大小；查一个串沿ch到达u后cnt[u]即次数。lcs在失配时沿fa跳并把当前长度截到新len，不是只换状态不换长度。要多串广义SAM不能每串简单last=0继续套普通extend。"
+    ],
+    "examples": [
+      {
+        "title": "构建 / 出现次数 / 不同子串 / LCS",
+        "code": "int main() {\n    SAM s;\n    for(char c : string(\"ababa\")) {\n        s.add(c);\n    }\n    assert(s.distinct() == 9);\n    s.count();\n    assert(s.occ(\"aba\") == 2 && s.occ(\"ba\") == 2);\n    assert(s.occ(\"ac\") == 0);\n    assert(s.lcs(\"cababd\") == 4);\n    long long ans = 0;\n    for(int u = 1; u < int(s.t.size()); u++) {\n        ans += s.t[u].len - s.t[s.t[u].fa].len;\n    }\n    assert(ans == s.distinct());\n}",
+        "deps": [],
+        "file": "examples/sam_1.cpp"
+      }
+    ],
+    "code": "sam.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "8.7",
+    "page": 121
+  },
+  {
+    "id": 113,
+    "key": "suffix_array",
+    "title": "后缀数组 SA",
+    "chapter": "8. 字符串",
+    "old_page": 125,
+    "notes": [
+      "SA(s) O(n log n) 倍增计数排序，字节字符；sa/rk/height为1-based，height[i]=LCP(sa[i-1],sa[i])，height[1]=0。两后缀LCP是它们排名间 height 的最小值，可接ST；空串支持。"
+    ],
+    "examples": [
+      {
+        "title": "SA + height：两后缀 LCP",
+        "code": "int main() {\n    SA s(\"banana\");\n    int a = s.rk[2], b = s.rk[4];\n    if(a > b) {\n        swap(a, b);\n    }\n    int ans = INT_MAX;\n    for(int i = a + 1; i <= b; i++) {\n        ans = min(ans, s.height[i]);\n    }\n    assert(ans == 3); // anana 与 ana；多询问用ST预处理height。\n}",
+        "deps": [],
+        "file": "examples/suffix_array_1.cpp"
+      }
+    ],
+    "code": "suffix_array.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "8.8",
+    "page": 123
+  },
+  {
+    "id": 114,
+    "key": "minimal_rotation",
+    "title": "最小循环表示",
+    "chapter": "8. 字符串",
+    "old_page": 127,
+    "notes": [
+      "minRotation(s) 返回0-based起点，答案=s.substr(k)+s.substr(0,k)，O(n)。空串返回0；多个最优起点任取。不同字符串的循环同构比较先规范化，不能仅比较最优起点编号。"
+    ],
+    "examples": [],
+    "code": "minimal_rotation.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "8.9",
+    "page": 125
+  },
+  {
+    "id": 115,
+    "key": "manacher",
+    "title": "Manacher",
+    "chapter": "8. 字符串",
+    "old_page": 128,
+    "notes": [
+      "longestPal 返回最长回文长度，O(n)；manacherRadius 的扩展字符数组用独立整数哨兵，原串含 $/#/& 也安全。半径包括中心，原串回文长度是半径-1；空串为0。"
+    ],
+    "examples": [],
+    "code": "manacher.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "8.10",
+    "page": 125
+  },
+  {
+    "id": 116,
+    "key": "eertree",
+    "title": "回文自动机 PAM",
+    "chapter": "8. 字符串",
+    "old_page": 128,
+    "notes": [
+      "PAM(s) 一次构建小写串，0为长度-1根，1为长度0根，实回文节点>=2。distinct 返回不同回文个数；count 后 cnt 为出现次数，重复count不再累加。len*cnt 需转 i64；count 后不再 extend。"
+    ],
+    "examples": [
+      {
+        "title": "回文出现次数的应用",
+        "code": "int main() {\n    PAM s(\"ababa\");\n    s.count();\n    long long ans = 0;\n    for(int u = 2; u < s.size(); u++) {\n        ans = max(ans, 1LL * s.tr[u].len * s.tr[u].cnt);\n    }\n    assert(s.distinct() == 5 && ans == 6);\n}",
+        "deps": [],
+        "file": "examples/eertree_1.cpp"
+      }
+    ],
+    "code": "eertree.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "8.11",
+    "page": 126
+  },
+  {
+    "id": 117,
+    "key": "point",
+    "title": "点与基础几何运算",
+    "chapter": "9. 计算几何",
+    "old_page": 130,
+    "notes": [
+      "整型坐标优先 Point<i64>，dot/cross/square 的乘法先提升 i128；加减坐标仍是原类型。建议 |坐标|<=1e12，保证差与后续128乘积范围。排序比较必须严格，不能在 operator< 里随便加 EPS；零向量极角归属按 polarOrder 定义。"
+    ],
+    "examples": [],
+    "code": "point.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "9.1",
+    "page": 129
+  },
+  {
+    "id": 118,
+    "key": "line",
+    "title": "直线",
+    "chapter": "9. 计算几何",
+    "old_page": 133,
+    "notes": [
+      "Line<T>(a,b)，a!=b 才是真直线；onLeft 是严格左侧，onLine 整型精确判定。lineCross 调用前确认不平行；整型交点转 long double。distancePL 也处理退化点；浮点共线判定应按题目尺度设置容差。"
+    ],
+    "examples": [],
+    "code": "line.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "9.2",
+    "page": 130
+  },
+  {
+    "id": 119,
+    "key": "segment",
+    "title": "线段交与距离",
+    "chapter": "9. 计算几何",
+    "old_page": 135,
+    "notes": [
+      "segCross 返回 (类型,p,q)：0不交，1内点相交，2共线重叠段，3接触于单点（含退化线段）。onSeg 含端点；distancePS、distanceSS。整型判交精确，输出坐标为浮点；包含竖直/负斜率重叠与点段退化。"
+    ],
+    "examples": [],
+    "code": "segment.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "9.3",
+    "page": 131
+  },
+  {
+    "id": 120,
+    "key": "convex_hull",
+    "title": "凸包 Andrew",
+    "chapter": "9. 计算几何",
+    "old_page": 139,
+    "notes": [
+      "convexHull 去重，返回不重复首点的逆时针严格凸包，共线点只留端点；0/1/2点都处理。O(n log n)。polygonArea 返回有向面积，逆时针为正（浮点）；需精确半整数面积时自己累计 i128 叉积得到两倍面积。"
+    ],
+    "examples": [],
+    "code": "convex_hull.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "9.4",
+    "page": 133
+  },
+  {
+    "id": 121,
+    "key": "point_in_polygon",
+    "title": "点在简单多边形内",
+    "chapter": "9. 计算几何",
+    "old_page": 141,
+    "notes": [
+      "pointInPolygon 包含边界，空多边形 false，O(n)；顶点不必凸，顺/逆时针均可。采用射线奇偶规则，不适用自交多边形面积意义；若要三态，先 onSeg 检测边界再做内部判定。"
+    ],
+    "examples": [],
+    "code": "point_in_polygon.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "9.5",
+    "page": 133
+  },
+  {
+    "id": 122,
+    "key": "closest_pair",
+    "title": "最近点对",
+    "chapter": "9. 计算几何",
+    "old_page": 143,
+    "notes": [
+      "closest2(vector<Point>) 返回最小平方距离 i128，<2点为 CP_INF；整型坐标，无浮点误差。分治后按 y 归并，条带逐点检查，O(n log n)；重复点返回0。此 Point 为简洁的非模板独立版本，别与基础 Point<T> 重复定义。"
+    ],
+    "examples": [],
+    "code": "closest_pair.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "9.6",
+    "page": 134
+  },
+  {
+    "id": 123,
+    "key": "rotating_calipers",
+    "title": "旋转卡壳：凸包直径",
+    "chapter": "9. 计算几何",
+    "old_page": 144,
+    "notes": [
+      "diameter2(h) 输入逆时针凸包（不重复首点、去除中间共线点），返回最大平方距离，整型为i128；<2点为0，2点直接计算。先凸包 O(n log n)，卡壳 O(n)。不能直接输入乱序点或凹多边形。"
+    ],
+    "examples": [],
+    "code": "rotating_calipers.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "9.7",
+    "page": 135
+  },
+  {
+    "id": 124,
+    "key": "circle",
+    "title": "外接圆与圆交",
+    "chapter": "9. 计算几何",
+    "old_page": 145,
+    "notes": [
+      "独立 long double Point、Circle。circumcircle(a,b,c,out) 共线 false；circleCross 返回0/1/2交点，正半径重合为-1，两个相同零圆为一个点。半径>=0；EPS=1e-12需按坐标尺度调整，接近退化时没有浮点绝对精确保证。"
+    ],
+    "examples": [],
+    "code": "circle.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "9.8",
+    "page": 135
+  },
+  {
+    "id": 125,
+    "key": "half_plane_intersection",
+    "title": "半平面交",
+    "chapter": "9. 计算几何",
+    "old_page": 147,
+    "notes": [
+      "每个有向 Line(a,b) 保留左侧含边界，a!=b。halfPlanes 返回逆时针顶点；适用于有界且正面积的交集，空返回也包含点/线退化情形。若题目本来有边界，把真实边界加入；不要用随意大框把无界问题伪装成有界。角度严格排序，同向平行留最紧，O(n log n)。"
+    ],
+    "examples": [
+      {
+        "title": "四条真实边界构成矩形",
+        "code": "int main() {\n    vector<Point> p = {{0, 0}, {3, 0}, {3, 2}, {0, 2}};\n    vector<Line> a;\n    for(int i = 0; i < 4; i++) {\n        a.emplace_back(p[i], p[(i + 1) % 4]);\n    }\n    auto h = halfPlanes(a);\n    long double area = 0;\n    for(int i = 0; i < int(h.size()); i++) {\n        area += cross(h[i], h[(i + 1) % h.size()]);\n    }\n    assert(fabsl(area / 2 - 6) < 1e-10);\n}",
+        "deps": [],
+        "file": "examples/half_plane_intersection_1.cpp"
+      }
+    ],
+    "code": "half_plane_intersection.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "9.9",
+    "page": 136
+  },
+  {
+    "id": 126,
+    "key": "minkowski_sum",
+    "title": "Minkowski 和",
+    "chapter": "9. 计算几何",
+    "old_page": 150,
+    "notes": [
+      "输入两个逆时针凸包，不重复首点、去除中间共线点；minkowskiSum 返回它们和的凸包。正常多边形 O(n+m)，点/线段退化情况合并候选点后重做凸包。非凸集合先取凸包将改变原集合，只有求凸包意义时可这样做。"
+    ],
+    "examples": [],
+    "code": "minkowski_sum.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "9.10",
+    "page": 138
+  },
+  {
+    "id": 127,
+    "key": "rectangle_union",
+    "title": "矩形面积并",
+    "chapter": "9. 计算几何",
+    "old_page": 152,
+    "notes": [
+      "rectArea 接受 {x1,y1,x2,y2}，轴平行闭矩形，零面积忽略，反向端点归一化。扫描x与压缩y区间长度，O(n log n)，结果i128。压缩的是端点，叶子代表 [ys[i],ys[i+1]) 的实际长度；同x事件间宽度0。"
+    ],
+    "examples": [],
+    "code": "rectangle_union.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "9.11",
+    "page": 140
+  },
+  {
+    "id": 128,
+    "key": "binary_search",
+    "title": "二分答案边界",
+    "chapter": "10. 离线算法与技巧",
+    "old_page": 154,
+    "notes": [
+      "先证明判定单调并找到有解端点。首个true：lo<hi 时 mid=lo+(hi-lo)/2，true令hi=mid，否则lo=mid+1。最后true用上中位数 mid=lo+(hi-lo+1)/2，true令lo=mid，否则hi=mid-1。整个差值若可超i64，先转i128；浮点用固定迭代次数。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "删除题意占位代码，重写为条件与公式速查",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": true,
+    "number": "10.1",
+    "page": 142
+  },
+  {
+    "id": 129,
+    "key": "mo",
+    "title": "普通莫队：不同数计数",
+    "chapter": "10. 离线算法与技巧",
+    "old_page": 154,
+    "notes": [
+      "moDistinct(a,queries)，a是1-based，可有负值，内部压缩；询问为闭区间，返回按输入0-based序的不同值数。块长约sqrt(n)，蛇形排序，O((n+q)√n)。带修改/树上路径需额外时间维或欧拉序转换，本版不包含。"
+    ],
+    "examples": [],
+    "code": "mo.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "10.2",
+    "page": 142
+  },
+  {
+    "id": 130,
+    "key": "cdq",
+    "title": "CDQ 三维偏序",
+    "chapter": "10. 离线算法与技巧",
+    "old_page": 154,
+    "notes": [
+      "dominance(p) 输入0-based三元组，返回每点满足 x<=X,y<=Y,z<=Z 的“其他点数”。重复三元组统一计数，自身扣1；z内部压缩，CDQ 按y归并，BIT回滚，O(n log² n)。改为严格不等式要同步调整去重与扫序。"
+    ],
+    "examples": [
+      {
+        "title": "三维偏序的重复点",
+        "code": "int main() {\n    auto a = dominance({{1, 1, 1}, {1, 1, 1}, {2, 2, 2}});\n    assert(a == vector<long long>({1, 1, 2}));\n}",
+        "deps": [],
+        "file": "examples/cdq_1.cpp"
+      }
+    ],
+    "code": "cdq.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "10.3",
+    "page": 143
+  },
+  {
+    "id": 131,
+    "key": "parallel_binary_search",
+    "title": "整体二分：动态区间第k小",
+    "chapter": "10. 离线算法与技巧",
+    "old_page": 154,
+    "notes": [
+      "KthOffline::Event 类型0是位置pos增减d份值x，类型1是[l,r]第k小，id为0-based答案编号；所有事件必须保持时间顺序。初始数组用n次+1插入，修改先-1旧值再+1新值；每个询问k合法。solve(n,events,q) 返回值，O((n+q)logV logn)。",
+      "递归按值域中点划分，按时间序扫小值修改并用BIT数询问区间内小值；不足k就送右边且k减去小值数。扫描结束必须回滚BIT；事件分区要稳定，不能排序打乱历史顺序。"
+    ],
+    "examples": [
+      {
+        "title": "修改数组后的区间第 k 小",
+        "code": "int main() {\n    using E = KthOffline::Event;\n    vector<E> e;\n    e.push_back({0, 1, 5, 1, 0, 0, 0, 0});\n    e.push_back({0, 2, 1, 1, 0, 0, 0, 0});\n    e.push_back({1, 0, 0, 0, 1, 2, 1, 0});\n    e.push_back({0, 2, 1, -1, 0, 0, 0, 0});\n    e.push_back({0, 2, 7, 1, 0, 0, 0, 0});\n    e.push_back({1, 0, 0, 0, 1, 2, 1, 1});\n    auto a = KthOffline().solve(2, e, 2);\n    assert(a == vector<int>({1, 5}));\n}",
+        "deps": [],
+        "file": "examples/parallel_binary_search_1.cpp"
+      }
+    ],
+    "code": "parallel_binary_search.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "10.4",
+    "page": 144
+  },
+  {
+    "id": 132,
+    "key": "offline_connectivity",
+    "title": "时间线段树 + 回滚 DSU",
+    "chapter": "10. 离线算法与技巧",
+    "old_page": 154,
+    "notes": [
+      "OfflineConn(n,q)，时间1..q。add(l,r,u,v) 表示边在闭区间有效；solve(ask) 每个时刻一对点，返回1-based连通性。插入时刻t、删除时刻d的边有效段[t,d-1]；未删除延伸到q，重边维护独立次数/生命周期。O(m logq logn+q logn)。",
+      "DFS进入时间节点记snapshot，合并覆盖该时间段的边，左右子树结束后恢复snapshot；不能路径压缩，否则撤销记录不够。"
+    ],
+    "examples": [
+      {
+        "title": "边的生存时间",
+        "code": "int main() {\n    OfflineConn s(3, 4);\n    s.add(1, 2, 1, 2); // 时刻3删去，所以截止2。\n    s.add(2, 4, 2, 3);\n    vector<pair<int, int>> ask = {{0, 0}, {1, 3}, {1, 3}, {1, 3}, {2, 3}};\n    auto a = s.solve(ask);\n    assert(a == vector<int>({0, 0, 1, 0, 1}));\n}",
+        "deps": [],
+        "file": "examples/offline_connectivity_1.cpp"
+      }
+    ],
+    "code": "offline_connectivity.hpp",
+    "action": "复核并修订完整模板",
+    "checks": [
+      "GNU++17 独立编译",
+      "固定种子边界/暴力对照"
+    ],
+    "kind": "模板",
+    "print": true,
+    "number": "10.5",
+    "page": 146
+  },
+  {
+    "id": 133,
+    "key": "sqrt_decomposition",
+    "title": "根号分块",
+    "chapter": "10. 离线算法与技巧",
+    "old_page": 154,
+    "notes": [
+      "块长 B，整块信息处理 O(n/B)，两侧散块 O(B)。lazy与块聚合必须兼容；赋值/加法的组合顺序明确。B≈sqrt(n)只在两侧代价相近时合理，按更新查询比例与常数调节。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "删除题意占位代码，重写为条件与公式速查",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": true,
+    "number": "10.6",
+    "page": 147
+  },
+  {
+    "id": 134,
+    "key": "heavy_light_vertices",
+    "title": "图上重轻点",
+    "chapter": "10. 离线算法与技巧",
+    "old_page": 155,
+    "notes": [
+      "按度数阈值B：轻点遍历邻接 O(B)，重点个数 O(m/B)。预存重点相关贡献，修改时只更新关联重点；是否能做到这些界取决于询问形式，不能把树的HLD用于一般图。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "删除题意占位代码，重写为条件与公式速查",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": true,
+    "number": "10.7",
+    "page": 148
+  },
+  {
+    "id": 135,
+    "key": "time_blocks",
+    "title": "时间分块",
+    "chapter": "10. 离线算法与技巧",
+    "old_page": 155,
+    "notes": [
+      "一批B次修改先记录，静态部分预处理，询问补偿这批改变；批末重建。总成本常为 q·B+(q/B)·重建成本，取平衡点；补偿必须基于“最后一次修改”去重。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "删除题意占位代码，重写为条件与公式速查",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": true,
+    "number": "10.8",
+    "page": 148
+  },
+  {
+    "id": 136,
+    "key": "reverse_offline",
+    "title": "倒序离线",
+    "chapter": "10. 离线算法与技巧",
+    "old_page": 155,
+    "notes": [
+      "只有删边的连通性：先建最终图，倒序删除变加边，用DSU。混合增删或询问历史版本时不能直接倒序解决，改用时间线段树+回滚。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "删除题意占位代码，重写为条件与公式速查",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": true,
+    "number": "10.9",
+    "page": 148
+  },
+  {
+    "id": 137,
+    "key": "two_pointers",
+    "title": "双指针",
+    "chapter": "10. 离线算法与技巧",
+    "old_page": 155,
+    "notes": [
+      "维护区间满足性质，左右指针各至多前进n次，需要扩展/缩小对可行性有单调影响。含负数的区间和<=K一般不满足；删除元素时频次和答案要精确回退。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "删除题意占位代码，重写为条件与公式速查",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": true,
+    "number": "10.10",
+    "page": 148
+  },
+  {
+    "id": 138,
+    "key": "meet_in_middle",
+    "title": "折半搜索",
+    "chapter": "10. 离线算法与技巧",
+    "old_page": 155,
+    "notes": [
+      "把n≈40的子集分两半枚举，约O(2^(n/2))空间时间，再排序二分/双指针配对。不要枚举两边笛卡尔积；重复和的保留方式取决于求最优还是计数。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "删除题意占位代码，重写为条件与公式速查",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": true,
+    "number": "10.11",
+    "page": 148
+  },
+  {
+    "id": 139,
+    "key": "coordinate_compression",
+    "title": "坐标压缩",
+    "chapter": "10. 离线算法与技巧",
+    "old_page": 155,
+    "notes": [
+      "排序去重后 rank=lower_bound+1，保留原值数组。只保大小关系不保距离；长度、面积、差值必须用原坐标。若离线结构随后还出现新值，提前把它们一起收集。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "删除题意占位代码，重写为条件与公式速查",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": true,
+    "number": "10.12",
+    "page": 148
+  },
+  {
+    "id": 140,
+    "key": "sweep_line",
+    "title": "扫描线",
+    "chapter": "10. 离线算法与技巧",
+    "old_page": 155,
+    "notes": [
+      "把几何问题变成一维事件；相同坐标的进入、离开、询问顺序对应闭/开区间约定。面积用相邻坐标差乘当前覆盖长度；只查点数时可用BIT，不必上覆盖长度树。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "删除题意占位代码，重写为条件与公式速查",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": true,
+    "number": "10.13",
+    "page": 148
+  },
+  {
+    "id": 141,
+    "key": "log_trick",
+    "title": "Log Trick",
+    "chapter": "10. 离线算法与技巧",
+    "old_page": 155,
+    "notes": [
+      "固定右端点的所有子段 gcd/按位AND/OR可把相同值合并，携带最早下标/数量。gcd正值严格变化至少减半，AND/OR每次改变至少一位，状态数为O(logA)或位数；sum不满足这个性质。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "删除题意占位代码，重写为条件与公式速查",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": true,
+    "number": "10.14",
+    "page": 148
+  },
+  {
+    "id": 142,
+    "key": "prefix_difference",
+    "title": "前缀与差分",
+    "chapter": "10. 离线算法与技巧",
+    "old_page": 155,
+    "notes": [
+      "1-based区间和pre[r]-pre[l-1]；闭区间加：d[l]+=v,d[r+1]-=v，数组须开n+2。二维包含-排除四项；树上路径用前述树差分，不能拿一维下标差分代替。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "删除题意占位代码，重写为条件与公式速查",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": true,
+    "number": "10.15",
+    "page": 148
+  },
+  {
+    "id": 143,
+    "key": "contribution",
+    "title": "贡献法",
+    "chapter": "10. 离线算法与技巧",
+    "old_page": 155,
+    "notes": [
+      "把“枚举所有对象”改为每个元素/事件对答案的贡献，明确对象是否有序、是否重叠。动态维护时先撤旧贡献，再改状态，再加新贡献；边界与自身项必须单独考虑。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "删除题意占位代码，重写为条件与公式速查",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": true,
+    "number": "10.16",
+    "page": 148
+  },
+  {
+    "id": 144,
+    "key": "finite_group",
+    "title": "有限群状态",
+    "chapter": "10. 离线算法与技巧",
+    "old_page": 155,
+    "notes": [
+      "前缀状态若有逆元，区间状态由 pre[l-1]的逆与pre[r]组合；非交换群要注意乘法顺序。仅有结合律的幺半群没有一般“前缀相减”，需要分治/线段树。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "删除题意占位代码，重写为条件与公式速查",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": true,
+    "number": "10.17",
+    "page": 149
+  },
+  {
+    "id": 145,
+    "key": "inclusion_exclusion",
+    "title": "容斥",
+    "chapter": "10. 离线算法与技巧",
+    "old_page": 156,
+    "notes": [
+      "并集大小=Σ非空S (-1)^(|S|+1)|交S|；小集合数直接2^k枚举。整除约束交集用lcm并在超过上界时停止，乘法先除gcd再用i128检查；相同条件需去重防重复。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "删除题意占位代码，重写为条件与公式速查",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": true,
+    "number": "10.18",
+    "page": 149
+  },
+  {
+    "id": 146,
+    "key": "regret_greedy",
+    "title": "反悔贪心",
+    "chapter": "10. 离线算法与技巧",
+    "old_page": 156,
+    "notes": [
+      "维护已选集合，加入新项后用堆删除最差项恢复约束。必须证明可交换性与局部替换不损失全局最优，常用于截止时间/容量排序后的选择；不是“遇到冲突删最大”就自动成立。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "删除题意占位代码，重写为条件与公式速查",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": true,
+    "number": "10.19",
+    "page": 149
+  },
+  {
+    "id": 147,
+    "key": "topk_states",
+    "title": "状态保留 Top-K",
+    "chapter": "10. 离线算法与技巧",
+    "old_page": 156,
+    "notes": [
+      "只有未来转移把同状态候选视为等价、且答案只需有限个最优值时才截断。若未来会排除类别，至少保留排除数+1个不同类别，见 TopK；任意状态搜索截前K可能漏最优。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "移出打印正文；保留经过修订的适用条件于完整源稿/复核记录",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": false,
+    "page": null
+  },
+  {
+    "id": 148,
+    "key": "last_occurrence",
+    "title": "上次出现位置",
+    "chapter": "10. 离线算法与技巧",
+    "old_page": 156,
+    "notes": [
+      "维护last[value]可把区间不同值数离线转为BIT：扫r，在旧last减1、新r加1，询问[l,r]的和。需按r排序，压缩值后存last；这是完整公式，泛化到其他约束需重新推导。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "删除题意占位代码，重写为条件与公式速查",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": true,
+    "number": "10.20",
+    "page": 149
+  },
+  {
+    "id": 149,
+    "key": "dyadic_blocks",
+    "title": "二进制对齐区间",
+    "chapter": "10. 离线算法与技巧",
+    "old_page": 156,
+    "notes": [
+      "将[l,r)分成互不交的2次幂对齐块，块数O(log范围)。取块长要同时满足左端对齐和不越过r；l=0时lowbit=0须特别处理，64位全域端点常需u128。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "删除题意占位代码，重写为条件与公式速查",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": true,
+    "number": "10.21",
+    "page": 149
+  },
+  {
+    "id": 150,
+    "key": "exchange_ordering",
+    "title": "相邻交换排序",
+    "chapter": "10. 离线算法与技巧",
+    "old_page": 156,
+    "notes": [
+      "比较AB与BA代价证明局部交换顺序；比较器还须满足严格弱序，不能出现循环偏好。乘积比较用i128，平值返回false/稳定下标；把证明中的<=直接写比较器会出错。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "删除题意占位代码，重写为条件与公式速查",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": true,
+    "number": "10.22",
+    "page": 149
+  },
+  {
+    "id": 151,
+    "key": "interval_point_matching",
+    "title": "区间与点匹配",
+    "chapter": "10. 离线算法与技巧",
+    "old_page": 156,
+    "notes": [
+      "最大数量匹配：按点坐标升序，加入左端<=点的区间，把右端<点的过期项弹掉，匹配最小右端。O((n+m)logn)，点/区间各只能使用一次；加权目标不保证此贪心。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "删除题意占位代码，重写为条件与公式速查",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": true,
+    "number": "10.23",
+    "page": 149
+  },
+  {
+    "id": 152,
+    "key": "feasibility_oracle",
+    "title": "可行性判定构造",
+    "chapter": "10. 离线算法与技巧",
+    "old_page": 156,
+    "notes": [
+      "若可行性判定能处理已固定决策，逐位尝试最小候选并保留可完成的一项，可得字典序最小方案。需要q次判定，复杂度=q·判定代价；不能只检查局部约束而忽略未来。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "删除题意占位代码，重写为条件与公式速查",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": true,
+    "number": "10.24",
+    "page": 149
+  },
+  {
+    "id": 153,
+    "key": "weighted_median",
+    "title": "加权中位数",
+    "chapter": "10. 离线算法与技巧",
+    "old_page": 156,
+    "notes": [
+      "非负权重，最小化Σwi|xi-x|；累积权首次达到总权一半附近即最优区间。总权0时任意点最优；偶数/平分可有整个区间，权值前缀用i128避免溢出。不同于最小平方误差的均值。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "删除题意占位代码，重写为条件与公式速查",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": true,
+    "number": "10.25",
+    "page": 149
+  },
+  {
+    "id": 154,
+    "key": "spatial_hash",
+    "title": "固定半径空间哈希",
+    "chapter": "10. 离线算法与技巧",
+    "old_page": 156,
+    "notes": [
+      "把平面分格，格长与搜索半径匹配，只查附近常数格；负坐标整除需向下取整。格内点可能很密，最坏仍退化到二次；没有密度/分离条件不能承诺O(n)。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "删除题意占位代码，重写为条件与公式速查",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": true,
+    "number": "10.26",
+    "page": 149
+  },
+  {
+    "id": 155,
+    "key": "l1_transform",
+    "title": "L1 坐标变换",
+    "chapter": "10. 离线算法与技巧",
+    "old_page": 156,
+    "notes": [
+      "u=x+y,v=x-y，则曼哈顿距离=max(|Δu|,|Δv|)，二维直径可由u/v极值得到。逆变换 x=(u+v)/2,y=(u-v)/2，整数点需奇偶一致；加减先用足够宽类型。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "删除题意占位代码，重写为条件与公式速查",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": true,
+    "number": "10.27",
+    "page": 150
+  },
+  {
+    "id": 156,
+    "key": "reset_segments",
+    "title": "重置分段",
+    "chapter": "10. 离线算法与技巧",
+    "old_page": 156,
+    "notes": [
+      "若某操作真正把未来状态清为固定值，过去可按段独立计算；若历史还影响约束/答案则不独立。分段点是否算在前段或后段需定义。删除原题特定的无上下文骨架。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "移出打印正文；保留经过修订的适用条件于完整源稿/复核记录",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": false,
+    "page": null
+  },
+  {
+    "id": 157,
+    "key": "frequency_memo",
+    "title": "频次状态记忆化",
+    "chapter": "10. 离线算法与技巧",
+    "old_page": 157,
+    "notes": [
+      "仅当同频次表的所有排列对未来行为完全等价时可记忆化；状态编码需无碰撞，不能用未经核验的单哈希当精确状态。复杂度由可达频次状态数决定，常随种类数指数增长。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "移出打印正文；保留经过修订的适用条件于完整源稿/复核记录",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": false,
+    "page": null
+  },
+  {
+    "id": 158,
+    "key": "reserved_coordinates",
+    "title": "预留坐标",
+    "chapter": "10. 离线算法与技巧",
+    "old_page": 157,
+    "notes": [
+      "离线收集所有会使用的位置、端点和必要的相邻哨兵，排序压缩后再执行。是否加x±1取决于离散点或连续长度意义，不能无条件加；极值处防整数溢出。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "删除题意占位代码，重写为条件与公式速查",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": true,
+    "number": "10.28",
+    "page": 150
+  },
+  {
+    "id": 159,
+    "key": "modulo_pruning",
+    "title": "区间取模剪枝",
+    "chapter": "10. 离线算法与技巧",
+    "old_page": 157,
+    "notes": [
+      "非负a，取模x>0时若区间max<x无需递归；有效变化后值至少减半（a>=x时 a%x<a/2），因此每点有效变化O(logA)。配合单点赋值时按每次新值重新计摊还；不支持负数同样的证明。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "删除题意占位代码，重写为条件与公式速查",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": true,
+    "number": "10.29",
+    "page": 150
+  },
+  {
+    "id": 160,
+    "key": "boolean_chain",
+    "title": "布尔仿射链",
+    "chapter": "10. 离线算法与技巧",
+    "old_page": 157,
+    "notes": [
+      "布尔变量的取反/恒等可写 x→a*x xor b，组合 (a2a1,a2b1 xor b2)。若a=0是常量映射，没有逆元；链区间查询可线段树按顺序合并，不能全部当成可逆群。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "移出打印正文；保留经过修订的适用条件于完整源稿/复核记录",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": false,
+    "page": null
+  },
+  {
+    "id": 161,
+    "key": "identities",
+    "title": "常用恒等式",
+    "chapter": "11. 公式与博弈",
+    "old_page": 157,
+    "notes": [
+      "Σi=n(n+1)/2；Σi²=n(n+1)(2n+1)/6；Σ(i=0..n)C(n,i)=2^n；Σk C(n,k)k=n2^(n-1)。乘除在整数里先约分或用i128；模数非素数时2、6未必可逆。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "删除题意占位代码，重写为条件与公式速查",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": true,
+    "number": "11.1",
+    "page": 151
+  },
+  {
+    "id": 162,
+    "key": "games",
+    "title": "SG / Nim",
+    "chapter": "11. 公式与博弈",
+    "old_page": 157,
+    "notes": [
+      "有限、无环的正常规则 impartial game：SG(x)=mex{SG(next)}，独立游戏和取xor；Nim堆大小即SG。终态SG=0。反常规则（最后操作者输）或有环不直接适用；递归记忆化先保证状态图无环，规则决定转移。"
+    ],
+    "examples": [],
+    "code": null,
+    "action": "删除题意占位代码，重写为条件与公式速查",
+    "checks": [
+      "检查公式、适用条件与边界定义"
+    ],
+    "kind": "速查",
+    "print": true,
+    "number": "11.2",
+    "page": 151
+  }
+]

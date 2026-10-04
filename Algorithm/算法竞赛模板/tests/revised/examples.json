@@ -1,0 +1,248 @@
+[
+  {
+    "file": "aho_corasick_1.cpp",
+    "ok": true,
+    "phase": "run",
+    "log": ""
+  },
+  {
+    "file": "boruvka_1.cpp",
+    "ok": true,
+    "phase": "run",
+    "log": ""
+  },
+  {
+    "file": "bsgs_1.cpp",
+    "ok": true,
+    "phase": "run",
+    "log": ""
+  },
+  {
+    "file": "cdq_1.cpp",
+    "ok": true,
+    "phase": "run",
+    "log": ""
+  },
+  {
+    "file": "centroid_decomposition_1.cpp",
+    "ok": true,
+    "phase": "run",
+    "log": ""
+  },
+  {
+    "file": "convex_hull_dp_1.cpp",
+    "ok": true,
+    "phase": "run",
+    "log": ""
+  },
+  {
+    "file": "difference_constraints_1.cpp",
+    "ok": true,
+    "phase": "run",
+    "log": ""
+  },
+  {
+    "file": "dinic_1.cpp",
+    "ok": true,
+    "phase": "run",
+    "log": ""
+  },
+  {
+    "file": "dsu_on_tree_1.cpp",
+    "ok": true,
+    "phase": "run",
+    "log": ""
+  },
+  {
+    "file": "dujiao_sieve_1.cpp",
+    "ok": true,
+    "phase": "run",
+    "log": "32 -1\n"
+  },
+  {
+    "file": "dynamic_segment_tree_1.cpp",
+    "ok": true,
+    "phase": "run",
+    "log": ""
+  },
+  {
+    "file": "eertree_1.cpp",
+    "ok": true,
+    "phase": "run",
+    "log": ""
+  },
+  {
+    "file": "exgcd_crt_1.cpp",
+    "ok": true,
+    "phase": "run",
+    "log": ""
+  },
+  {
+    "file": "fps_1.cpp",
+    "ok": true,
+    "phase": "run",
+    "log": ""
+  },
+  {
+    "file": "gauss_1.cpp",
+    "ok": true,
+    "phase": "run",
+    "log": ""
+  },
+  {
+    "file": "half_plane_intersection_1.cpp",
+    "ok": true,
+    "phase": "run",
+    "log": ""
+  },
+  {
+    "file": "hld_1.cpp",
+    "ok": true,
+    "phase": "run",
+    "log": ""
+  },
+  {
+    "file": "hopcroft_karp_1.cpp",
+    "ok": true,
+    "phase": "run",
+    "log": "1 1\n2 2\n"
+  },
+  {
+    "file": "implicit_treap_1.cpp",
+    "ok": true,
+    "phase": "run",
+    "log": ""
+  },
+  {
+    "file": "kruskal_reconstruction_tree_1.cpp",
+    "ok": true,
+    "phase": "run",
+    "log": ""
+  },
+  {
+    "file": "lazy_segment_tree_1.cpp",
+    "ok": true,
+    "phase": "run",
+    "log": ""
+  },
+  {
+    "file": "link_cut_tree_1.cpp",
+    "ok": true,
+    "phase": "run",
+    "log": ""
+  },
+  {
+    "file": "li_chao_1.cpp",
+    "ok": true,
+    "phase": "run",
+    "log": ""
+  },
+  {
+    "file": "lower_bound_flow_1.cpp",
+    "ok": true,
+    "phase": "run",
+    "log": ""
+  },
+  {
+    "file": "matrix_1.cpp",
+    "ok": true,
+    "phase": "run",
+    "log": ""
+  },
+  {
+    "file": "min25_sieve_1.cpp",
+    "ok": true,
+    "phase": "run",
+    "log": ""
+  },
+  {
+    "file": "min_cost_flow_1.cpp",
+    "ok": true,
+    "phase": "run",
+    "log": ""
+  },
+  {
+    "file": "offline_connectivity_1.cpp",
+    "ok": true,
+    "phase": "run",
+    "log": ""
+  },
+  {
+    "file": "parallel_binary_search_1.cpp",
+    "ok": true,
+    "phase": "run",
+    "log": ""
+  },
+  {
+    "file": "persistent_segment_tree_1.cpp",
+    "ok": true,
+    "phase": "run",
+    "log": ""
+  },
+  {
+    "file": "range_graph_1.cpp",
+    "ok": true,
+    "phase": "run",
+    "log": ""
+  },
+  {
+    "file": "sam_1.cpp",
+    "ok": true,
+    "phase": "run",
+    "log": ""
+  },
+  {
+    "file": "segment_tree_1.cpp",
+    "ok": true,
+    "phase": "run",
+    "log": ""
+  },
+  {
+    "file": "suffix_array_1.cpp",
+    "ok": true,
+    "phase": "run",
+    "log": ""
+  },
+  {
+    "file": "two_sat_1.cpp",
+    "ok": true,
+    "phase": "run",
+    "log": ""
+  },
+  {
+    "file": "virtual_tree_1.cpp",
+    "ok": true,
+    "phase": "run",
+    "log": ""
+  },
+  {
+    "file": "xor_basis_1.cpp",
+    "ok": true,
+    "phase": "run",
+    "log": ""
+  },
+  {
+    "file": "min25_phi.cpp",
+    "ok": true,
+    "phase": "run",
+    "log": ""
+  },
+  {
+    "file": "min25_tau.cpp",
+    "ok": true,
+    "phase": "run",
+    "log": ""
+  },
+  {
+    "file": "min25_mu.cpp",
+    "ok": true,
+    "phase": "run",
+    "log": ""
+  },
+  {
+    "file": "stress.cpp",
+    "ok": true,
+    "phase": "run",
+    "log": "PASS 200000-vertex chains\n"
+  }
+]

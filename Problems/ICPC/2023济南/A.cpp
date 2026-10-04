@@ -11,31 +11,31 @@ void solve() {
     string s;
     cin >> s;
     int n = s.size();
-    vector<int> a(n);
+    vector<int> a(n + 1);
     for(int i = 0; i < n; i++) {
-        a[i] = s[i] == '(' || s[i] == ')';
+        a[i + 1] = s[i] == '(' || s[i] == ')';
     }
-    stack<int> stk, stkf;
-    vector<int> match(n, -1);
 
-    bool flag = true;
-    stkf.push(0);
+    vector<array<int, 2>> dp(n + 1);
 
-    for(int i = 0; i < n; i++) {
+    stack<int> stk;
+
+    for(int i = 1; i <= n; i++) {
         int x = a[i];
-        if(stk.empty() || a[stk.top()] != x) {
-            if(stkf.top() & (1 << x)) flag = false;
-            stkf.push(0);
-            stk.push(i);
+        if(!stk.empty() && a[stk.top()] == x) {
+            int j = stk.top(); stk.pop();
+            dp[i][x] = 1;
+            dp[i][x ^ 1] |= dp[j - 1][x ^ 1];
+            if(dp[j - 1][x]) {
+                cout << "No\n";
+                return;
+            }
         } else {
-            stkf.pop();
-            stkf.top() |= (1 << x);
-            match[i] = stk.top();
-            stk.pop();
+            stk.push(i);
         }
     }
 
-    cout << (flag ? "Yes\n" : "No\n");
+    cout << "Yes\n";
 }
 
 int main() {
